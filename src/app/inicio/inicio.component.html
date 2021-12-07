@@ -1,0 +1,15 @@
+<div *ngIf="selectedCard">
+  <h2>{{selectedCard.name | uppercase}} Details</h2>
+  <div><span>id: </span>{{selectedCard.id}}</div>
+  <div>
+    <label for="card-name">Card name: </label>
+    <input id="card-name" [(ngModel)]="selectedCard.name" placeholder="name">
+  </div>
+</div>
+
+<h2>My cards</h2>
+<div class="cards-container">
+  <div *ngFor="let card of cards" (click)="onSelect(card)" class="card">
+    <span>{{card.id}}</span> {{card.name}}
+  </div>
+</div>

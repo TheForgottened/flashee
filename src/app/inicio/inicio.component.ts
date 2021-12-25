@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Flashcard } from '../flashcard';
-
-import { CARDS } from '../prueba-tarjetas';
+import { Flashcard } from '../clases/flashcard';
+import { CARDS } from '../clases/prueba-tarjetas';
 
 @Component({
   selector: 'app-inicio',
@@ -11,10 +10,6 @@ import { CARDS } from '../prueba-tarjetas';
 
 export class InicioComponent implements OnInit {
 
-  card: Flashcard = {
-    id: 1,
-    name: 'Tarjeta'
-  }
 
   selectedCard?: Flashcard;
   cards = CARDS;

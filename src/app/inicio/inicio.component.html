@@ -1,15 +1,17 @@
 <div *ngIf="selectedCard">
-  <h2>{{selectedCard.name | uppercase}} Details</h2>
+  <h2>{{selectedCard.question | uppercase}} Details</h2>
   <div><span>id: </span>{{selectedCard.id}}</div>
   <div>
     <label for="card-name">Card name: </label>
-    <input id="card-name" [(ngModel)]="selectedCard.name" placeholder="name">
+    <input id="card-name" [(ngModel)]="selectedCard.question" placeholder="question">
   </div>
 </div>
 
 <h2>My cards</h2>
 <div class="cards-container">
   <div *ngFor="let card of cards" (click)="onSelect(card)" class="card">
-    <span>{{card.id}}</span> {{card.name}}
+    <span>{{card.question}}</span>
+    <span>{{card.description}}</span>
+    <span>{{card.answer}}</span>
   </div>
 </div>

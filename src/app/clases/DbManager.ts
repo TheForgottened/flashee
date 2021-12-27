@@ -28,8 +28,8 @@ export class DbManager extends Dexie{
     async populate() {
         const deck = await db.decks.add(new Deck());
         await db.cards.bulkAdd([
-            new Flashcard("Hola??","!!","desc"),
-            new Flashcard("Que haces??","!!","desc"),
+            new Flashcard("Question1??","!!","desc"),
+            new Flashcard("Question2??","!!","desc"),
             new Flashcard("asdas??","!!","desc"),
             new Flashcard("gfdgf??","!!","desc"),
         ])

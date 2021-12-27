@@ -2,9 +2,17 @@
 
 import { Flashcard } from "./flashcard";
 
-export interface Deck {
+// Probably a singleton, magaing the cards reading writing
+export class Deck {
     id: number;
     creationDate: Date;
 
-    cards: Flashcard[];
+    cards: Set<Flashcard>;
+
+    constructor(id:number) {
+        // Will be only one deck for now
+        this.id = 0;
+        this.cards = new Set<Flashcard>();
+        this.creationDate = new Date();
+    }
 }

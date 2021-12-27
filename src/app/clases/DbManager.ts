@@ -14,8 +14,9 @@ export class DbManager extends Dexie{
     decks!: Table<Deck,number>;
     tags!: Table<Tag, number>;
 
-    constructor() {
-        super('ngdexieliveQuery');
+    constructor() {        
+
+        super('flashee');
         this.version(1).stores({
             decks: '++id',
             cards: '++id,question',
@@ -27,13 +28,16 @@ export class DbManager extends Dexie{
 
     async populate() {
         const deck = await db.decks.add(new Deck());
+        const idDeck = (await db.decks.where('id').equals(deck).toArray())[0]
+
         await db.cards.bulkAdd([
-            new Flashcard("Question1??","!!","desc"),
-            new Flashcard("Question2??","!!","desc"),
-            new Flashcard("asdas??","!!","desc"),
-            new Flashcard("gfdgf??","!!","desc"),
+            new Flashcard("Question1??","!!","desc",idDeck),
+            new Flashcard("Question2??","!!","desc",idDeck),
+            new Flashcard("asdas??","!!","desc",idDeck),
+            new Flashcard("gfdgf??","!!","desc",idDeck)
         ])
     }
 }
+
 
 export const db = new DbManager();

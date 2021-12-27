@@ -15,7 +15,6 @@ export class InicioComponent implements OnInit {
 
   selectedCard?: Flashcard;
   cards = liveQuery(() => db.cards.toArray());
-
   constructor() { }
 
   onSelect(card: Flashcard): void {
@@ -23,7 +22,8 @@ export class InicioComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    //! RESETS THE DATABASE
+    //db.delete().then (()=>db.open());
   }
 
 }

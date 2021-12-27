@@ -9,7 +9,7 @@ export class Deck {
 
     cards: Set<Flashcard>;
 
-    constructor(id:number) {
+    constructor() {
         // Will be only one deck for now
         this.id = 0;
         this.cards = new Set<Flashcard>();

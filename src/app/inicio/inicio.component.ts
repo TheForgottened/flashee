@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { liveQuery } from 'dexie';
+import { DbManager, db } from '../clases/DbManager';
 import { Flashcard } from '../clases/flashcard';
 import { CARDS } from '../clases/prueba-tarjetas';
 
@@ -12,7 +14,7 @@ export class InicioComponent implements OnInit {
 
 
   selectedCard?: Flashcard;
-  cards = CARDS;
+  cards = liveQuery(() => db.cards.toArray());
 
   constructor() { }
 
@@ -21,6 +23,7 @@ export class InicioComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
   }
 
 }

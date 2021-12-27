@@ -3,7 +3,7 @@
 import { Tag } from "./tag";
 
 export class Flashcard {
-    id: number;
+    id?: number;
 
     // Contetnt
     question: string;
@@ -17,11 +17,12 @@ export class Flashcard {
 
 
     // TODO: add atomated id generation
-    constructor(id:number,question:string,answer:string) {
-        this.id = id;
+    constructor(question:string,answer:string,description?:string) {
+        //this.id = id;
         this.question = question;
         this.answer = answer;
         this.creationDate = new Date();
         this.tags = new Set<Tag>();
+        this.description = description;
     }
 }

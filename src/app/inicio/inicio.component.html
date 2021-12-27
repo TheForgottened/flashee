@@ -9,7 +9,7 @@
 
 <h2>My cards</h2>
 <div class="cards-container">
-  <div *ngFor="let card of cards" (click)="onSelect(card)" class="card">
+  <div *ngFor="let card of cards | async;" (click)="onSelect(card)" class="card">
     <span>{{card.question}}</span>
     <span>{{card.description}}</span>
     <span>{{card.answer}}</span>

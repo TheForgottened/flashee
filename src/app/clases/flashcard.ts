@@ -18,7 +18,7 @@ export class Flashcard {
 
 
     // TODO: add atomated id generation
-    constructor(question:string,answer:string,description?:string,deck?:Deck) {
+    constructor(question:string, answer:string, description?:string, deck?:Deck) {
         //this.id = id;
         this.question = question;
         this.answer = answer;

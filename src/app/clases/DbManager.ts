@@ -19,7 +19,7 @@ export class DbManager extends Dexie{
         super('flashee');
         this.version(1).stores({
             decks: '++id',
-            cards: '++id,question',
+            cards: '++id, question',
             tags: '++id'
         })
 
@@ -31,10 +31,9 @@ export class DbManager extends Dexie{
         const idDeck = (await db.decks.where('id').equals(deck).toArray())[0]
 
         await db.cards.bulkAdd([
-            new Flashcard("Question1??","!!","desc",idDeck),
-            new Flashcard("Question2??","!!","desc",idDeck),
-            new Flashcard("asdas??","!!","desc",idDeck),
-            new Flashcard("gfdgf??","!!","desc",idDeck)
+            new Flashcard("Card1?","Yes","This is card 1", idDeck),
+            new Flashcard("Card2?","Yes","This is card 2", idDeck),
+            new Flashcard("Card3?","Yes","This is card 3", idDeck),
         ])
     }
 }

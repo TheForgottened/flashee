@@ -1,23 +1,22 @@
 <title>{{title}}</title>
 
-  <div id="card-creation" *ngIf='createCard'>
-    <create-card></create-card>
-  </div>  
-  <app-inicio></app-inicio>
-  <div class="vertical-container">
-    {{createCard}}
-    <button (click)='newCardMenu()'>New card</button>
-    <button>Import</button>
-    <button>Export</button>
-    <button>Stats</button>
-    <button>Quiz</button>
-  </div>
+
+<create-card (closeEvent)="closeEventHandler($event)" id="card-creation" *ngIf='createCard'></create-card>
+
+<app-inicio></app-inicio>
+<div class="vertical-menu">
+  <button class="green" (click)='newCardMenu()'>New card</button>
+  <button>Import</button>
+  <button>Export</button>
+  <button>Stats</button>
+  <button>Quiz</button>
+</div>
 
 
 
- <!-- Footer -->
-  <footer>
+<!-- Footer -->
+<footer>
 
-  </footer>
+</footer>
 
 <router-outlet></router-outlet>

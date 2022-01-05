@@ -1,36 +1,22 @@
-section {
-    display: table;
-}
-
-.example-label {
-    display: table-cell;
-    font-size: 14px;
-    margin-left: 8px;
-    min-width: 120px;
-}
-
-.example-button-row {
-    display: table-cell;
-    width: 490px;
-}
-
-.example-button-row .mat-button-base {
-    margin: 8px 8px 8px 0;
-}
-
-.example-flex-container {
+.container-card-creation {
+    margin: 1em;
+    padding: 1em;
     display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
+    flex-direction: column;
+    width: 80%;
+    height: 15em;
 }
 
-.example-button-container {
+.form-field {
+    width: 20em;
     display: flex;
-    justify-content: center;
-    width: 120px;
+    flex-direction: column;
 }
 
-.example-button-row button,
-.example-button-row a {
-  margin-right: 8px;
+label {
+    width: 100%;
+}
+
+input {
+    width: 100%;
 }

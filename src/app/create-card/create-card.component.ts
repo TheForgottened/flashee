@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { db } from '../clases/DbManager';
 import { Flashcard } from '../clases/flashcard';
@@ -13,7 +13,9 @@ export class CreateCardComponent implements OnInit {
   question = new FormControl('');
   answer = new FormControl('');
   tags = new FormControl('');
-  description = new FormControl(''); 
+  description = new FormControl('');
+
+  @Output() closeEvent = new EventEmitter<boolean>();
 
   constructor() { }
 
@@ -30,6 +32,10 @@ export class CreateCardComponent implements OnInit {
     this.description.setValue('');
     this.answer.setValue('');
     this.tags.setValue('');
+  }
+
+  close() {
+    this.closeEvent.emit(true);
   }
 
 }

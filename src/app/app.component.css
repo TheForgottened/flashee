@@ -1,0 +1,9 @@
+.vertical-menu {
+    display: flex;
+    flex-direction: column;
+    width: 10em;
+}
+
+#card-creation {
+    margin: auto 10em;
+}

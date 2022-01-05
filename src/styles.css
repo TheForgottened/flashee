@@ -2,12 +2,10 @@
 /* Application-wide Styles */
 h1 {
   color: #369;
-  font-family: Arial, Helvetica, sans-serif;
   font-size: 250%;
 }
 h2, h3 {
   color: #444;
-  font-family: Arial, Helvetica, sans-serif;
   font-weight: lighter;
 }
 body {
@@ -15,11 +13,26 @@ body {
 }
 body, input[type="text"], button {
   color: #333;
-  font-family: Cambria, Georgia, serif;
 }
+
+button {
+  min-width: 5em;
+  height: 3.5em;
+  padding: 1em;
+  margin: .5em;
+  border: .2em double rgba(128, 128, 128, 0.384);
+  border-radius: .3em;
+}
+
+.green {
+  background-color: rgb(160, 229, 160);
+}
+
 /* everywhere else */
 * {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  margin: 0;
+  padding: 0;
 }
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

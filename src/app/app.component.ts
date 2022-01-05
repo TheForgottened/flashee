@@ -13,4 +13,8 @@ export class AppComponent {
   newCardMenu():void {
     (this.createCard == true)?this.createCard=false:this.createCard=true;
   }
+
+  closeEventHandler(event: any) {
+    this.newCardMenu();
+  }
 }

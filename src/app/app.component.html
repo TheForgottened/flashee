@@ -1,7 +1,18 @@
 <title>{{title}}</title>
 
-  <app-create-card></app-create-card>
+  <div id="card-creation" *ngIf='createCard'>
+    <create-card></create-card>
+  </div>  
   <app-inicio></app-inicio>
+  <div class="vertical-container">
+    {{createCard}}
+    <button (click)='newCardMenu()'>New card</button>
+    <button>Import</button>
+    <button>Export</button>
+    <button>Stats</button>
+    <button>Quiz</button>
+  </div>
+
 
 
  <!-- Footer -->

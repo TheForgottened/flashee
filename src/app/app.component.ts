@@ -8,4 +8,9 @@ import { Component } from '@angular/core';
 
 export class AppComponent {
   title = 'flashee';
+  createCard = false;
+
+  newCardMenu():void {
+    (this.createCard == true)?this.createCard=false:this.createCard=true;
+  }
 }

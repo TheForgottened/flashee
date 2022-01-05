@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { Compiler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 
@@ -12,6 +12,9 @@ import { StatisticsComponent } from './statistics/statistics.component';
 import { TagListComponent } from './tag-list/tag-list.component';
 import { CreateCardComponent } from './create-card/create-card.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HorizontalMenuComponent } from './horizontal-menu/horizontal-menu.component';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { JitCompiler } from '@angular/compiler';
 
 @NgModule({
   declarations: [
@@ -22,13 +25,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     CardFormComponent,
     StatisticsComponent,
     TagListComponent,
-    CreateCardComponent
+    CreateCardComponent,
+    HorizontalMenuComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

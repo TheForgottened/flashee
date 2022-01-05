@@ -1,5 +1,23 @@
 <section>
-    <div class="example-button-row">
-        <button mat-raised-button color="primary">Create Card</button>
+  <div class="form-container">
+    <h3>Card creation</h3>
+    <div>
+      <label for="question">Question </label>
+      <input id="question" type="text" [formControl]='question'>
     </div>
+    <div>
+      <label for="description">Description </label>
+      <input id="description" type="text" [formControl]='description'>
+    </div>
+    <div>
+      <label for="answer">Answer </label>
+      <input id="answer" type="text" [formControl]='answer'>
+    </div>
+    <div>
+      <label for="tags">Tags </label>
+      <input id="tags" type="text" [formControl]='tags'>
+    </div>
+  </div>
+  <button (click)="newCard()">Confirm</button>
+  <button (click)="discard()">Discard</button>
 </section>

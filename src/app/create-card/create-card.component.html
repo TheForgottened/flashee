@@ -1,5 +1,6 @@
 <section class="container-card-creation">
   <button (click)="close()">Close</button>
+
   <div class="form-container">
     <h3>Card creation</h3>
     <div class="form-field">
@@ -19,6 +20,7 @@
       <input id="tags" type="text" [formControl]='tags'>
     </div>
   </div>
+  
   <button class="green" (click)="newCard()">Confirm</button>
   <button (click)="discard()">Discard</button>
 </section>

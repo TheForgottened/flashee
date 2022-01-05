@@ -1,9 +1,9 @@
 <title>{{title}}</title>
 
 
-<create-card (closeEvent)="closeEventHandler($event)" id="card-creation" *ngIf='createCard'></create-card>
+<create-card (closeEvent)="closeEventHandler($event)" id="card-creation" *ngIf='createCard' [card]='modCard'></create-card>
 
-<app-inicio></app-inicio>
+<app-inicio (modCardEvent)="onModify($event)" ></app-inicio>
 <div class="vertical-menu">
   <button class="green" (click)='newCardMenu()'>New card</button>
   <button>Import</button>

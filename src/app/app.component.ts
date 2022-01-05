@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Flashcard } from './clases/flashcard';
 
 @Component({
   selector: 'app-root',
@@ -9,12 +10,18 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'flashee';
   createCard = false;
+  modCard?: Flashcard;
 
   newCardMenu():void {
     (this.createCard == true)?this.createCard=false:this.createCard=true;
   }
 
   closeEventHandler(event: any) {
+    this.newCardMenu();
+  }
+
+  onModify(card: Flashcard) {
+    this.modCard = card;
     this.newCardMenu();
   }
 }

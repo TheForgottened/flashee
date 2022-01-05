@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { liveQuery } from 'dexie';
 import { DbManager, db } from '../clases/DbManager';
 import { Flashcard } from '../clases/flashcard';
@@ -15,10 +15,17 @@ export class InicioComponent implements OnInit {
 
   selectedCard?: Flashcard;
   cards = liveQuery(() => db.cards.toArray());
+  @Output() modCardEvent = new EventEmitter<Flashcard>(); 
+  
+
   constructor() { }
 
   onSelect(card: Flashcard): void {
     this.selectedCard = card;
+  }
+
+  onModify(card: Flashcard) {
+    this.modCardEvent.emit(card);
   }
 
   ngOnInit(): void {

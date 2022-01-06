@@ -6,7 +6,10 @@
 <app-inicio (modCardEvent)="onModify($event)" ></app-inicio>
 <div class="vertical-menu">
   <button class="green" (click)='newCardMenu()'>New card</button>
-  <button>Import</button>
+  <input hidden type="file" #uploader (change)="importDeck($event)"/>
+  <button class="greenyellow" (click)="uploader.click()">
+    Import
+  </button>
   <button class="blue" (click)='exportDeck()'>Export</button>
   <button>Stats</button>
   <button>Quiz</button>

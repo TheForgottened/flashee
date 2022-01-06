@@ -13,7 +13,8 @@ export class AppComponent {
   modCard?: Flashcard;
 
   newCardMenu():void {
-    (this.createCard == true)?this.createCard=false:this.createCard=true;
+    this.modCard = undefined;
+    (this.createCard == true)?this.createCard=false:this.createCard=true;    
   }
 
   closeEventHandler(event: any) {
@@ -21,7 +22,9 @@ export class AppComponent {
   }
 
   onModify(card: Flashcard) {
+    console.log(card);
     this.modCard = card;
-    this.newCardMenu();
+    this.createCard = false;
+    this.createCard = true;
   }
 }

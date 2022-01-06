@@ -26,6 +26,27 @@ export class AppComponent {
     this.createCard = open;
   }
 
+  importDeck($event: any): void {
+    const idbDatabase = db.backendDB()
+    var selectedFile = $event.target.files[0];
+    let fileReader = new FileReader();
+
+    fileReader.onload = (e) => {
+      indexExportImport.clearDatabase(idbDatabase, (err: any) => {
+        if (!err) { // cleared data successfully
+          indexExportImport.importFromJsonString(idbDatabase, fileReader.result, (err: any) =>{
+            if (!err) {
+              console.log('Imported data successfully');
+              document.location.reload()
+            }
+          });
+        }
+      });
+    }
+    fileReader.readAsText(selectedFile);
+  }
+
+
   exportDeck(): void{
     const idbDatabase = db.backendDB()
     indexExportImport.exportToJsonString(idbDatabase, (err: any, jsonString: any) =>{

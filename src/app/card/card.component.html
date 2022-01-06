@@ -13,6 +13,6 @@
   </div>
 
   <div class="card-tags">
-    {{flashcard.tags}}
+    <div *ngFor="let tag of flashcard.tags">{{tag.name}}</div>
   </div>
 </section>

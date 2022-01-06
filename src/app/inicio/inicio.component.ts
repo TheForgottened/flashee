@@ -3,6 +3,7 @@ import { liveQuery } from 'dexie';
 import { DbManager, db } from '../clases/DbManager';
 import { Flashcard } from '../clases/flashcard';
 import { CARDS } from '../clases/prueba-tarjetas';
+import { GlobalDataService } from '../global-data.service';
 
 @Component({
   selector: 'app-inicio',
@@ -18,10 +19,11 @@ export class InicioComponent implements OnInit {
   @Output() modCardEvent = new EventEmitter<Flashcard>(); 
   
 
-  constructor() { }
+  constructor(public globalData:GlobalDataService) { }
 
   onSelect(card: Flashcard): void {
-    this.selectedCard = card;
+    //this.selectedCard = card;
+    this.globalData.setCard(card);
   }
 
   onModify(card: Flashcard) {

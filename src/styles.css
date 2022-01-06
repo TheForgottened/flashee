@@ -36,6 +36,10 @@ button {
   background-color: rgba(173, 173, 250, 0.452);
 }
 
+.greenyellow {
+  background-color: greenyellow;
+}
+
 /* everywhere else */
 * {
   font-family: Roboto, "Helvetica Neue", sans-serif;

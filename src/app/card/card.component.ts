@@ -24,6 +24,7 @@ export class CardComponent implements OnInit {
   }
 
   deletionEvent(){
+    //TODO: add confirmation
     db.cards.delete(this.flashcard.id);
     this.deleteEvent.emit(this.flashcard);
   }

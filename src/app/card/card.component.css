@@ -1,5 +1,31 @@
 .card-container {
     display: flex;
-    min-width: 20em;
-    min-height: 10em;
+    flex-direction: column;
+    justify-content: space-between;
+
+    width: 20em;
+    height: 10em;
+
+    background-color: white;
+    padding: .3em;
+}
+
+.card-container > * {
+    width: 100%;
+}
+
+.card-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.button-container > button {
+ height: 2em;
+ width: 3em;
+ padding: 0;
+}
+
+.card-tags {
+    align-self: flex-end;
 }

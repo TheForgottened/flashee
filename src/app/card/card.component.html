@@ -1,12 +1,17 @@
 <section class="card-container">
+
   <div class="card-header">
     <span class="card-title">{{flashcard.question}}</span>
-    <button (click)="modificationEvent()" >Modify</button>
-    <button (click)="deletionEvent()">Delete</button>
+    <div class="button-container">
+      <button id="mod-button" (click)="modificationEvent()">Modify</button>
+      <button class="red" id="delete-button" (click)="deletionEvent()">Delete</button>
+    </div>
   </div>
+
   <div class="card-body">
     <p>{{flashcard.description}}</p>
   </div>
+
   <div class="card-tags">
     {{flashcard.tags}}
   </div>

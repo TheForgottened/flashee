@@ -1,8 +1,10 @@
-<section class="container-card-creation">
-  <button (click)="close()">Close</button>
+<section class="container-card-creation blue">
+  <div class="horizontal-buttons">
+    <h3>Card creation</h3>
+    <button class="red" (click)="close()">Close</button>   
+  </div>
 
   <div class="form-container">
-    <h3>Card creation</h3>
     <div class="form-field">
       <label for="question">Question </label>
       <input id="question" type="text" [formControl]='question'>
@@ -20,7 +22,9 @@
       <input id="tags" type="text" [formControl]='tags'>
     </div>
   </div>
-  
-  <button class="green" (click)="newCard()">Confirm</button>
-  <button (click)="discard()">Discard</button>
+
+  <div class="horizontal-buttons">
+    <button class="green" (click)="newCard()">Confirm</button>
+    <button (click)="discard()">Discard</button>
+  </div>
 </section>

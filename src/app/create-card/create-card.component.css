@@ -4,13 +4,32 @@
     display: flex;
     flex-direction: column;
     width: 80%;
-    height: 15em;
+    min-width: 10em;
+    height: auto;
+    justify-content: space-evenly;
+
+    border: .2em solid rgb(89, 89, 243);
+    border-radius: .2em;
+}
+
+.container-card-creation > * {
+    margin: .5em;
+}
+
+.form-countainer {
+    min-width: 10em;
+    width: auto;
 }
 
 .form-field {
-    width: 20em;
     display: flex;
     flex-direction: column;
+    margin: .5em;
+}
+
+.horizontal-buttons {
+    display: flex;
+    justify-content: space-between;
 }
 
 label {
@@ -18,5 +37,11 @@ label {
 }
 
 input {
+    width: auto;
+}
+
+h3 {
     width: 100%;
+    text-align: center;
+    font-weight: bold;
 }

@@ -30,7 +30,7 @@ export class InicioComponent implements OnInit {
 
   ngOnInit(): void {
     //! RESETS THE DATABASE
-    //db.delete().then (()=>db.open());
+    // db.delete().then (()=>db.open());
   }
 
 }

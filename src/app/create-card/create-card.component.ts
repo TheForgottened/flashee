@@ -25,7 +25,10 @@ export class CreateCardComponent implements OnInit {
   @Input() card?: Flashcard;
   @Output() closeEvent = new EventEmitter<boolean>();
 
-  constructor(public globalData: GlobalDataService) {    
+  constructor(public globalData: GlobalDataService) {
+    this.globalData.cardChanged.subscribe(card => {
+      this.updateValues(card);
+    })
   }
 
   ngOnInit(): void {
@@ -34,7 +37,7 @@ export class CreateCardComponent implements OnInit {
       this.question.setValue(this.card.question)
       this.description.setValue(this.card.description)
       this.answer.setValue(this.card.answer)
-      this.tags.setValue(this.card.tags)
+      this.tags.setValue(this.getTagsString(this.card.tags))
     }
 
     
@@ -102,7 +105,21 @@ export class CreateCardComponent implements OnInit {
     this.question.setValue(card.question)
     this.description.setValue(card.description)
     this.answer.setValue(card.answer)
-    this.tags.setValue(card.tags)
+    this.tags.setValue(this.getTagsString(card.tags))
+  }
+
+  getTagsString(tags:Set<Tag>|undefined):string {
+    let result: string = "";
+
+    for (let tag of tags!) {
+      result+=tag.name;
+      result+=","
+    }
+
+    result = result.slice(0, result.length - 1);
+
+    return result;
+
   }
 
 }

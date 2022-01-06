@@ -28,6 +28,14 @@ button {
   background-color: rgb(160, 229, 160);
 }
 
+.red {
+  background-color: rgba(231, 90, 90, 0.63);
+}
+
+.blue {
+  background-color: rgba(173, 173, 250, 0.452);
+}
+
 /* everywhere else */
 * {
   font-family: Roboto, "Helvetica Neue", sans-serif;

@@ -1,14 +1,13 @@
 'use strict';
 export class Tag {
-    id: number;
+    id?: number;
     name: string;
 
     // Ideas
     // Related tags
     related: Set<Tag>;
 
-    constructor(id:number,name:string){
-        this.id = id;
+    constructor(name:string){
         this.name = name;
         this.related = new Set<Tag>();
     }

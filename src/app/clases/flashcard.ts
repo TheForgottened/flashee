@@ -10,14 +10,14 @@ export class Flashcard {
     question: string;
     description?: string;
     answer: string;
-    deck?: Deck;
+    deck?: number;
     tags?: Set<Tag>;
 
     // Meta
     creationDate: Date;
 
 
-    constructor(question:string, answer:string, description?:string, deck?:Deck) {
+    constructor(question:string, answer:string, description?:string, deck?: number) {
         this.id = Date.now()
         this.question = question;
         this.answer = answer;

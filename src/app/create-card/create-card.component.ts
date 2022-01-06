@@ -34,20 +34,44 @@ export class CreateCardComponent implements OnInit {
       this.card.question = this.question.value;
       this.card.answer = this.answer.value;
       this.card.description = this.description.value;
-      this.card.tags = this.tags.value;
+      //this.card.tags = this.tags.value;
+
+      this.findTags(this.card);
+
       db.cards.put(this.card)
-    } else {      
-      db.cards.add(new Flashcard(this.question.value,this.description.value,this.answer.value,this.tags.value))
+    } else {
+      let card: Flashcard =  new Flashcard(this.question.value,this.answer.value,this.description.value);
+      this.findTags(card);
+
+      db.cards.add(card)
     }
     
     this.discard();
   }
 
-  findTags() {
+  findTags(card: Flashcard) {
     let tagSet = new Set<Tag>();
-    let tagArr = this.tags.value.split(',');
+    let tagArr = this.tags.value.split(',');   
 
+    tagArr.forEach((tag: string) => {
+      tagSet.add(new Tag(tag))
+    });
 
+    card.tags = tagSet;
+    
+    this.updateTagList(tagSet);
+  }
+
+  async updateTagList(tagSet:Set<Tag>) {
+    for (let tag of tagSet) {
+      let n = (await db.tags.where("name").equals(tag.name).toArray())[0]
+      console.log("Encontrado")
+      console.log(n)
+      if (!n) {
+        db.tags.put(tag);
+      }
+      
+    }
   }
 
   discard() {

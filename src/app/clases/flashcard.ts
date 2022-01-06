@@ -4,7 +4,7 @@ import { Deck } from "./deck";
 import { Tag } from "./tag";
 
 export class Flashcard {
-    id?: number;
+    id: number;
 
     // Contetnt
     question: string;
@@ -17,9 +17,8 @@ export class Flashcard {
     creationDate: Date;
 
 
-    // TODO: add atomated id generation
     constructor(question:string, answer:string, description?:string, deck?:Deck) {
-        //this.id = id;
+        this.id = Date.now()
         this.question = question;
         this.answer = answer;
         this.creationDate = new Date();

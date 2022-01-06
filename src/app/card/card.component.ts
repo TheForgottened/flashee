@@ -1,5 +1,7 @@
 import { Component, Input, OnInit, Output,EventEmitter } from '@angular/core';
+import { db } from '../clases/DbManager';
 import { Flashcard } from '../clases/flashcard';
+
 
 @Component({
   selector: 'flashcard',
@@ -22,6 +24,7 @@ export class CardComponent implements OnInit {
   }
 
   deletionEvent(){
+    db.cards.delete(this.flashcard.id);
     this.deleteEvent.emit(this.flashcard);
   }
 }

@@ -43,6 +43,13 @@ export class CreateCardComponent implements OnInit {
     this.discard();
   }
 
+  findTags() {
+    let tagSet = new Set<Tag>();
+    let tagArr = this.tags.value.split(',');
+
+
+  }
+
   discard() {
     this.question.setValue('');
     this.description.setValue('');

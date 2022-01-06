@@ -1,11 +1,11 @@
 <title>{{title}}</title>
 
 
-<create-card (closeEvent)="closeEventHandler($event)" id="card-creation" *ngIf='createCard' [card]='modCard'></create-card>
+<create-card (closeEvent)="closeEventHandler($event)" id="card-creation" *ngIf='globalData.selectedCard || this.createCard' [card]='globalData.selectedCard'></create-card>
 
 <app-inicio (modCardEvent)="onModify($event)" ></app-inicio>
 <div class="vertical-menu">
-  <button class="green" (click)='newCardMenu()'>New card</button>
+  <button class="green" (click)='newCardMenu(true)'>New card</button>
   <button>Import</button>
   <button class="blue" (click)='exportDeck()'>Export</button>
   <button>Stats</button>

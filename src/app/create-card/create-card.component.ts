@@ -1,32 +1,43 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { Observable } from 'rxjs';
 import { db } from '../clases/DbManager';
 import { Flashcard } from '../clases/flashcard';
 import { Tag } from '../clases/tag';
+import { GlobalDataService } from '../global-data.service';
 
 @Component({
   selector: 'create-card',
   templateUrl: './create-card.component.html',
-  styleUrls: ['./create-card.component.css']
+  styleUrls: ['./create-card.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
+
 export class CreateCardComponent implements OnInit {
   question = new FormControl('');
   answer = new FormControl('');
   tags = new FormControl('');
   description = new FormControl('');
   
+  //private globalDataService: any;
+  public cardObs?: Observable<Flashcard>;
 
   @Input() card?: Flashcard;
   @Output() closeEvent = new EventEmitter<boolean>();
 
+  constructor(public globalData: GlobalDataService) {    
+  }
 
   ngOnInit(): void {
+    console.log(this.globalData.selectedCard)
     if (this.card) {
       this.question.setValue(this.card.question)
       this.description.setValue(this.card.description)
       this.answer.setValue(this.card.answer)
       this.tags.setValue(this.card.tags)
     }
+
+    
   }
 
   newCard() {
@@ -79,10 +90,19 @@ export class CreateCardComponent implements OnInit {
     this.description.setValue('');
     this.answer.setValue('');
     this.tags.setValue('');
+    console.log(this.globalData.getCardQuestion());
   }
 
   close() {
+    this.globalData.selectedCard = undefined;
     this.closeEvent.emit(true);
+  }
+
+  updateValues(card:Flashcard) {
+    this.question.setValue(card.question)
+    this.description.setValue(card.description)
+    this.answer.setValue(card.answer)
+    this.tags.setValue(card.tags)
   }
 
 }

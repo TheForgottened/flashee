@@ -1,6 +1,8 @@
 import { Component, Input, OnInit, Output,EventEmitter } from '@angular/core';
+import { Observable } from 'rxjs';
 import { db } from '../clases/DbManager';
 import { Flashcard } from '../clases/flashcard';
+import { GlobalDataService } from '../global-data.service';
 
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
@@ -18,13 +20,20 @@ export class CardComponent implements OnInit {
 
   @Output() modifyEvent= new EventEmitter<Flashcard>();
   @Output() deleteEvent = new EventEmitter<Flashcard>();
-  
+
+   
+
+  constructor(public globalData: GlobalDataService) {
+
+  }
 
   ngOnInit(): void {
   }
 
   modificationEvent() {
-    this.modifyEvent.emit(this.flashcard);
+    console.log("Emitiendo tarjeta");
+    this.globalData.setCard(this.flashcard);
+    //this.modifyEvent.emit(this.flashcard);
   }
 
   deletionEvent(){

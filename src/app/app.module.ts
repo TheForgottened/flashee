@@ -6,8 +6,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { InicioComponent } from './inicio/inicio.component';
 import { CardComponent } from './card/card.component';
-import { BrowserComponent } from './browser/browser.component';
-import { CardFormComponent } from './card-form/card-form.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 import { TagListComponent } from './tag-list/tag-list.component';
 import { CreateCardComponent } from './create-card/create-card.component';
@@ -16,18 +14,20 @@ import { HorizontalMenuComponent } from './horizontal-menu/horizontal-menu.compo
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { JitCompiler } from '@angular/compiler';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { SearchCardComponent } from './search-card/search-card.component';
+import { GlobalDataService } from './global-data.service';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     InicioComponent,
     CardComponent,
-    BrowserComponent,
-    CardFormComponent,
     StatisticsComponent,
     TagListComponent,
     CreateCardComponent,
-    HorizontalMenuComponent
+    HorizontalMenuComponent,
+    SearchCardComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +37,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     ReactiveFormsModule,
     FontAwesomeModule
   ],
-  providers: [],
+  providers: [GlobalDataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

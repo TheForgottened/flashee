@@ -6,7 +6,7 @@
 
   <div class="form-container">
     <div class="form-field">
-      <label for="question">Question </label>
+      <label for="question">Question {{globalData.getCardQuestion()}}</label>
       <input id="question" type="text" [formControl]='question'>
     </div>
     <div class="form-field">

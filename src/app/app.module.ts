@@ -16,6 +16,8 @@ import { HorizontalMenuComponent } from './horizontal-menu/horizontal-menu.compo
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { JitCompiler } from '@angular/compiler';
 import { SearchCardComponent } from './search-card/search-card.component';
+import { GlobalDataService } from './global-data.service';
+
 
 @NgModule({
   declarations: [
@@ -37,7 +39,7 @@ import { SearchCardComponent } from './search-card/search-card.component';
     BrowserAnimationsModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [GlobalDataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

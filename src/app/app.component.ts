@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
 import { db } from './clases/DbManager';
 import { Flashcard } from './clases/flashcard';
+import { GlobalDataService } from './global-data.service';
 const indexExportImport = require('indexeddb-export-import')
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  providers: [GlobalDataService]
 })
 
 export class AppComponent {
@@ -14,10 +16,15 @@ export class AppComponent {
   createCard = false;
   searchCard = false;
   modCard?: Flashcard;
+  
 
-  newCardMenu():void {
+  constructor(public globalData: GlobalDataService){
+   
+  }
+  
+  newCardMenu(open:boolean):void {
     this.modCard = undefined;
-    (this.createCard == true)?this.createCard=false:this.createCard=true;    
+    this.createCard = open;
   }
 
   searchCardMenu(): void {
@@ -63,12 +70,11 @@ export class AppComponent {
   }
 
   closeEventHandler(event: any) {
-    this.newCardMenu();
+    this.newCardMenu(false);
   }
 
   onModify(card: Flashcard) {
-    console.log(card);
-    this.modCard = card;
+    //this.modCard = card;
     this.createCard = false;
     this.createCard = true;
   }

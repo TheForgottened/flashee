@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { db } from './clases/DbManager';
 import { Flashcard } from './clases/flashcard';
+
 const indexExportImport = require('indexeddb-export-import')
 
 @Component({
@@ -11,6 +12,7 @@ const indexExportImport = require('indexeddb-export-import')
 
 export class AppComponent {
   title = 'flashee';
+
   createCard = false;
   modCard?: Flashcard;
 

@@ -2,6 +2,8 @@ import { Component, Input, OnInit, Output,EventEmitter } from '@angular/core';
 import { db } from '../clases/DbManager';
 import { Flashcard } from '../clases/flashcard';
 
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'flashcard',
@@ -9,6 +11,8 @@ import { Flashcard } from '../clases/flashcard';
   styleUrls: ['./card.component.css']
 })
 export class CardComponent implements OnInit {
+  faTrash = faTrash;
+  faEdit = faEdit;
 
   @Input() flashcard!: Flashcard;
 

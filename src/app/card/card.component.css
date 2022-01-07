@@ -6,8 +6,10 @@
     width: 20em;
     height: 10em;
 
-    background-color: white;
-    padding: .3em;
+    background-color: var(--backgroundLight);
+    border-radius: 1em;
+    border: 0.1em solid var(--foreground);
+    padding: 1em;
 }
 
 .card-container > * {
@@ -20,12 +22,34 @@
     justify-content: space-between;
 }
 
-.button-container > button {
- height: 2em;
- width: 3em;
- padding: 0;
+.button-container > fa-icon {
+    padding: 0;
+    margin: 0.2em;
 }
 
-.card-tags {
-    align-self: flex-end;
+#mod-button {
+    color: var(--yellow) !important;
+}
+
+#del-button {
+    color: var(--red) !important;
+}
+
+.card-title {
+    font-weight: bold;
+}
+
+.card-body {
+    text-align: center;
+}
+
+.card-tags > button {
+    border: .2em double var(--backgroundLighter);
+    text-align: center;
+    border-radius: 1em;
+    background-color: var(--purple);
+    height: fit-content !important;
+    width: fit-content !important;
+
+    float: right;
 }

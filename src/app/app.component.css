@@ -7,3 +7,12 @@
 #card-creation {
     margin: auto 10em;
 }
+
+button {
+    min-width: 5em;
+    height: 3.5em;
+    padding: 1em;
+    margin: .5em;
+    border: .2em double var(--backgroundLighter);
+    border-radius: .3em;
+}

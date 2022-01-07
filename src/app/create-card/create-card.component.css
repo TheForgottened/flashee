@@ -8,8 +8,10 @@
     height: auto;
     justify-content: space-evenly;
 
-    border: .2em solid rgb(89, 89, 243);
-    border-radius: .2em;
+    background-color: var(--backgroundLight);
+    border-radius: 1em;
+    border: 0.1em solid var(--foreground);
+    padding: 1em;
 }
 
 .container-card-creation > * {

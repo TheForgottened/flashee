@@ -15,6 +15,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HorizontalMenuComponent } from './horizontal-menu/horizontal-menu.component';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { JitCompiler } from '@angular/compiler';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { JitCompiler } from '@angular/compiler';
     AppRoutingModule,
     FormsModule,
     BrowserAnimationsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

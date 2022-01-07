@@ -1,50 +1,75 @@
 /* You can add global styles to this file, and also import other style files */
 /* Application-wide Styles */
+:root {
+  --background: #282a36;
+  --backgroundLight: #343746;
+  --backgroundLighter: #424450;
+  --backgroundDark: #21222C;
+  --backgroundDarker: #191A21;
+  --currentLine: #44475a;
+  --foreground: #f8f8f2;
+  --comment: #6272a4;
+
+  /* Colors */
+  --cyan: #8be9fd;
+  --green: #50fa7b;
+  --orange: #ffb86c;
+  --pink: #ff79c6;
+  --purple: #bd93f9;
+  --red: #ff5555;
+  --yellow: #f1fa8c;
+}
+
 h1 {
-  color: #369;
+  color: var(--pink);
   font-size: 250%;
 }
+
 h2, h3 {
-  color: #444;
+  color: var(--foreground);
   font-weight: lighter;
 }
-body {
-  margin: 2em;
-}
+
 body, input[type="text"], button {
   color: #333;
 }
 
+/*
 button {
   min-width: 5em;
   height: 3.5em;
   padding: 1em;
   margin: .5em;
-  border: .2em double rgba(128, 128, 128, 0.384);
+  border: .2em double var(--backgroundLighter);
   border-radius: .3em;
 }
+*/
 
 .green {
-  background-color: rgb(160, 229, 160);
+  background-color: var(--green);
 }
 
 .red {
-  background-color: rgba(231, 90, 90, 0.63);
+  background-color: var(--red);
 }
 
 .blue {
-  background-color: rgba(173, 173, 250, 0.452);
+  background-color: var(--purple);
 }
 
 .greenyellow {
-  background-color: greenyellow;
+  background-color: var(--yellow);
 }
 
-/* everywhere else */
-* {
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+* { font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+html, body { 
+  background-color: var(--background);
+  color: var(--foreground);
+
   margin: 0;
-  padding: 0;
+  height: 100vh; 
+  overflow: hidden;
 }
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+body { margin: 2em; }

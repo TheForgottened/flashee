@@ -6,7 +6,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { InicioComponent } from './inicio/inicio.component';
 import { CardComponent } from './card/card.component';
-import { BrowserComponent } from './browser/browser.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 import { TagListComponent } from './tag-list/tag-list.component';
 import { CreateCardComponent } from './create-card/create-card.component';
@@ -23,7 +22,6 @@ import { GlobalDataService } from './global-data.service';
     AppComponent,
     InicioComponent,
     CardComponent,
-    BrowserComponent,
     StatisticsComponent,
     TagListComponent,
     CreateCardComponent,

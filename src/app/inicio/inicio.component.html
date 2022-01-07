@@ -1,7 +1,6 @@
 <h2>My cards</h2>
-<div>Selected card: {{globalData.getCardQuestion()}}</div>
 <div class="cards-container">
-  <flashcard *ngFor="let card of cards | async;" [flashcard]="card"
+  <flashcard *ngFor="let card of cards" [flashcard]="card"
     (modifyEvent)="onModify($event)">
   </flashcard>
 

@@ -1,12 +1,14 @@
 <title>{{title}}</title>
 
+<search-card (closeEvent)="closeEventHandler($event)" id="card-search" ></search-card>
+
 <create-card (closeEvent)="closeEventHandler($event)" id="card-creation" *ngIf='globalData.selectedCard || this.createCard' [card]='globalData.selectedCard'></create-card>
-<search-card (closeEvent)="closeEventHandler($event)" id="card-search" *ngIf='searchCard'></search-card> 
+ 
 <app-inicio (modCardEvent)="onModify($event)" ></app-inicio>
 <div class="vertical-menu">
 
   <button class="green" (click)='newCardMenu(true)'>New card</button>
-  <button class="blue" (click)='searchCardMenu()'>Search card</button>
+  
 
   <input hidden type="file" #uploader (change)="importDeck($event)"/>
   <button class="greenyellow" (click)="uploader.click()">

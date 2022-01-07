@@ -28,10 +28,6 @@ export class AppComponent {
     this.createCard = open;
   }
 
-  searchCardMenu(): void {
-    (this.searchCard == true) ? this.searchCard = false : this.searchCard = true;
-  }
-
   importDeck($event: any): void {
     const idbDatabase = db.backendDB()
     var selectedFile = $event.target.files[0];

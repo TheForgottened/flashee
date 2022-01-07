@@ -15,6 +15,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HorizontalMenuComponent } from './horizontal-menu/horizontal-menu.component';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { JitCompiler } from '@angular/compiler';
+import { SearchCardComponent } from './search-card/search-card.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { JitCompiler } from '@angular/compiler';
     StatisticsComponent,
     TagListComponent,
     CreateCardComponent,
-    HorizontalMenuComponent
+    HorizontalMenuComponent,
+    SearchCardComponent
   ],
   imports: [
     BrowserModule,

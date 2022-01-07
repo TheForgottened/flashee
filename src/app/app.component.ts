@@ -12,11 +12,16 @@ const indexExportImport = require('indexeddb-export-import')
 export class AppComponent {
   title = 'flashee';
   createCard = false;
+  searchCard = false;
   modCard?: Flashcard;
 
   newCardMenu():void {
     this.modCard = undefined;
     (this.createCard == true)?this.createCard=false:this.createCard=true;    
+  }
+
+  searchCardMenu(): void {
+    (this.searchCard == true) ? this.searchCard = false : this.searchCard = true;
   }
 
   importDeck($event: any): void {

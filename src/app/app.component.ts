@@ -24,6 +24,7 @@ export class AppComponent {
   
   newCardMenu(open:boolean):void {
     this.modCard = undefined;
+    this.globalData.selectedCard = undefined;
     this.createCard = open;
   }
 

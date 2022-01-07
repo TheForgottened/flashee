@@ -6,3 +6,9 @@
   </flashcard>
 
 </div>
+<div>Selected deck: {{globalData.getDeckName()}}</div>
+<div class="cards-container">
+  
+  <deck *ngFor="let deck of decks | async;" [deck]="deck"></deck>
+
+</div>

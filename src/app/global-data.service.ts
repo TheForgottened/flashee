@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { liveQuery, Observable } from 'dexie';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { db } from './clases/DbManager';
+import { Deck } from './clases/deck';
 import { Flashcard } from './clases/flashcard';
 
 
@@ -11,7 +12,8 @@ import { Flashcard } from './clases/flashcard';
 export class GlobalDataService {
 
   public selectedCard?: Flashcard = undefined;
-
+  public selectedDeck?: Deck = undefined;
+  public viewDeckCards?: boolean = false;
   public cards: Observable<Flashcard[]> = this.getCards();
   public filterCards: Observable<Flashcard[]> = this.cards;
   
@@ -21,6 +23,18 @@ export class GlobalDataService {
   setCard(card?: Flashcard) {
     console.log("Card cambiada",card);
     this.selectedCard = card;
+  }
+
+  setDeck(deck?: Deck) {
+    this.selectedDeck = deck;
+  }
+
+  getDeckName(): string|undefined {
+    return this.selectedDeck?.name;
+  }
+
+  setViewDeckCards(view :boolean) {
+    this.viewDeckCards = view;
   }
 
   getCardQuestion(): string|undefined {

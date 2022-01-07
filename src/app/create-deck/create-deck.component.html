@@ -1,0 +1,18 @@
+<section class="container-card-creation blue">
+    <div class="horizontal-buttons">
+      <h3>Deck creation</h3>
+      <!--<button class="red" (click)="close()">Close</button>   -->
+    </div>
+  
+    <div class="form-container">
+      <div class="form-field">
+        <label for="question">Deck name: </label>
+        <input id="question" type="text" [formControl]='name'>
+      </div>
+    </div>
+    <div class="horizontal-buttons">
+        <button class="green" (click)="newDeck()">Confirm</button>
+        <!--<button (click)="discard()">Discard</button>-->
+    </div>
+</section>
+  

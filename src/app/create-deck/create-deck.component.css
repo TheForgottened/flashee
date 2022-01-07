@@ -1,13 +1,3 @@
-.vertical-menu {
-    display: flex;
-    flex-direction: column;
-    width: 10em;
-}
-
-#card-creation {
-    margin: auto 10em;
-}
-
 .cards-container {
     padding: 1em;
     background-color: coral;

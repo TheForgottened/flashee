@@ -1,0 +1,14 @@
+<section class="deck-container" (click)="onSelect()">
+
+    <div class="deck-header" >
+      <span class="card-title">Name: {{deck.name}}</span>
+      <div class="button-container">
+        <button id="mod-button" (click)="addCard()">Add card</button>
+        <button id="mod-button" (click)="viewCards()">View cards</button>
+      </div>
+    </div>
+  
+    <div class="deck-body">
+      <p>Number of cards: {{deck.cards.size}}</p>
+    </div>
+  </section>

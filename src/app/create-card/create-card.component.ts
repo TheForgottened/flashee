@@ -31,13 +31,22 @@ export class CreateCardComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.globalData.selectedCard)
     if (this.card) {
+      var cardTags: string = "";
       this.question.setValue(this.card.question)
       this.description.setValue(this.card.description)
       this.answer.setValue(this.card.answer)
-      this.tags.setValue(this.card.tags)
-    }
 
-    
+      var index = 0;
+      this.card.tags?.forEach((tag) => {
+        cardTags += tag.name;
+        if (index != (this.card!.tags!.size - 1)) {
+          cardTags += ", "
+        }
+        index++;
+      });
+
+      this.tags.setValue(cardTags)
+    }
   }
 
   newCard() {

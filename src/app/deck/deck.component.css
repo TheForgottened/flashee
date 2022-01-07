@@ -1,0 +1,27 @@
+.deck-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    width: 20em;
+    height: 10em;
+
+    background-color: white;
+    padding: .3em;
+}
+
+.deck-container > * {
+    width: 100%;
+}
+
+.deck-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.button-container > button {
+ height: 2em;
+ width: 3em;
+ padding: 0;
+}

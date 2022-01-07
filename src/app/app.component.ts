@@ -15,6 +15,7 @@ export class AppComponent {
   title = 'flashee';
   createCard = false;
   searchCard = false;
+  createDeck = false;
   modCard?: Flashcard;
   
 
@@ -29,6 +30,10 @@ export class AppComponent {
 
   searchCardMenu(): void {
     (this.searchCard == true) ? this.searchCard = false : this.searchCard = true;
+  }
+
+  createDeckMenu(): void {
+    (this.createDeck == true) ? this.createDeck = false : this.createDeck = true;
   }
 
   importDeck($event: any): void {

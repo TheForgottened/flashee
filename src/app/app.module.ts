@@ -17,6 +17,8 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { JitCompiler } from '@angular/compiler';
 import { SearchCardComponent } from './search-card/search-card.component';
 import { GlobalDataService } from './global-data.service';
+import { CreateDeckComponent } from './create-deck/create-deck.component';
+import { DeckComponent } from './deck/deck.component';
 
 
 @NgModule({
@@ -30,7 +32,9 @@ import { GlobalDataService } from './global-data.service';
     TagListComponent,
     CreateCardComponent,
     HorizontalMenuComponent,
-    SearchCardComponent
+    SearchCardComponent,
+    CreateDeckComponent,
+    DeckComponent
   ],
   imports: [
     BrowserModule,

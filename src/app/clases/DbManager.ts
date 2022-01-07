@@ -16,8 +16,8 @@ export class DbManager extends Dexie{
 
     constructor() { 
         super('flashee');
-        this.version(2).stores({
-            decks: '++id',
+        this.version(4).stores({
+            decks: '++id, name',
             cards: '++id, question',
             tags: '++id, name'
         })
@@ -26,10 +26,10 @@ export class DbManager extends Dexie{
     }
 
     async populate() {
-        const deck = await db.decks.add(new Deck());
-
+        //const deck = await db.decks.add(new Deck("test"));
+        //this.decks.each(deck => console.log("deck id: " + deck.id + " name: " + deck.name));
         await db.cards.bulkAdd([
-            new Flashcard("Card1?","Yes","This is card 1", deck)
+            new Flashcard("Card1?","Yes","This is card 1")
         ])
     }
 }

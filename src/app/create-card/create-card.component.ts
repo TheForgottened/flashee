@@ -51,29 +51,45 @@ export class CreateCardComponent implements OnInit {
       //this.card.tags = this.tags.value;
 
       this.findTags(this.card);
+      if (!this.findTags(this.card)) {
+        return;
+      }
 
       db.cards.put(this.card)
     } else {
       let card: Flashcard =  new Flashcard(this.question.value,this.answer.value,this.description.value);
-      this.findTags(card);
+      if (!this.findTags(card)) {
+        return;
+      }
 
-      db.cards.add(card)
+      db.cards.add(card);
     }
-    
+
+    this.globalData.searchCards("");
     this.discard();
   }
 
-  findTags(card: Flashcard) {
+  findTags(card: Flashcard): number {
     let tagSet = new Set<Tag>();
-    let tagArr = this.tags.value.split(',');   
+    let tagArr = this.tags.value.split(','); 
 
     tagArr.forEach((tag: string) => {
       tagSet.add(new Tag(tag))
     });
 
+    for (let i = 0; i < tagArr.length; i++) {
+      for (let j = i + 1; j < tagArr.length; j++) {
+        if (tagArr[i] == tagArr[j]) {
+          alert("You can't use the same tag twice.");
+          return 0;
+        }
+      }
+    }
+
     card.tags = tagSet;
     
     this.updateTagList(tagSet);
+    return 1;
   }
 
   async updateTagList(tagSet:Set<Tag>) {

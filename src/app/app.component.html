@@ -1,6 +1,9 @@
 <title>{{title}}</title>
 
+<search-card (closeEvent)="closeEventHandler($event)" id="card-search" ></search-card>
+
 <create-card (closeEvent)="closeEventHandler($event)" id="card-creation" *ngIf='globalData.selectedCard || this.createCard' [card]='globalData.selectedCard'></create-card>
+
 <search-card (closeEvent)="closeEventHandler($event)" id="card-search" *ngIf='searchCard'></search-card> 
 <div class="grid-container">
   <div class="header">

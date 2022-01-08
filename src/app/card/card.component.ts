@@ -33,6 +33,7 @@ export class CardComponent implements OnInit {
   modificationEvent() {
     console.log("Emitiendo tarjeta");
     this.globalData.setCard(this.flashcard);
+    this.globalData.searchCards('');
     //this.modifyEvent.emit(this.flashcard);
   }
 
@@ -40,5 +41,6 @@ export class CardComponent implements OnInit {
     //TODO: add confirmation
     db.cards.delete(this.flashcard.id);
     this.deleteEvent.emit(this.flashcard);
+    this.globalData.searchCards('');
   }
 }

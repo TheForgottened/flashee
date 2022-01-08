@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { liveQuery } from 'dexie';
 import { db } from './clases/DbManager';
 import { Flashcard } from './clases/flashcard';
 
@@ -13,17 +14,20 @@ const indexExportImport = require('indexeddb-export-import')
   providers: [GlobalDataService]
 })
 
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'Flashee';
 
   createCard = false;
   searchCard = false;
   overlayDiv = false;
   modCard?: Flashcard;
-  
 
   constructor(public globalData: GlobalDataService){
    
+  }
+
+  ngOnInit(): void {
+    this.globalData.getTags();
   }
   
   newCardMenu(open:boolean):void {

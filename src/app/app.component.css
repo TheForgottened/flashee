@@ -53,6 +53,9 @@
     grid-row-start: 2;
     grid-row-end: 2;
 
+    background-color: none !important;
+
+    padding: 0em !important;
     overflow: auto;
 }
 
@@ -82,13 +85,25 @@
     margin: auto 10em;
 }
 
-button {
+.vertical-menu-right > button {
     min-width: 5em;
     height: 3.5em;
     padding: 1em;
     margin: .5em;
     border: .2em double var(--backgroundLighter);
     border-radius: 1em;
+}
+
+.vertical-menu-left > button {
+    border: .2em double var(--background);
+    text-align: center;
+    border-radius: 1em;
+    background-color: var(--purple);
+    height: fit-content !important;
+    width: fit-content !important;
+
+    float: right;
+    margin: 0.2em;
 }
 
 p { margin: 0em; }

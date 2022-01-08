@@ -40,5 +40,6 @@ export class CardComponent implements OnInit {
     db.cards.delete(this.flashcard.id);
     this.deleteEvent.emit(this.flashcard);
     this.globalData.searchCards("");
+    this.globalData.getTags();
   }
 }

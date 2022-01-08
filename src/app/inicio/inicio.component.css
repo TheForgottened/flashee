@@ -1,16 +1,14 @@
 .cards-container {
     padding: 1em;
-    background-color: var(--backgroundLighter);
+    background-color: rgba(0, 0, 0, 0);
     display: flex;
     gap: 1em;
     flex-wrap: wrap;
     align-content: center;
     justify-content: flex-start;
     flex-direction: row;
-    border-radius: 1em;
-    border: 0.1em solid var(--foreground);
-    max-height: 100%;
-    max-width: 100%;
+
+    overflow: auto;
 }
 
 .card {

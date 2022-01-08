@@ -6,6 +6,7 @@ import { EventEmitter } from 'stream';
 import { brotliDecompress } from 'zlib';
 import { db } from './clases/DbManager';
 import { Flashcard } from './clases/flashcard';
+import { Tag } from './clases/tag';
 
 
 @Injectable({
@@ -13,6 +14,7 @@ import { Flashcard } from './clases/flashcard';
 })
 export class GlobalDataService {
 
+  public tags: Tag[] = [];
   public selectedCard?: Flashcard = undefined;
   public cardChanged: Subject<Flashcard> = new Subject<Flashcard>();
 
@@ -40,6 +42,11 @@ export class GlobalDataService {
 
   getCards(): Observable<Flashcard[]> {
     return liveQuery(() => db.cards.toArray());
+  }
+
+  getTags() { 
+    this.tags = [];
+    db.tags.each(tag => { this.tags.push(tag); }) 
   }
 
   searchCards(filter: string) {

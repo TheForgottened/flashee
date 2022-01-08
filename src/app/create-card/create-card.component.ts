@@ -106,6 +106,8 @@ export class CreateCardComponent implements OnInit {
       }
       
     }
+
+    this.globalData.getTags();
   }
 
   discard() {
@@ -126,6 +128,7 @@ export class CreateCardComponent implements OnInit {
     this.description.setValue(card.description)
     this.answer.setValue(card.answer)
     this.tags.setValue(this.getTagsString(card.tags))
+    this.globalData.getTags();
   }
 
   getTagsString(tags:Set<Tag>|undefined):string {

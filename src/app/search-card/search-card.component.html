@@ -1,19 +1,12 @@
-<section class="card-search-container green">
-    <div>
-        <h1>Flashee</h1>
-    </div>
-    <div>
-        <input id="question" type="text" [formControl]='searchString' (ngModelChange)='searchCard()'>
-        Search by:
+<section class="card-search-container">
+    <div id="container-div">
+        <input id="question" type="text" placeholder="Search for cards" [formControl]='searchString' (ngModelChange)='searchCard()'>
+        <span>Search by:</span>
         <select [(ngModel)]="selectedOption">
             <option *ngFor="let o of options">
                 {{o.name}}
              </option>
         </select>
         <!--<button class="red" (click)="searchCard()">Search</button>-->
-    </div>
-
-    <div class="cards-container" *ngIf='found'>
-        <flashcard *ngFor="let card of foundCards;" [flashcard]="card"></flashcard>
     </div>
 </section>

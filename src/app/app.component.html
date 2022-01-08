@@ -1,18 +1,17 @@
 <title>{{title}}</title>
 
-<div class="overlay" *ngIf='overlayDiv'>
+<div class="overlay" *ngIf='overlayDiv || globalData.selectedCard || this.createCard'>
   <create-card (closeEvent)="closeEventHandler($event)" id="card-creation" *ngIf='globalData.selectedCard || this.createCard' [card]='globalData.selectedCard'></create-card>
-  <search-card (closeEvent)="closeEventHandler($event)" id="card-search" *ngIf='searchCard'></search-card> 
 </div>
 
 <div class="grid-container">
   <div class="header">
     <p style="color: var(--pink); font-weight: bold;">Flashee</p>
-    <search-card (closeEvent)="closeEventHandler($event)" id="card-search" *ngIf='searchCard'></search-card> 
+    <search-card (closeEvent)="closeEventHandler($event)" id="card-search" style="width: 50%;"></search-card> 
   </div>
 
   <div class="vertical-menu-left">
-    <p>tags must show here dfasdfasdfasdfas</p>
+    <button *ngFor="let tag of globalData.tags">{{tag.name}}</button>
   </div>
 
   <div class="main-screen">

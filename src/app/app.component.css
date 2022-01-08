@@ -1,7 +1,64 @@
-.vertical-menu {
+.grid-container {
+    width: 100%;
+    height: 100%;
+
+    display: grid;
+    justify-items: stretch;
+
+    grid-template-columns: 1fr 8fr 1fr;
+    grid-template-rows: 1fr 16fr;
+    grid-column-gap: 2em;
+    grid-row-gap: 2em;
+}
+
+.header {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 1;
+    grid-row-end: 1;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.vertical-menu-left {
+    grid-column-start: 1;
+    grid-column-end: 1;
+    grid-row-start: 2;
+    grid-row-end: 2;
+
+    overflow: auto;
+}
+
+.main-screen {
+    grid-column-start: 2;
+    grid-column-end: 2;
+    grid-row-start: 2;
+    grid-row-end: 2;
+
+    overflow: auto;
+}
+
+.vertical-menu-right {
+    grid-column-start: 3;
+    grid-column-end: 3;
+    grid-row-start: 2;
+    grid-row-end: 2;
+
+    overflow: auto;
+
     display: flex;
     flex-direction: column;
-    width: 10em;
+}
+
+.grid-container div {
+    box-sizing: border-box;
+    padding: 1em;
+
+    background-color: var(--backgroundLighter);
+    border-radius: 1em;
+    border: 0.1em solid var(--foreground);
 }
 
 #card-creation {
@@ -15,4 +72,96 @@ button {
     margin: .5em;
     border: .2em double var(--backgroundLighter);
     border-radius: .3em;
+}
+
+p { margin: 0em; }
+
+input {
+    background-color: var(--backgroundLight);
+    color: var(--foreground);
+    width: 50%;
+
+    resize: none;
+    border-radius: 5px;
+
+    outline: none;
+}
+
+/* scrollbar for .main-screen */
+
+/* width */
+.main-screen::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    padding: 2px;
+}
+  
+/* Track */
+.main-screen::-webkit-scrollbar-track {
+    background: var(--background);
+}
+
+/* Handle */
+.main-screen::-webkit-scrollbar-thumb {
+    background: var(--backgroundLight);
+    border-radius: 5px;
+    border: 1px solid #3A3D41;
+}
+  
+/* Handle on hover */
+.main-screen::-webkit-scrollbar-thumb:hover {
+    background: var(--backgroundLighter);
+    cursor: pointer !important;
+}
+
+/* scrollbar for .vertical-menu-left */
+
+/* width */
+.vertical-menu-left::-webkit-scrollbar {
+    width: 8px;
+    padding: 2px;
+}
+  
+/* Track */
+.vertical-menu-left::-webkit-scrollbar-track {
+    background: var(--background);
+}
+
+/* Handle */
+.vertical-menu-left::-webkit-scrollbar-thumb {
+    background: var(--backgroundLight);
+    border-radius: 5px;
+    border: 1px solid #3A3D41;
+}
+  
+/* Handle on hover */
+.vertical-menu-left::-webkit-scrollbar-thumb:hover {
+    background: var(--backgroundLighter);
+    cursor: pointer !important;
+}
+
+/* scrollbar for .vertical-menu-right */
+
+/* width */
+.vertical-menu-right::-webkit-scrollbar {
+    width: 8px;
+    padding: 2px;
+}
+  
+/* Track */
+.vertical-menu-right::-webkit-scrollbar-track {
+    background: var(--background);
+}
+
+/* Handle */
+.vertical-menu-right::-webkit-scrollbar-thumb {
+    background: var(--backgroundLight);
+    border-radius: 5px;
+    border: 1px solid #3A3D41;
+}
+  
+/* Handle on hover */
+.vertical-menu-left::-webkit-scrollbar-thumb:hover {
+    background: var(--backgroundLighter);
+    cursor: pointer !important;
 }

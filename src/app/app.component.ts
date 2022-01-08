@@ -14,7 +14,7 @@ const indexExportImport = require('indexeddb-export-import')
 })
 
 export class AppComponent {
-  title = 'flashee';
+  title = 'Flashee';
 
   createCard = false;
   searchCard = false;

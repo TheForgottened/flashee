@@ -68,8 +68,10 @@ html, body {
   color: var(--foreground);
 
   margin: 0;
-  height: 100vh; 
-  overflow: hidden;
+  height: 100%; 
 }
 
-body { margin: 2em; }
+body {
+  box-sizing: border-box;
+  padding: 2em;
+}

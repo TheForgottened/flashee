@@ -13,6 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HorizontalMenuComponent } from './horizontal-menu/horizontal-menu.component';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { JitCompiler } from '@angular/compiler';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SearchCardComponent } from './search-card/search-card.component';
 import { GlobalDataService } from './global-data.service';
 
@@ -33,7 +34,8 @@ import { GlobalDataService } from './global-data.service';
     AppRoutingModule,
     FormsModule,
     BrowserAnimationsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FontAwesomeModule
   ],
   providers: [GlobalDataService],
   bootstrap: [AppComponent]

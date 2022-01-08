@@ -49,21 +49,23 @@ export class GlobalDataService {
     db.tags.each(tag => { this.tags.push(tag); }) 
   }
 
-  searchCards(filter: string) {
+  searchCards(filter: string, searchString: string) {
 
     this.filterCards = [];
     this.filterCardsObs.next([]);
 
     db.cards.each(card => {
-      console.log(card.question.toLowerCase(), filter, card.question.toLowerCase().includes(filter.toLowerCase()));
-      if (
-        card.question.toLowerCase().includes(filter.toLowerCase()) //||
-        //card.answer.toLowerCase().includes(filter.toLowerCase()) ||
-        //card.description!.toLowerCase().includes(filter.toLowerCase())          
-      ) {
-        //console.log("pushing: ",card)
-        this.filterCards.push(card);
-      }
+      
+      if (searchString.length == 0) { this.filterCards.push(card) }
+
+      else if (filter.match("Question")) {
+        if (card.question.toLowerCase().includes(searchString.toLowerCase())) 
+          this.filterCards.push(card);
+      } 
+      // else if (filter.match("Tag")) {
+      //   if (card.tags.toLowerCase().includes(searchString.toLowerCase())) 
+      //     this.filterCards.push(card);
+      // }
     })
 
     //console.log("Filter cards",this.filterCards);

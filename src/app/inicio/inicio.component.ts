@@ -37,5 +37,6 @@ export class InicioComponent implements OnInit {
 
   ngOnInit(): void {
     //db.delete().then (()=>db.open());
+    //db.tags.clear();
   }
 }

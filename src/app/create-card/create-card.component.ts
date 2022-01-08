@@ -69,7 +69,7 @@ export class CreateCardComponent implements OnInit {
       db.cards.add(card);
     }
 
-    this.globalData.searchCards("");
+    this.globalData.searchCards("", "");
     this.discard();
   }
 

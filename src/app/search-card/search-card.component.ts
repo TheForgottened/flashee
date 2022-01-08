@@ -33,7 +33,7 @@ export class SearchCardComponent implements OnInit {
   searchCard() {
     //this.foundCards.clear();
     //if (this.searchString.value == "") return;
-    this.globalData.searchCards(this.searchString.value);
+    this.globalData.searchCards(this.selectedOption, this.searchString.value);
     console.log("Searched",this.globalData.filterCards);
   }
 

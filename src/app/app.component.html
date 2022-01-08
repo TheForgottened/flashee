@@ -11,7 +11,7 @@
   </div>
 
   <div class="vertical-menu-left">
-    <button *ngFor="let tag of globalData.tags">{{tag.name}}</button>
+    <tag *ngFor="let tag of globalData.tags" [tag]="tag">{{tag.name}}</tag>
   </div>
 
   <div class="main-screen">

@@ -1,4 +1,3 @@
-<div>Selected card: {{globalData.getCardQuestion()}}</div>
 <div class="cards-container">
   <flashcard *ngFor="let card of cards" [flashcard]="card"
     (modifyEvent)="onModify($event)">

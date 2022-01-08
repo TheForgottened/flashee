@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { db } from './clases/DbManager';
 import { Flashcard } from './clases/flashcard';
+
 import { GlobalDataService } from './global-data.service';
+
 const indexExportImport = require('indexeddb-export-import')
 
 @Component({
@@ -12,9 +14,11 @@ const indexExportImport = require('indexeddb-export-import')
 })
 
 export class AppComponent {
-  title = 'flashee';
+  title = 'Flashee';
+
   createCard = false;
   searchCard = false;
+  overlayDiv = false;
   modCard?: Flashcard;
   
 
@@ -26,6 +30,7 @@ export class AppComponent {
     this.modCard = undefined;
     this.globalData.selectedCard = undefined;
     this.createCard = open;
+    this.overlayDiv = open;
   }
 
   importDeck($event: any): void {

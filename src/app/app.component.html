@@ -1,15 +1,14 @@
 <title>{{title}}</title>
 
-<search-card (closeEvent)="closeEventHandler($event)" id="card-search" ></search-card>
-
-<create-card (closeEvent)="closeEventHandler($event)" id="card-creation" *ngIf='globalData.selectedCard || this.createCard' [card]='globalData.selectedCard'></create-card>
-
-<search-card (closeEvent)="closeEventHandler($event)" id="card-search" *ngIf='searchCard'></search-card>
+<div class="overlay" *ngIf='overlayDiv'>
+  <create-card (closeEvent)="closeEventHandler($event)" id="card-creation" *ngIf='globalData.selectedCard || this.createCard' [card]='globalData.selectedCard'></create-card>
+  <search-card (closeEvent)="closeEventHandler($event)" id="card-search" *ngIf='searchCard'></search-card> 
+</div>
 
 <div class="grid-container">
   <div class="header">
     <p style="color: var(--pink); font-weight: bold;">Flashee</p>
-    <input type="text" placeholder="Search for cards"/>
+    <search-card (closeEvent)="closeEventHandler($event)" id="card-search" *ngIf='searchCard'></search-card> 
   </div>
 
   <div class="vertical-menu-left">
@@ -22,15 +21,15 @@
 
   <div class="vertical-menu-right">
     <button class="green" (click)='newCardMenu(true)'>New card</button>
-
+  
     <input hidden type="file" #uploader (change)="importDeck($event)"/>
-    <button class="greenyellow" (click)="uploader.click()">
+    <button class="blue" (click)="uploader.click()">
       Import
     </button>
-
+  
     <button class="blue" (click)='exportDeck()'>Export</button>
     <button>Stats</button>
-    <button>Quiz</button>
+    <button class="greenyellow">Quiz</button>
   </div>
 </div>
 

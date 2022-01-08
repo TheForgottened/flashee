@@ -47,7 +47,6 @@ export class GlobalDataService {
     this.filterCards = [];
     this.filterCardsObs.next([]);
 
-
     db.cards.each(card => {
       console.log(card.question.toLowerCase(), filter, card.question.toLowerCase().includes(filter.toLowerCase()));
       if (

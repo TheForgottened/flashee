@@ -3,8 +3,8 @@
   <div class="card-header">
     <span class="card-title">{{flashcard.question}}</span>
     <div class="button-container">
-      <button id="mod-button" (click)="modificationEvent()">Modify</button>
-      <button class="red" id="delete-button" (click)="deletionEvent()">Delete</button>
+      <fa-icon id="mod-button" [icon]="faEdit" (click)="modificationEvent()"></fa-icon>
+      <fa-icon id="del-button" [icon]="faTrash" (click)="deletionEvent()"></fa-icon>
     </div>
   </div>
 
@@ -13,6 +13,6 @@
   </div>
 
   <div class="card-tags">
-    <div *ngFor="let tag of flashcard.tags">{{tag.name}}</div>
+    <button *ngFor="let tag of flashcard.tags">{{tag.name}}</button>
   </div>
 </section>

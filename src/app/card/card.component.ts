@@ -4,6 +4,8 @@ import { db } from '../clases/DbManager';
 import { Flashcard } from '../clases/flashcard';
 import { GlobalDataService } from '../global-data.service';
 
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'flashcard',
@@ -11,6 +13,8 @@ import { GlobalDataService } from '../global-data.service';
   styleUrls: ['./card.component.css']
 })
 export class CardComponent implements OnInit {
+  faTrash = faTrash;
+  faEdit = faEdit;
 
   @Input() flashcard!: Flashcard;
 

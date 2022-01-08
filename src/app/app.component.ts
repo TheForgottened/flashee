@@ -18,6 +18,7 @@ export class AppComponent {
 
   createCard = false;
   searchCard = false;
+  overlayDiv = false;
   modCard?: Flashcard;
   
 
@@ -29,6 +30,7 @@ export class AppComponent {
     this.modCard = undefined;
     this.globalData.selectedCard = undefined;
     this.createCard = open;
+    this.overlayDiv = open;
   }
 
   searchCardMenu(): void {

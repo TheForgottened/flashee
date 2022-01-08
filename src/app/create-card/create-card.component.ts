@@ -6,6 +6,8 @@ import { Flashcard } from '../clases/flashcard';
 import { Tag } from '../clases/tag';
 import { GlobalDataService } from '../global-data.service';
 
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+
 @Component({
   selector: 'create-card',
   templateUrl: './create-card.component.html',
@@ -14,6 +16,8 @@ import { GlobalDataService } from '../global-data.service';
 })
 
 export class CreateCardComponent implements OnInit {
+  faTimes = faTimes;
+
   question = new FormControl('');
   answer = new FormControl('');
   tags = new FormControl('');

@@ -1,10 +1,9 @@
 .container-card-creation {
-    margin: 1em;
+    margin: auto;
     padding: 1em;
     display: flex;
     flex-direction: column;
     width: 80%;
-    min-width: 10em;
     height: auto;
     justify-content: space-evenly;
 
@@ -20,13 +19,39 @@
 
 .form-countainer {
     min-width: 10em;
-    width: auto;
+    width: 100%;
 }
 
 .form-field {
-    display: flex;
-    flex-direction: column;
-    margin: .5em;
+    margin: 1em 0 1em 0;
+    border-radius: 1em;
+}
+
+.form-field * {
+    box-sizing: border-box;
+    
+    line-height: 3em;
+    border: 0.15em solid gray;
+}
+
+.form-field label {
+    border-right: 0;
+
+    display: inline-block;
+    width: 20%;
+
+    color: var(--background);
+    background-color: var(--foreground);
+    border-radius: 1em 0em 0em 1em;
+    text-align: center;
+}
+
+.form-field input {
+    line-height: 3.5em;
+    display: inline-block;
+
+    border-radius: 0em 1em 1em 0em;
+    width: 80%;
 }
 
 .horizontal-buttons {

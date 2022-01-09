@@ -116,6 +116,7 @@ export class QuizComponent implements OnInit {
 
   close() {
     this.showQuiz = false;
+    this.globalData.createQuiz = false;
     this.closeEvent.emit(true);
   }
 }

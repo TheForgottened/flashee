@@ -21,9 +21,7 @@ export class CardComponent implements OnInit {
   @Output() modifyEvent= new EventEmitter<Flashcard>();
   @Output() deleteEvent = new EventEmitter<Flashcard>();
 
-  constructor(public globalData: GlobalDataService) {
-
-  }
+  constructor(public globalData: GlobalDataService) {}
 
   ngOnInit(): void {
   }

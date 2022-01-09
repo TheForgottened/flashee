@@ -12,7 +12,7 @@
 
   <div class="vertical-menu-left">
     <button (click)="globalData.searchCards('','',false)">Show all cards</button>
-    <tag *ngFor="let tag of globalData.tags" [tag]="tag">{{tag.name}}</tag>
+    <tag *ngFor="let tag of globalData.tags" [tag]="tag"></tag>
   </div>
 
   <div class="main-screen">

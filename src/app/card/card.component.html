@@ -12,6 +12,6 @@
   </div>
 
   <div class="card-tags">
-    <button *ngFor="let tag of flashcard.tags">{{tag.name}}</button>
+    <tag *ngFor="let tag of flashcard.tags" [tag]="tag"></tag>
   </div>
 </section>

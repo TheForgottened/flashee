@@ -1,16 +1,44 @@
 .cards-container {
     padding: 1em;
-    background-color: coral;
+    background-color: rgba(0, 0, 0, 0);
     display: flex;
     gap: 1em;
     flex-wrap: wrap;
     align-content: center;
     justify-content: flex-start;
     flex-direction: row;
+
+    overflow: auto;
 }
 
 .card {
     padding: 1em;
-    background-color: rgb(255, 225, 214);
+    background-color: var(--backgroundLight);
     width: 5em;
+}
+
+/* Scrollbar for cards-container */
+
+/* width */
+.cards-container::-webkit-scrollbar {
+    width: 8px;
+    padding: 2px;
+}
+  
+/* Track */
+.cards-container::-webkit-scrollbar-track {
+    background: var(--background);
+}
+
+/* Handle */
+.cards-container::-webkit-scrollbar-thumb {
+    background: var(--backgroundLight);
+    border-radius: 5px;
+    border: 1px solid #3A3D41;
+}
+  
+/* Handle on hover */
+.cards-container::-webkit-scrollbar-thumb:hover {
+    background: var(--backgroundLighter);
+    cursor: pointer !important;
 }

@@ -5,6 +5,7 @@ import { db } from '../clases/DbManager';
 import { Flashcard } from '../clases/flashcard';
 import { CARDS } from '../clases/prueba-tarjetas';
 import { Tag } from '../clases/tag';
+import { GlobalDataService } from '../global-data.service';
 
 @Component({
   selector: 'search-card',
@@ -22,51 +23,22 @@ export class SearchCardComponent implements OnInit {
     { name: "Tag", value: "tag" },
     { name: "Description", value: "description"}
   ]
-  selectedOption!: string;
+
+  constructor (private globalData: GlobalDataService) {
+  
+  }
+
+  selectedOption: string = "Question";
 
   searchCard() {
-    this.foundCards.clear();
-
-    if (this.searchString.value == "") return;
-
-    db.cards.each(card => {
-        switch (this.selectedOption) {
-          case "Question":
-              if (card.question.toLowerCase().includes(this.searchString.value.toLowerCase())) {
-                this.foundCards.add(card);
-                this.found = true;
-              }
-            break;
-
-          case "Answer":
-              if (card.answer.toLowerCase().includes(this.searchString.value.toLowerCase())) {
-                this.foundCards.add(card);
-                this.found = true;
-              }
-            break;
-
-          case "Description":
-              if (card.description?.toLowerCase().includes(this.searchString.value.toLowerCase())) {
-                this.foundCards.add(card);
-                this.found = true;
-              }
-            break;
-
-          case "Tag":
-              for (const tag of card.tags!) {
-                if (tag.name.toLowerCase().includes(this.searchString.value.toLowerCase())) {
-                  this.foundCards.add(card);
-                  this.found = true;
-                }
-              }
-            break;
-        }
-    });
-    if (this.foundCards.size)
-      this.found = false;
+    //this.foundCards.clear();
+    //if (this.searchString.value == "") return;
+    this.globalData.searchCards(this.selectedOption, this.searchString.value);
+    console.log("Searched",this.globalData.filterCards);
   }
 
   ngOnInit(): void {
+    this.searchCard();
   }
 
 }

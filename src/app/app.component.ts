@@ -1,7 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { liveQuery } from 'dexie';
 import { db } from './clases/DbManager';
 import { Flashcard } from './clases/flashcard';
+
 import { GlobalDataService } from './global-data.service';
+
 const indexExportImport = require('indexeddb-export-import')
 
 @Component({
@@ -11,25 +14,27 @@ const indexExportImport = require('indexeddb-export-import')
   providers: [GlobalDataService]
 })
 
-export class AppComponent {
-  title = 'flashee';
+export class AppComponent implements OnInit {
+  title = 'Flashee';
+
   createCard = false;
   searchCard = false;
+  overlayDiv = false;
   modCard?: Flashcard;
-  
 
   constructor(public globalData: GlobalDataService){
    
+  }
+
+  ngOnInit(): void {
+    this.globalData.getTags();
   }
   
   newCardMenu(open:boolean):void {
     this.modCard = undefined;
     this.globalData.selectedCard = undefined;
     this.createCard = open;
-  }
-
-  searchCardMenu(): void {
-    (this.searchCard == true) ? this.searchCard = false : this.searchCard = true;
+    this.overlayDiv = open;
   }
 
   importDeck($event: any): void {

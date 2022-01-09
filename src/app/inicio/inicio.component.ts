@@ -15,11 +15,16 @@ export class InicioComponent implements OnInit {
 
 
   selectedCard?: Flashcard;
-  cards = liveQuery(() => db.cards.toArray());
+  //cards = liveQuery(() => db.cards.toArray());
+  cards:Flashcard[] = [];
   @Output() modCardEvent = new EventEmitter<Flashcard>(); 
   
 
-  constructor(public globalData:GlobalDataService) { }
+  constructor(private globalData: GlobalDataService) { 
+    this.globalData.filterCardsObs.subscribe(c=>{
+      this.cards = c;
+    });
+  }
 
   onSelect(card: Flashcard): void {
     //this.selectedCard = card;
@@ -31,8 +36,7 @@ export class InicioComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    //! RESETS THE DATABASE
-    // db.delete().then (()=>db.open());
+    //db.delete().then (()=>db.open());
+    //db.tags.clear();
   }
-
 }

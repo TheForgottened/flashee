@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { db } from '../clases/DbManager';
@@ -6,19 +13,22 @@ import { Flashcard } from '../clases/flashcard';
 import { Tag } from '../clases/tag';
 import { GlobalDataService } from '../global-data.service';
 
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+
 @Component({
   selector: 'create-card',
   templateUrl: './create-card.component.html',
   styleUrls: ['./create-card.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-
 export class CreateCardComponent implements OnInit {
+  faTimes = faTimes;
+
   question = new FormControl('');
   answer = new FormControl('');
   tags = new FormControl('');
   description = new FormControl('');
-  
+
   //private globalDataService: any;
   public cardObs?: Observable<Flashcard>;
 
@@ -26,21 +36,19 @@ export class CreateCardComponent implements OnInit {
   @Output() closeEvent = new EventEmitter<boolean>();
 
   constructor(public globalData: GlobalDataService) {
-    this.globalData.cardChanged.subscribe(card => {
+    this.globalData.cardChanged.subscribe((card) => {
       this.updateValues(card);
-    })
+    });
   }
 
   ngOnInit(): void {
-    console.log(this.globalData.selectedCard)
+    console.log(this.globalData.selectedCard);
     if (this.card) {
-      this.question.setValue(this.card.question)
-      this.description.setValue(this.card.description)
-      this.answer.setValue(this.card.answer)
-      this.tags.setValue(this.getTagsString(this.card.tags))
+      this.question.setValue(this.card.question);
+      this.description.setValue(this.card.description);
+      this.answer.setValue(this.card.answer);
+      this.tags.setValue(this.getTagsString(this.card.tagIDs));
     }
-
-    
   }
 
   newCard() {
@@ -51,41 +59,72 @@ export class CreateCardComponent implements OnInit {
       //this.card.tags = this.tags.value;
 
       this.findTags(this.card);
+      if (!this.findTags(this.card)) {
+        return;
+      }
 
-      db.cards.put(this.card)
+      db.cards.put(this.card);
     } else {
-      let card: Flashcard =  new Flashcard(this.question.value,this.answer.value,this.description.value);
-      this.findTags(card);
+      let card: Flashcard = new Flashcard(
+        this.question.value,
+        this.answer.value,
+        this.description.value
+      );
+      if (!this.findTags(card)) {
+        return;
+      }
 
-      db.cards.add(card)
+      db.cards.add(card);
     }
-    
+
+    this.globalData.searchCards('', '');
     this.discard();
   }
 
-  findTags(card: Flashcard) {
+  findTags(card: Flashcard): number {
     let tagSet = new Set<Tag>();
-    let tagArr = this.tags.value.split(',');   
+    this.tags.setValue(this.tags.value.replace(/\s/g, ""))
+    let tagArr = this.tags.value.split(',');
 
     tagArr.forEach((tag: string) => {
-      tagSet.add(new Tag(tag))
+      tagSet.add(new Tag(tag));
     });
 
-    card.tags = tagSet;
-    
+    for (let i = 0; i < tagArr.length; i++) {
+      for (let j = i + 1; j < tagArr.length; j++) {
+        if (tagArr[i] === tagArr[j]) {
+          alert("You can't use the same tag twice.");
+          return 0;
+        }
+      }
+    }
+    tagSet.forEach(tag => card.tagIDs!.push(tag.idString));
     this.updateTagList(tagSet);
+
+    
+
+    return 1;
   }
 
-  async updateTagList(tagSet:Set<Tag>) {
-    for (let tag of tagSet) {
-      let n = (await db.tags.where("name").equals(tag.name).toArray())[0]
-      console.log("Encontrado")
-      console.log(n)
-      if (!n) {
+  async updateTagList(tagSet: Set<Tag>) {
+    let exists = false;
+    tagSet.forEach((tag) => {
+      db.tags.each((dbtag) => {
+        console.log('tag name');
+        console.log(dbtag.name);
+        if (tag.name === dbtag.name) {
+          exists = true;
+        }
+      });
+
+      if (!exists) {
         db.tags.put(tag);
+      } else {
+        exists = false;
       }
-      
-    }
+    });
+
+    this.globalData.getTags();
   }
 
   discard() {
@@ -101,25 +140,27 @@ export class CreateCardComponent implements OnInit {
     this.closeEvent.emit(true);
   }
 
-  updateValues(card:Flashcard) {
-    this.question.setValue(card.question)
-    this.description.setValue(card.description)
-    this.answer.setValue(card.answer)
-    this.tags.setValue(this.getTagsString(card.tags))
+  updateValues(card: Flashcard) {
+    this.question.setValue(card.question);
+    this.description.setValue(card.description);
+    this.answer.setValue(card.answer);
+    this.tags.setValue(this.getTagsString(card.tagIDs));
+    this.globalData.getTags();
   }
 
-  getTagsString(tags:Set<Tag>|undefined):string {
-    let result: string = "";
+  getTagsString(tags: string[] | undefined): string {
+    let result: string = '';
 
     for (let tag of tags!) {
-      result+=tag.name;
-      result+=","
+      
+      db.tags.each((tag) => {
+        result += tag.name;
+        result += ',';
+      });
     }
 
     result = result.slice(0, result.length - 1);
 
     return result;
-
   }
-
 }

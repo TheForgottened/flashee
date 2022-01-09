@@ -6,7 +6,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { InicioComponent } from './inicio/inicio.component';
 import { CardComponent } from './card/card.component';
-import { BrowserComponent } from './browser/browser.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 import { TagListComponent } from './tag-list/tag-list.component';
 import { CreateCardComponent } from './create-card/create-card.component';
@@ -14,6 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HorizontalMenuComponent } from './horizontal-menu/horizontal-menu.component';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { JitCompiler } from '@angular/compiler';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SearchCardComponent } from './search-card/search-card.component';
 import { GlobalDataService } from './global-data.service';
 
@@ -23,7 +23,6 @@ import { GlobalDataService } from './global-data.service';
     AppComponent,
     InicioComponent,
     CardComponent,
-    BrowserComponent,
     StatisticsComponent,
     TagListComponent,
     CreateCardComponent,
@@ -35,7 +34,8 @@ import { GlobalDataService } from './global-data.service';
     AppRoutingModule,
     FormsModule,
     BrowserAnimationsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FontAwesomeModule
   ],
   providers: [GlobalDataService],
   bootstrap: [AppComponent]

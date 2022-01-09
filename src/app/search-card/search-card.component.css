@@ -1,3 +1,11 @@
+#container-div {
+    display: flex;
+    gap: 1em;
+    align-content: center;
+    justify-content: flex-end;
+    flex-direction: row;
+}
+
 .cards-container {
     padding: 1em;
     background-color: coral;
@@ -13,4 +21,22 @@
     padding: 1em;
     background-color: rgb(255, 225, 214);
     width: 5em;
+}
+
+select {
+    background-color: var(--backgroundLight);
+    color: var(--foreground);
+
+    border-radius: 5px;
+}
+
+input {
+    background-color: var(--backgroundLight);
+    color: var(--foreground);
+    width: 50%;
+
+    resize: none;
+    border-radius: 5px;
+
+    outline: none;
 }

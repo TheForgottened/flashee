@@ -18,19 +18,19 @@ export class DbManager extends Dexie{
         super('flashee');
         this.version(2).stores({
             decks: '++id',
-            cards: '++id, question',
-            tags: '++id, name'
+            cards: '++id, question, tags',
+            tags: '++id'
         })
 
         this.on('populate',()=>this.populate());
     }
 
     async populate() {
-        const deck = await db.decks.add(new Deck());
+        //const deck = await db.decks.add(new Deck());
 
-        await db.cards.bulkAdd([
-            new Flashcard("Card1?","Yes","This is card 1", deck)
-        ])
+        // await db.cards.bulkAdd([
+        //     new Flashcard("Card1?","Yes","This is card 1", deck)
+        // ])
     }
 }
 

@@ -83,29 +83,38 @@ export class CreateCardComponent implements OnInit {
 
     for (let i = 0; i < tagArr.length; i++) {
       for (let j = i + 1; j < tagArr.length; j++) {
-        if (tagArr[i] == tagArr[j]) {
+        if (tagArr[i] === tagArr[j]) {
           alert("You can't use the same tag twice.");
           return 0;
         }
       }
     }
+    this.updateTagList(tagSet);
 
     card.tags = tagSet;
     
-    this.updateTagList(tagSet);
     return 1;
   }
 
   async updateTagList(tagSet:Set<Tag>) {
-    for (let tag of tagSet) {
-      let n = (await db.tags.where("name").equals(tag.name).toArray())[0]
-      console.log("Encontrado")
-      console.log(n)
-      if (!n) {
-        db.tags.put(tag);
-      }
+    let exists = false;
+    tagSet.forEach(tag => {
       
-    }
+      
+      db.tags.each(dbtag => {
+        console.log("tag name");
+        console.log(dbtag.name);
+        if (tag.name === dbtag.name) {
+          exists = true;
+        }
+      })
+      
+      if (!exists) {
+        db.tags.add(tag);
+      } else {
+        exists = false;
+      }
+    })
 
     this.globalData.getTags();
   }

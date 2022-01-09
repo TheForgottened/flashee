@@ -61,6 +61,11 @@ button {
   background-color: var(--yellow);
 }
 
+@font-face {
+  font-family: "Roboto";
+  src: local("Roboto"), url(./assets/fonts/Roboto-Regular.ttf);
+}
+
 * { font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 html, body { 

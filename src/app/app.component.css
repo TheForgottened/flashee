@@ -92,6 +92,7 @@
     margin: .5em;
     border: .2em double var(--backgroundLighter);
     border-radius: 1em;
+    cursor: pointer;
 }
 
 .vertical-menu-left > button {
@@ -101,9 +102,15 @@
     background-color: var(--purple);
     height: 5% !important;
     width: 100%;
-
+    cursor: pointer;
     float: right;
     margin: 0.2em;
+    transition: 0.3s;
+}
+
+.vertical-menu-left > button:hover {
+    background-color: #48387a;
+    color: white;
 }
 
 p { margin: 0em; }

@@ -1,4 +1,14 @@
+@keyframes onLoad {
+    0% { 
+        opacity: 0%;
+    }
+    100% {
+        opacity: 100%;
+    }
+}
+
 .container-card-creation {
+    animation: 1s ease-in-out 0s 1 onLoad;
     margin: auto;
     padding: 1em;
     display: flex;

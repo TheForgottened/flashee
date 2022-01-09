@@ -48,16 +48,21 @@ export class GlobalDataService {
     });
   }
 
-  async searchCards(filter: string, searchString: string, match?: boolean) {
+  searchCards(filter: string, searchString: string, match?: boolean) {
     this.filterCards = [];
     this.filterCardsObs.next([]);
-    console.log("filter")
-    console.log(filter)
-    db.cards.each(async (card) => {
-      switch (filter) {
-        case '':
+
+    if (searchString.length == 0 && filter.length == 0) {
+      db.cards.toArray().then((arr) => {
+        arr.forEach((card) => {
           this.filterCards.push(card);
-          break;
+        });
+        return;
+      });
+    }
+
+    db.cards.each((card) => {
+      switch (filter) {
         case 'Question':
           if (card.question.toLowerCase().includes(searchString.toLowerCase()))
             this.filterCards.push(card);
@@ -74,11 +79,11 @@ export class GlobalDataService {
           break;
         case 'Tag':
           card.tagIDs?.forEach((tag) => {
-            let tagName = tag.split(' ').map((bin) => String.fromCharCode(parseInt(bin, 2))).join('');
+            let tagName = tag
+              .split(' ')
+              .map((bin) => String.fromCharCode(parseInt(bin, 2)))
+              .join('');
 
-            console.log("nomeeeeeeeeeeeeee")
-            console.log('[' + tagName + ']')
-            console.log('[' + searchString + ']')
             if (match) {
               if (tagName.toLowerCase() === searchString.toLowerCase())
                 this.filterCards.push(card);
@@ -86,8 +91,7 @@ export class GlobalDataService {
               if (tagName.toLowerCase().includes(searchString.toLowerCase()))
                 this.filterCards.push(card);
             }
-          })
-          
+          });
           break;
       }
     });

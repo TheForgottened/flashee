@@ -4,39 +4,38 @@
     align-content: center;
     justify-content: flex-end;
     flex-direction: row;
+    height: auto;
 }
 
-.cards-container {
-    padding: 1em;
-    background-color: coral;
-    display: flex;
-    gap: 1em;
-    flex-wrap: wrap;
-    align-content: center;
-    justify-content: flex-start;
-    flex-direction: row;
-}
-
-.card {
-    padding: 1em;
-    background-color: rgb(255, 225, 214);
-    width: 5em;
-}
-
-select {
+.custom-select select {
     background-color: var(--backgroundLight);
     color: var(--foreground);
-
+    padding: 10px;
     border-radius: 5px;
+    border: solid 1px transparent;
+    transition: 0.5s;
+}
+
+
+#container-div .search-by {
+    position: relative;
+    top: 50%;
+    transform: translateY(25%)
 }
 
 input {
     background-color: var(--backgroundLight);
     color: var(--foreground);
     width: 50%;
-
-    resize: none;
+    border: solid 1px transparent;
+    /* resize: none; */
+    
+    padding: 10px;
     border-radius: 5px;
 
-    outline: none;
+    transition: 0.5s; 
+}
+
+input:hover, .custom-select select:hover {
+    border: solid 1px white;   
 }

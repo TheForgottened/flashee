@@ -8,4 +8,11 @@ button{
 
     float: right;
     margin: 0.2em;
+    transition: 0.3s;
+}
+
+button:hover {
+    cursor: pointer;
+    background-color: #48387a;
+    color: white;
 }

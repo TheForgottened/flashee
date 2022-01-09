@@ -1,12 +1,22 @@
 <section class="card-search-container">
-    <div id="container-div">
-        <input id="question" type="text" placeholder="Search for cards" [formControl]='searchString' (ngModelChange)='searchCard()'>
-        <span>Search by:</span>
-        <select [(ngModel)]="selectedOption">
-            <option *ngFor="let o of options">
-                {{o.name}}
-             </option>
-        </select>
-        <!--<button class="red" (click)="searchCard()">Search</button>-->
+  <div id="container-div">
+    <input
+      id="question"
+      type="text"
+      placeholder="Search for cards"
+      [formControl]="searchString"
+      (ngModelChange)="searchCard()"
+    />
+    <div class="search-by">
+      <span>Search by:</span>
     </div>
+    <div class="custom-select" style="width: 100px">
+      <select [(ngModel)]="selectedOption">
+        <option *ngFor="let o of options">
+          {{ o.name }}
+        </option>
+      </select>
+    </div>
+    <!--<button class="red" (click)="searchCard()">Search</button>-->
+  </div>
 </section>

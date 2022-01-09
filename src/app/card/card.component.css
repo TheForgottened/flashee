@@ -1,4 +1,14 @@
+@keyframes onLoad {
+    0% { 
+        opacity: 0%;
+    }
+    100% {
+        opacity: 100%;
+    }
+}
+
 .card-container {
+    animation: 1s ease-in-out 0s 1 onLoad;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -8,8 +18,13 @@
 
     background-color: var(--backgroundLight);
     border-radius: 1em;
-    border: 0.1em solid var(--foreground);
+    border: 0.1em solid transparent;
+    transition: 0.5s;
     padding: 1em;
+}
+
+.card-container:hover {
+    border: 0.1em solid var(--foreground);
 }
 
 .card-container > * {
@@ -29,10 +44,12 @@
 
 #mod-button {
     color: var(--yellow) !important;
+    cursor: pointer;
 }
 
 #del-button {
     color: var(--red) !important;
+    cursor: pointer;
 }
 
 .card-title {

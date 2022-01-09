@@ -19,6 +19,8 @@ export class GlobalDataService {
   public cards: Observable<Flashcard[]> = this.getCards();
   public filterCards: Flashcard[] = [];
   public filterCardsObs: Subject<Flashcard[]> = new Subject<Flashcard[]>();
+  public createQuiz: boolean = false;
+  public tagsQuiz: Tag[] = [];
 
   constructor() {
     this.cardChanged.subscribe((card) => {
@@ -56,6 +58,7 @@ export class GlobalDataService {
       db.cards.toArray().then((arr) => {
         arr.forEach((card) => {
           this.filterCards.push(card);
+          console.log(this.filterCards.length);
         });
         return;
       });

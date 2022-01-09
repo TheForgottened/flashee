@@ -63,41 +63,33 @@ export class CardComponent implements OnInit {
       db.tags.clear();
     }
 
-    db.cards
-      .each((card) => {
-        card.tagIDs!.forEach((cardTagID) => {
-          let cardTagName = cardTagID
-            .split(' ')
-            .map((bin) => String.fromCharCode(parseInt(bin, 2)))
-            .join('');
-          tags!.forEach((tagIDString) => {
-            tag = tagIDString;
-            let tagName = tagIDString
-              .split(' ')
-              .map((bin) => String.fromCharCode(parseInt(bin, 2)))
-              .join('');
+    let cards = await db.cards.toArray();
 
-            if (tagName === cardTagName) {
-              found = true;
-            }
-          });
-
-          if (!found) {
-            let tagID = +tag.replace(/\s/g, '');
-            tagsToDelete.push(tagID);
-          } else {
-            found = false;
+    for (let tagIDString of tags!) {
+      tag = tagIDString;
+      for (let card of cards) {
+        for (let cardTagID of card.tagIDs!) {
+      
+          if (tagIDString === cardTagID) {
+            found = true;
           }
-        });
-      })
-      .then(() => {
-        tagsToDelete.forEach((tag) => {
-          db.tags.delete(tag);
-        });
+        }
+      }
 
-        this.globalData.searchCards('', '');
-        this.globalData.getTags();
-      });
+        if (!found) {
+          let tagID = +tag.replace(/\s/g, '');
+          tagsToDelete.push(tagID);
+        } else {
+          found = false;
+        }
+      
+    }
+    tagsToDelete.forEach((tag) => {
+      db.tags.delete(tag);
+    });
+
+    this.globalData.searchCards('', '');
+    this.globalData.getTags();
   }
 
   sleep(ms: number) {

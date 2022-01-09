@@ -1,0 +1,28 @@
+<section quiz-container>
+  <div class="horizontal-buttons">
+    <h3>Quiz</h3>
+    <fa-icon
+      style="color: var(--red)"
+      [icon]="faTimes"
+      (click)="close()"
+    ></fa-icon>
+  </div>
+  <div *ngIf="!showQuiz">
+    <div>
+      <span>Number of cards: </span>
+      <input type="text" [formControl]="numCards" />
+    </div>
+    <div>
+      <span>Pick tags</span>
+      <tag *ngFor="let tag of globalData.tags" [tag]="tag"></tag>
+    </div>
+    <button (click)="randomizeQuestions()">Start Quiz!</button>
+  </div>
+  <div *ngIf="showQuiz">
+    <label for="question">Question: {{currentQuestion!.question}}</label><br>
+    <label for="description">Description: {{currentQuestion!.description}}</label><br>
+    <label for="description">Answer: </label>
+    <input id="answer" type="text" [formControl]="answer" />
+    <button id="nextQuestion" (click)="onSubmitAnswer()">{{buttonLabel}}</button>
+  </div>
+</section>

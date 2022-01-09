@@ -4,6 +4,7 @@ import { Injectable } from "@angular/core";
 import Dexie, { Table } from 'dexie';
 import { Deck } from "./deck";
 import { Flashcard } from "./flashcard";
+import { Quiz } from "./quiz";
 import { Tag } from "./tag";
 
 
@@ -13,13 +14,15 @@ export class DbManager extends Dexie{
     cards!: Table<Flashcard,number>;
     decks!: Table<Deck,number>;
     tags!: Table<Tag, number>;
+    quizzes!: Table<Quiz, number>;
 
     constructor() { 
         super('flashee');
-        this.version(2).stores({
+        this.version(4).stores({
             decks: '++id',
             cards: '++id, question, tags',
-            tags: '++id'
+            tags: '++id',
+            quizzes: '++id'
         })
 
         this.on('populate',()=>this.populate());

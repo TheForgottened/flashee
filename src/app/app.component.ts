@@ -37,6 +37,10 @@ export class AppComponent implements OnInit {
     this.overlayDiv = open;
   }
 
+  newQuiz(): void {
+    	this.globalData.createQuiz = true;
+  }
+
   importDeck($event: any): void {
     const idbDatabase = db.backendDB()
     var selectedFile = $event.target.files[0];
@@ -77,6 +81,7 @@ export class AppComponent implements OnInit {
 
   closeEventHandler(event: any) {
     this.newCardMenu(false);
+    this.globalData.createQuiz = false;
   }
 
   onModify(card: Flashcard) {

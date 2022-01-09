@@ -1,7 +1,8 @@
 <title>{{title}}</title>
 
-<div class="overlay" *ngIf='overlayDiv || globalData.selectedCard || this.createCard'>
+<div class="overlay" *ngIf='overlayDiv || globalData.selectedCard || this.createCard || globalData.createQuiz'>
   <create-card (closeEvent)="closeEventHandler($event)" id="card-creation" *ngIf='globalData.selectedCard || this.createCard' [card]='globalData.selectedCard'></create-card>
+  <quiz (closeEvent)="closeEventHandler($event)" *ngIf='globalData.createQuiz'></quiz>
 </div>
 
 <div class="grid-container">
@@ -29,7 +30,7 @@
   
     <button class="blue" (click)='exportDeck()'>Export</button>
     <button>Stats</button>
-    <button class="greenyellow">Quiz</button>
+    <button class="greenyellow" (click)="newQuiz()">Quiz</button>
   </div>
 </div>
 

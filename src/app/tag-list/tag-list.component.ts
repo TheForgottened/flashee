@@ -17,7 +17,13 @@ export class TagListComponent implements OnInit {
   }
 
   searchByTag() {
-    console.log("trhejerth ");
+    if (this.globalData.createQuiz) {
+      console.log("oi?")
+      this.globalData.tagsQuiz.push(this.tag);
+      console.log(this.globalData.tagsQuiz.length)
+      return;
+    }
+ 
     console.log(this.tag.name);
     this.globalData.searchCards("Tag", this.tag.name, true);
   }

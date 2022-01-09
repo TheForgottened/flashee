@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { db } from '../clases/DbManager';
@@ -12,9 +19,8 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
   selector: 'create-card',
   templateUrl: './create-card.component.html',
   styleUrls: ['./create-card.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-
 export class CreateCardComponent implements OnInit {
   faTimes = faTimes;
 
@@ -22,7 +28,7 @@ export class CreateCardComponent implements OnInit {
   answer = new FormControl('');
   tags = new FormControl('');
   description = new FormControl('');
-  
+
   //private globalDataService: any;
   public cardObs?: Observable<Flashcard>;
 
@@ -30,21 +36,19 @@ export class CreateCardComponent implements OnInit {
   @Output() closeEvent = new EventEmitter<boolean>();
 
   constructor(public globalData: GlobalDataService) {
-    this.globalData.cardChanged.subscribe(card => {
+    this.globalData.cardChanged.subscribe((card) => {
       this.updateValues(card);
-    })
+    });
   }
 
   ngOnInit(): void {
-    console.log(this.globalData.selectedCard)
+    console.log(this.globalData.selectedCard);
     if (this.card) {
-      this.question.setValue(this.card.question)
-      this.description.setValue(this.card.description)
-      this.answer.setValue(this.card.answer)
-      this.tags.setValue(this.getTagsString(this.card.tags))
+      this.question.setValue(this.card.question);
+      this.description.setValue(this.card.description);
+      this.answer.setValue(this.card.answer);
+      this.tags.setValue(this.getTagsString(this.card.tagIDs));
     }
-
-    
   }
 
   newCard() {
@@ -59,9 +63,13 @@ export class CreateCardComponent implements OnInit {
         return;
       }
 
-      db.cards.put(this.card)
+      db.cards.put(this.card);
     } else {
-      let card: Flashcard =  new Flashcard(this.question.value,this.answer.value,this.description.value);
+      let card: Flashcard = new Flashcard(
+        this.question.value,
+        this.answer.value,
+        this.description.value
+      );
       if (!this.findTags(card)) {
         return;
       }
@@ -69,16 +77,17 @@ export class CreateCardComponent implements OnInit {
       db.cards.add(card);
     }
 
-    this.globalData.searchCards("", "");
+    this.globalData.searchCards('', '');
     this.discard();
   }
 
   findTags(card: Flashcard): number {
     let tagSet = new Set<Tag>();
-    let tagArr = this.tags.value.split(','); 
+    this.tags.setValue(this.tags.value.replace(/\s/g, ""))
+    let tagArr = this.tags.value.split(',');
 
     tagArr.forEach((tag: string) => {
-      tagSet.add(new Tag(tag))
+      tagSet.add(new Tag(tag));
     });
 
     for (let i = 0; i < tagArr.length; i++) {
@@ -89,32 +98,31 @@ export class CreateCardComponent implements OnInit {
         }
       }
     }
+    tagSet.forEach(tag => card.tagIDs!.push(tag.idString));
     this.updateTagList(tagSet);
 
-    card.tags = tagSet;
     
+
     return 1;
   }
 
-  async updateTagList(tagSet:Set<Tag>) {
+  async updateTagList(tagSet: Set<Tag>) {
     let exists = false;
-    tagSet.forEach(tag => {
-      
-      
-      db.tags.each(dbtag => {
-        console.log("tag name");
+    tagSet.forEach((tag) => {
+      db.tags.each((dbtag) => {
+        console.log('tag name');
         console.log(dbtag.name);
         if (tag.name === dbtag.name) {
           exists = true;
         }
-      })
-      
+      });
+
       if (!exists) {
-        db.tags.add(tag);
+        db.tags.put(tag);
       } else {
         exists = false;
       }
-    })
+    });
 
     this.globalData.getTags();
   }
@@ -132,26 +140,27 @@ export class CreateCardComponent implements OnInit {
     this.closeEvent.emit(true);
   }
 
-  updateValues(card:Flashcard) {
-    this.question.setValue(card.question)
-    this.description.setValue(card.description)
-    this.answer.setValue(card.answer)
-    this.tags.setValue(this.getTagsString(card.tags))
+  updateValues(card: Flashcard) {
+    this.question.setValue(card.question);
+    this.description.setValue(card.description);
+    this.answer.setValue(card.answer);
+    this.tags.setValue(this.getTagsString(card.tagIDs));
     this.globalData.getTags();
   }
 
-  getTagsString(tags:Set<Tag>|undefined):string {
-    let result: string = "";
+  getTagsString(tags: string[] | undefined): string {
+    let result: string = '';
 
     for (let tag of tags!) {
-      result+=tag.name;
-      result+=","
+      
+      db.tags.each((tag) => {
+        result += tag.name;
+        result += ',';
+      });
     }
 
     result = result.slice(0, result.length - 1);
 
     return result;
-
   }
-
 }

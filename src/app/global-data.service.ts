@@ -15,7 +15,7 @@ export class GlobalDataService {
   public tags: Tag[] = [];
   public selectedCard?: Flashcard = undefined;
   public cardChanged: Subject<Flashcard> = new Subject<Flashcard>();
-
+  public cardTags: Tag[] = [];
   public cards: Observable<Flashcard[]> = this.getCards();
   public filterCards: Flashcard[] = [];
   public filterCardsObs: Subject<Flashcard[]> = new Subject<Flashcard[]>();
@@ -48,11 +48,12 @@ export class GlobalDataService {
     });
   }
 
-  searchCards(filter: string, searchString: string, match?: boolean) {
+  async searchCards(filter: string, searchString: string, match?: boolean) {
     this.filterCards = [];
     this.filterCardsObs.next([]);
-
-    db.cards.each((card) => {
+    console.log("filter")
+    console.log(filter)
+    db.cards.each(async (card) => {
       switch (filter) {
         case '':
           this.filterCards.push(card);
@@ -72,15 +73,21 @@ export class GlobalDataService {
             this.filterCards.push(card);
           break;
         case 'Tag':
-          for (const tag of card.tags!) {
+          card.tagIDs?.forEach((tag) => {
+            let tagName = tag.split(' ').map((bin) => String.fromCharCode(parseInt(bin, 2))).join('');
+
+            console.log("nomeeeeeeeeeeeeee")
+            console.log('[' + tagName + ']')
+            console.log('[' + searchString + ']')
             if (match) {
-              if (tag.name.toLowerCase() === searchString.toLowerCase())
+              if (tagName.toLowerCase() === searchString.toLowerCase())
                 this.filterCards.push(card);
             } else {
-              if (tag.name.toLowerCase().includes(searchString.toLowerCase()))
+              if (tagName.toLowerCase().includes(searchString.toLowerCase()))
                 this.filterCards.push(card);
             }
-          }
+          })
+          
           break;
       }
     });

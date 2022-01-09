@@ -11,7 +11,7 @@ export class Flashcard {
     description?: string;
     answer: string;
     deck?: number;
-    tags?: Set<Tag>;
+    tagIDs?: string[];
 
     // Meta
     creationDate: Date;
@@ -22,7 +22,7 @@ export class Flashcard {
         this.question = question;
         this.answer = answer;
         this.creationDate = new Date();
-        this.tags = new Set<Tag>();
+        this.tagIDs = [];
         this.description = description;
         this.deck = deck;
     }

@@ -17,6 +17,8 @@ export class TagListComponent implements OnInit {
   }
 
   searchByTag() {
+    console.log("trhejerth ");
+    console.log(this.tag.name);
     this.globalData.searchCards("Tag", this.tag.name, true);
   }
 }

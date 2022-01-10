@@ -151,6 +151,7 @@ export class CreateCardComponent implements OnInit {
   }
 
   async deleteTag() {
+    if (!this.card) return;
     let tags = this.card!.tagIDs;
     let found = false;
     var tagsToDelete: number[] = [];

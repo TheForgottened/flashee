@@ -21,6 +21,7 @@ export class QuizComponent implements OnInit {
   showQuiz: boolean = false;
   cards: Flashcard[] = [];
   currentQuestion?: Flashcard;
+  currentQuestionTags: Tag[] = [];
   currentQuestionIndex: number = 0;
   answer = new FormControl('');
   startQuiz: boolean = false;
@@ -34,6 +35,17 @@ export class QuizComponent implements OnInit {
 
   ngOnInit(): void {
     this.tags = this.globalData.tags;
+  }
+
+  getTagsByID(id?: string[]) {
+    this.currentQuestionTags = [];
+    db.tags.each((tag) => {
+      id!.forEach((tagID) => {
+        if (tag.idString === tagID) {
+          this.currentQuestionTags.push(tag);
+        }
+      });
+    });
   }
 
   async randomizeQuestions() {
@@ -105,7 +117,8 @@ export class QuizComponent implements OnInit {
 
     this.currentQuestionIndex++;
     this.currentQuestion = this.quizQuestions[this.currentQuestionIndex];
-    
+    this.getTagsByID(this.currentQuestion.tagIDs);
+
     console.log("index " + this.currentQuestionIndex);
     if (this.currentQuestionIndex == this.quizQuestions.length - 1) {
       this.buttonLabel = 'Finish';

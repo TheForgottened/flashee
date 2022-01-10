@@ -1,7 +1,7 @@
 <section class="card-container">
   <div class="card-header">
     <span class="card-title">{{flashcard.question}}</span>
-    <div class="button-container">
+    <div class="button-container" *ngIf="!globalData.createQuiz">
       <fa-icon id="mod-button" [icon]="faEdit" (click)="modificationEvent()"></fa-icon>
       <fa-icon id="del-button" [icon]="faTrash" (click)="deletionEvent()"></fa-icon>
     </div>

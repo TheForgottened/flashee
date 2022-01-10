@@ -1,0 +1,41 @@
+<section quiz-container>
+    <div class="horizontal-buttons">
+        <h3 style="margin: 0em">Quiz</h3>
+        <fa-icon
+            style="color: var(--red)"
+            [icon]="faTimes"
+            (click)="close()"
+        ></fa-icon>
+    </div>
+    <div class="quiz-prepare-div" *ngIf="!showQuiz">
+        <div class="input-div">
+            <span>Number of cards: </span>
+            <input type="text" [formControl]="numCards" />
+        </div>
+
+        <div class="tag-container">
+            Pick tags:<br />
+            <tag
+                *ngFor="let tag of tags"
+                [tag]="tag"
+                (click)="removeTag(tag)"
+            ></tag>
+        </div>
+        <div class="center">
+            <button class="green" (click)="randomizeQuestions()">
+                Start Quiz!
+            </button>
+        </div>
+    </div>
+
+    <div class="card-answer-div" *ngIf="showQuiz">
+        <flashcard [flashcard]="currentQuestion!"></flashcard>
+
+        <div class="answer-div">
+            <input id="answer" type="text" [formControl]="answer" placeholder="Answer" />
+            <button class="green" id="nextQuestion" (click)="onSubmitAnswer()">
+                {{ buttonLabel }}
+            </button>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,99 @@
+section {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 1em;
+    background-color: var(--backgroundLighter);
+    border-radius: 1em;
+    border: 0.1em solid var(--foreground);
+}
+
+.horizontal-buttons,
+.card-answer-div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.quiz-prepare-div {
+    /*display:grid;
+     justify-content: center;
+     align-items: center;
+     height: 100%; */
+
+    /*display: grid;
+    justify-items: stretch;
+
+    grid-template-columns: 0.8fr; 
+    grid-template-rows: 1fr;
+    grid-column-gap: 0em;
+    grid-row-gap: 1em; */
+    padding: 1em;
+}
+
+.quiz-prepare-div > div {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.card-answer-div {
+    box-sizing: border-box;
+
+    margin: 1em;
+}
+
+.card-answer-div > flashcard {
+    margin-right: 1em;
+}
+
+.card-answer-div > .answer-div {
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    gap: 4em;
+}
+
+.answer-div > input {
+    line-height: 5em;
+}
+input {
+    background-color: var(--backgroundLight);
+    color: var(--foreground);
+
+    border: solid 1px transparent;
+    /* resize: none; */
+
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.tag-container {
+    overflow: auto;
+}
+
+.tag-container tag {
+    text-align: center;
+    margin-top: 5px;
+
+    float: left;
+    margin: 0.2em;
+}
+
+button {
+    box-sizing: border-box;
+    margin-top: 20px;
+    width: 50%;
+    height: 3.5em;
+    padding: 1em;
+    border: 0.2em double var(--backgroundLighter);
+    border-radius: 1em;
+    cursor: pointer;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

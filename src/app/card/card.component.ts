@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, OnChanges } from '@angular/core';
 import { Observable } from 'rxjs';
 import { db } from '../clases/DbManager';
 import { Flashcard } from '../clases/flashcard';
@@ -14,7 +14,7 @@ import Dexie from 'dexie';
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.css'],
 })
-export class CardComponent implements OnInit {
+export class CardComponent implements OnInit, OnChanges {
   faTrash = faTrash;
   faEdit = faEdit;
   cardTags: Tag[] = [];
@@ -27,6 +27,10 @@ export class CardComponent implements OnInit {
   constructor(public globalData: GlobalDataService) {}
 
   ngOnInit(): void {
+    
+  }
+
+  ngOnChanges() {
     this.getTagsByID(this.flashcard.tagIDs);
   }
 
@@ -63,41 +67,33 @@ export class CardComponent implements OnInit {
       db.tags.clear();
     }
 
-    db.cards
-      .each((card) => {
-        card.tagIDs!.forEach((cardTagID) => {
-          let cardTagName = cardTagID
-            .split(' ')
-            .map((bin) => String.fromCharCode(parseInt(bin, 2)))
-            .join('');
-          tags!.forEach((tagIDString) => {
-            tag = tagIDString;
-            let tagName = tagIDString
-              .split(' ')
-              .map((bin) => String.fromCharCode(parseInt(bin, 2)))
-              .join('');
+    let cards = await db.cards.toArray();
 
-            if (tagName === cardTagName) {
-              found = true;
-            }
-          });
-
-          if (!found) {
-            let tagID = +tag.replace(/\s/g, '');
-            tagsToDelete.push(tagID);
-          } else {
-            found = false;
+    for (let tagIDString of tags!) {
+      tag = tagIDString;
+      for (let card of cards) {
+        for (let cardTagID of card.tagIDs!) {
+      
+          if (tagIDString === cardTagID) {
+            found = true;
           }
-        });
-      })
-      .then(() => {
-        tagsToDelete.forEach((tag) => {
-          db.tags.delete(tag);
-        });
+        }
+      }
 
-        this.globalData.searchCards('', '');
-        this.globalData.getTags();
-      });
+        if (!found) {
+          let tagID = +tag.replace(/\s/g, '');
+          tagsToDelete.push(tagID);
+        } else {
+          found = false;
+        }
+      
+    }
+    tagsToDelete.forEach((tag) => {
+      db.tags.delete(tag);
+    });
+
+    this.globalData.searchCards('', '');
+    this.globalData.getTags();
   }
 
   sleep(ms: number) {

@@ -16,6 +16,7 @@ import { JitCompiler } from '@angular/compiler';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SearchCardComponent } from './search-card/search-card.component';
 import { GlobalDataService } from './global-data.service';
+import { QuizComponent } from './quiz/quiz.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { GlobalDataService } from './global-data.service';
     TagListComponent,
     CreateCardComponent,
     HorizontalMenuComponent,
-    SearchCardComponent
+    SearchCardComponent,
+    QuizComponent
   ],
   imports: [
     BrowserModule,

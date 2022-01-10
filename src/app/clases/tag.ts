@@ -1,8 +1,5 @@
 'use strict';
 
-import { Byte } from "@angular/compiler/src/util";
-
-//import { Buffer } from 'buffer';
 export class Tag {
   id: number;
   name: string;

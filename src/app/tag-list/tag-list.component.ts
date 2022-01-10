@@ -5,20 +5,30 @@ import { GlobalDataService } from '../global-data.service';
 @Component({
   selector: 'tag',
   templateUrl: './tag-list.component.html',
-  styleUrls: ['./tag-list.component.css']
+  styleUrls: ['./tag-list.component.css'],
 })
 export class TagListComponent implements OnInit {
+  @Input() tag!: Tag;
 
-  @Input() tag!: Tag; 
+  constructor(public globalData: GlobalDataService) {}
 
-  constructor(public globalData: GlobalDataService) { }
-
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   searchByTag() {
-    console.log("trhejerth ");
+    if (this.globalData.createQuiz) {
+      let exists = false;
+
+      for (let tag of this.globalData.tagsQuiz) {
+        if (this.tag.id == tag.id) {
+          exists = true;
+        }
+      }
+      if (!exists)
+        this.globalData.tagsQuiz.push(this.tag);
+      return;
+    }
+
     console.log(this.tag.name);
-    this.globalData.searchCards("Tag", this.tag.name, true);
+    this.globalData.searchCards('Tag', this.tag.name, true);
   }
 }

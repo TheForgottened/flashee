@@ -14,13 +14,14 @@
     </div>
     <div>
       <span>Pick tags</span>
-      <tag (click)="removeTag(tag)" *ngFor="let tag of tags" [tag]="tag"></tag>
+      <tag *ngFor="let tag of tags" [tag]="tag" (click)="removeTag(tag)"></tag>
     </div>
     <button (click)="randomizeQuestions()">Start Quiz!</button>
   </div>
   <div *ngIf="showQuiz">
-    <label for="question">Question: {{currentQuestion!.question}}</label><br>
-    <label for="description">Description: {{currentQuestion!.description}}</label><br>
+    <!-- <label for="question">Question: {{currentQuestion!.question}}</label><br>
+    <label for="description">Description: {{currentQuestion!.description}}</label><br> -->
+    <flashcard [flashcard]="currentQuestion!"></flashcard>
     <label for="description">Answer: </label>
     <input id="answer" type="text" [formControl]="answer" />
     <button id="nextQuestion" (click)="onSubmitAnswer()">{{buttonLabel}}</button>

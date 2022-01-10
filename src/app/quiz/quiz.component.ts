@@ -25,7 +25,7 @@ export class QuizComponent implements OnInit {
   answer = new FormControl('');
   startQuiz: boolean = false;
   correctAnswers: number = 0;
-  buttonLabel: string = "Next Question";
+  buttonLabel: string = 'Next Question';
   tags: Tag[] = [];
 
   @Output() closeEvent = new EventEmitter<boolean>();
@@ -37,36 +37,51 @@ export class QuizComponent implements OnInit {
   }
 
   async randomizeQuestions() {
-    this.startQuiz = true;
+    //this.startQuiz = true;
     this.cards = await db.cards.toArray();
+    let nCards = this.numCards.value;
+
+    if (this.cards.length < 1) {
+      alert("You can't start a Quiz with 0 cards!");
+      return;
+    } else if (nCards < 1) {
+      alert('You must have at least 1 card in the Quiz!');
+      return;
+    } else if (nCards > this.cards.length) {
+      alert("You can't have more cards than you own in the Quiz!");
+      return;
+    } else if (this.globalData.tagsQuiz.length == 0) {
+      alert('You must pick at least 1 tag for the Quiz!');
+      return;
+    } else if (this.globalData.tagsQuiz.length > nCards) {
+      alert("You can't pick more tags than the number of cards.");
+    }
 
     this.quizQuestions = [];
 
-    let nCards = this.numCards.value;
-    console.log(nCards)
+    let nextTag = false;
+
     let totalQuestions = 0;
-
-    for (let val of this.globalData.tagsQuiz) {
-      let tagCardNum = 0;
-
-      while (tagCardNum < nCards / this.globalData.tagsQuiz.length) {
-
-        let randomCard = this.cards[this.getRandomInt(this.cards.length)];
-        for (let cardTagID of randomCard.tagIDs!) {
-
-          if (cardTagID === val.idString) {
-      
-            if (!this.repeatedQuestion(randomCard)) {
-              console.log("quest " + randomCard.question);
-              this.quizQuestions.push(randomCard);
-              totalQuestions++;
-              tagCardNum++;
+    while (totalQuestions < nCards) {
+      for (let val of this.globalData.tagsQuiz) {
+        nextTag = false;
+        while (!nextTag) {
+          let randomCard = this.cards[this.getRandomInt(this.cards.length)];
+          
+          for (let cardTagID of randomCard.tagIDs!) {
+            if (cardTagID == val.idString) {
+              if (!this.repeatedQuestion(randomCard)) {
+                console.log('quest ' + randomCard.question);
+                this.quizQuestions.push(randomCard);
+                totalQuestions++;
+                nextTag = true;
+                break;
+              }
             }
-            
           }
         }
+        if (totalQuestions == nCards) break;
       }
-      if (totalQuestions == nCards) break;
     }
     console.log(this.quizQuestions.length);
     this.currentQuestion = this.quizQuestions[0];
@@ -84,29 +99,28 @@ export class QuizComponent implements OnInit {
   }
 
   onSubmitAnswer() {
-    
     if (this.answer.value === this.currentQuestion?.answer) {
       this.correctAnswers++;
     }
 
     if (this.currentQuestionIndex == this.quizQuestions.length - 1) {
       let tagIDs: string[] = [];
-      this.globalData.tagsQuiz.forEach(tag => {
+      this.globalData.tagsQuiz.forEach((tag) => {
         tagIDs.push(tag.idString);
       });
       let q = new Quiz(this.quizQuestions.length, this.correctAnswers, tagIDs);
       db.quizzes.add(q);
       this.globalData.tagsQuiz = [];
-      
-      db.quizzes.each(quiz => console.log(quiz.correctAnswers));
+
+      db.quizzes.each((quiz) => console.log(quiz.correctAnswers));
 
       this.close();
     }
 
     this.currentQuestionIndex++;
     this.currentQuestion = this.quizQuestions[this.currentQuestionIndex];
-    
-    console.log("index " + this.currentQuestionIndex);
+
+    console.log('index ' + this.currentQuestionIndex);
     if (this.currentQuestionIndex == this.quizQuestions.length - 1) {
       this.buttonLabel = 'Finish';
     }
@@ -117,7 +131,8 @@ export class QuizComponent implements OnInit {
   }
 
   removeTag(tag: Tag) {
-    this.tags.splice(this.tags.indexOf(tag));
+    console.log('toremove ' + tag.name);
+    this.tags.splice(this.tags.indexOf(tag), 1);
     this.globalData.getTags();
   }
 

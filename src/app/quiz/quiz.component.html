@@ -14,7 +14,7 @@
     </div>
     <div>
       <span>Pick tags</span>
-      <tag *ngFor="let tag of globalData.tags" [tag]="tag"></tag>
+      <tag (click)="removeTag(tag)" *ngFor="let tag of tags" [tag]="tag"></tag>
     </div>
     <button (click)="randomizeQuestions()">Start Quiz!</button>
   </div>

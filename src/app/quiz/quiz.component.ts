@@ -7,6 +7,7 @@ import { FormControl } from '@angular/forms';
 import { Flashcard } from '../clases/flashcard';
 import { Quiz } from '../clases/quiz';
 import { Observable } from 'dexie';
+import { Tag } from '../clases/tag';
 
 @Component({
   selector: 'quiz',
@@ -25,13 +26,14 @@ export class QuizComponent implements OnInit {
   startQuiz: boolean = false;
   correctAnswers: number = 0;
   buttonLabel: string = "Next Question";
+  tags: Tag[] = [];
 
   @Output() closeEvent = new EventEmitter<boolean>();
 
   constructor(public globalData: GlobalDataService) {}
 
   ngOnInit(): void {
-    
+    this.tags = this.globalData.tags;
   }
 
   async randomizeQuestions() {
@@ -41,7 +43,7 @@ export class QuizComponent implements OnInit {
     this.quizQuestions = [];
 
     let nCards = this.numCards.value;
-    
+    console.log(nCards)
     let totalQuestions = 0;
 
     for (let val of this.globalData.tagsQuiz) {
@@ -112,6 +114,11 @@ export class QuizComponent implements OnInit {
 
   getRandomInt(max: number) {
     return Math.floor(Math.random() * max);
+  }
+
+  removeTag(tag: Tag) {
+    this.tags.splice(this.tags.indexOf(tag));
+    this.globalData.getTags();
   }
 
   close() {

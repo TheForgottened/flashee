@@ -36,9 +36,9 @@ export class CreateCardComponent implements OnInit {
   @Output() closeEvent = new EventEmitter<boolean>();
 
   constructor(public globalData: GlobalDataService) {
-    this.globalData.cardChanged.subscribe((card) => {
-      this.updateValues(card);
-    });
+    // this.globalData.cardChanged.subscribe((card) => {
+    //   this.updateValues(card);
+    // });
   }
 
   ngOnInit(): void {
@@ -56,14 +56,19 @@ export class CreateCardComponent implements OnInit {
       this.card.question = this.question.value;
       this.card.answer = this.answer.value;
       this.card.description = this.description.value;
-      //this.card.tags = this.tags.value;
-
+      //this.card.tagIDs = this.tags.value;
+      console.log('Modifying');
       this.findTags(this.card);
       if (!this.findTags(this.card)) {
         return;
       }
 
       db.cards.put(this.card);
+
+      db.tags.each(tag => {
+        console.log("adfasd " + tag.name);
+      })
+
     } else {
       let card: Flashcard = new Flashcard(
         this.question.value,
@@ -77,13 +82,14 @@ export class CreateCardComponent implements OnInit {
       db.cards.add(card);
     }
 
-    this.globalData.searchCards('', '');
     this.discard();
+    this.globalData.searchCards('', '');
+    this.globalData.getTags();
   }
 
   findTags(card: Flashcard): number {
     let tagSet = new Set<Tag>();
-    this.tags.setValue(this.tags.value.replace(/\s/g, ""))
+    this.tags.setValue(this.tags.value.replace(/\s/g, ''));
     let tagArr = this.tags.value.split(',');
 
     tagArr.forEach((tag: string) => {
@@ -98,33 +104,30 @@ export class CreateCardComponent implements OnInit {
         }
       }
     }
-    tagSet.forEach(tag => card.tagIDs!.push(tag.idString));
-    this.updateTagList(tagSet);
-
+    card.tagIDs! = [];
     
+    tagSet.forEach((tag) => { card.tagIDs!.push(tag.idString); });
+    this.updateTagList(tagSet);
 
     return 1;
   }
 
-  async updateTagList(tagSet: Set<Tag>) {
+  updateTagList(tagSet: Set<Tag>) {
     let exists = false;
     tagSet.forEach((tag) => {
       db.tags.each((dbtag) => {
-        console.log('tag name');
-        console.log(dbtag.name);
         if (tag.name === dbtag.name) {
           exists = true;
         }
-      });
+      })
 
       if (!exists) {
-        db.tags.put(tag);
+        db.tags.add(tag);
       } else {
         exists = false;
       }
     });
-
-    this.globalData.getTags();
+    this.deleteTag();
   }
 
   discard() {
@@ -145,18 +148,54 @@ export class CreateCardComponent implements OnInit {
     this.description.setValue(card.description);
     this.answer.setValue(card.answer);
     this.tags.setValue(this.getTagsString(card.tagIDs));
-    this.globalData.getTags();
+  }
+
+  async deleteTag() {
+    let tags = this.card!.tagIDs;
+    let found = false;
+    var tagsToDelete: number[] = [];
+    let tag = '';
+
+    let cards = await db.cards.toArray();
+
+    for (let tagIDString of tags!) {
+      tag = tagIDString;
+      for (let card of cards) {
+        for (let cardTagID of card.tagIDs!) {
+          if (tagIDString === cardTagID) {
+            found = true;
+          }
+        }
+      }
+
+      if (!found) {
+        let tagName = tag
+        .split(' ')
+        .map((bin) => String.fromCharCode(parseInt(bin, 2)))
+        .join('');
+        console.log("asdasdsadsadad " + tagName);
+        tag = tag.replace(/\s/g, '');
+        let tagID = +tag;
+        tagsToDelete.push(tagID);
+      } else {
+        found = false;
+      }
+    }
+    tagsToDelete.forEach((tag) => {
+      db.tags.delete(tag);
+    });
   }
 
   getTagsString(tags: string[] | undefined): string {
     let result: string = '';
 
     for (let tag of tags!) {
-      
-      db.tags.each((tag) => {
-        result += tag.name;
-        result += ',';
-      });
+      let tagName = tag
+        .split(' ')
+        .map((bin) => String.fromCharCode(parseInt(bin, 2)))
+        .join('');
+      result += tagName;
+      result += ',';
     }
 
     result = result.slice(0, result.length - 1);

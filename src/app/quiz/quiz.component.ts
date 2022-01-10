@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { GlobalDataService } from '../global-data.service';
 
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -20,7 +20,7 @@ export class QuizComponent implements OnInit {
     quizQuestions: Flashcard[] = [];
     showQuiz: boolean = false;
     cards: Flashcard[] = [];
-    currentQuestion?: Flashcard;
+    
     currentQuestionIndex: number = 0;
     answer = new FormControl('');
     startQuiz: boolean = false;
@@ -28,6 +28,7 @@ export class QuizComponent implements OnInit {
     buttonLabel: string = 'Next Question';
     tags: Tag[] = [];
 
+    @Input() currentQuestion!: Flashcard;
     @Output() closeEvent = new EventEmitter<boolean>();
 
     constructor(public globalData: GlobalDataService) {}
@@ -55,6 +56,24 @@ export class QuizComponent implements OnInit {
             return;
         } else if (this.globalData.tagsQuiz.length > nCards) {
             alert("You can't pick more tags than the number of cards.");
+            return;
+        }
+
+        let tagCards = 0;
+
+        for (let tag of this.globalData.tagsQuiz) {
+            for (let card of this.cards) {
+                for (let cardTagID of card.tagIDs!) {
+                    if (cardTagID == tag.idString) {
+                        tagCards++;
+                    }
+                }
+            }
+        }
+
+        if (tagCards < nCards) {
+            alert("Not enough cards for the chosen tags");
+            return;
         }
 
         this.quizQuestions = [];

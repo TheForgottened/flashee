@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, OnChanges } from '@angular/core';
 import { Observable } from 'rxjs';
 import { db } from '../clases/DbManager';
 import { Flashcard } from '../clases/flashcard';
@@ -14,7 +14,7 @@ import Dexie from 'dexie';
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.css'],
 })
-export class CardComponent implements OnInit {
+export class CardComponent implements OnInit, OnChanges {
   faTrash = faTrash;
   faEdit = faEdit;
   cardTags: Tag[] = [];
@@ -27,6 +27,10 @@ export class CardComponent implements OnInit {
   constructor(public globalData: GlobalDataService) {}
 
   ngOnInit(): void {
+    
+  }
+
+  ngOnChanges() {
     this.getTagsByID(this.flashcard.tagIDs);
   }
 

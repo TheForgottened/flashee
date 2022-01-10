@@ -17,7 +17,7 @@ export class TagListComponent implements OnInit {
   searchByTag() {
     if (this.globalData.createQuiz) {
       let exists = false;
-      console.log('oi?');
+
       for (let tag of this.globalData.tagsQuiz) {
         if (this.tag.id == tag.id) {
           exists = true;
@@ -25,7 +25,6 @@ export class TagListComponent implements OnInit {
       }
       if (!exists)
         this.globalData.tagsQuiz.push(this.tag);
-      console.log(this.globalData.tagsQuiz.length);
       return;
     }
 

@@ -20,6 +20,7 @@ export class AppComponent implements OnInit {
   createCard = false;
   searchCard = false;
   overlayDiv = false;
+  statistics = true;
   modCard?: Flashcard;
 
   constructor(public globalData: GlobalDataService){
@@ -33,6 +34,7 @@ export class AppComponent implements OnInit {
   newCardMenu(open:boolean):void {
     this.modCard = undefined;
     this.globalData.selectedCard = undefined;
+
     this.createCard = open;
     this.overlayDiv = open;
   }
@@ -82,6 +84,10 @@ export class AppComponent implements OnInit {
   closeEventHandler(event: any) {
     this.newCardMenu(false);
     this.globalData.createQuiz = false;
+  }
+
+  closeStatisticsEventHandler(event: boolean) {
+    this.statistics = false;
   }
 
   onModify(card: Flashcard) {

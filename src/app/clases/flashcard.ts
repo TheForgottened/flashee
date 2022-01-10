@@ -13,6 +13,10 @@ export class Flashcard {
     deck?: number;
     tagIDs?: string[];
 
+    //Statistics
+    attempts: number;
+    sucessAttempts: number;
+
     // Meta
     creationDate: Date;
 
@@ -25,5 +29,7 @@ export class Flashcard {
         this.tagIDs = [];
         this.description = description;
         this.deck = deck;
+        this.attempts = 0;
+        this.sucessAttempts = 0;
     }
 }

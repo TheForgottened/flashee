@@ -20,7 +20,7 @@ export class QuizComponent implements OnInit {
     quizQuestions: Flashcard[] = [];
     showQuiz: boolean = false;
     cards: Flashcard[] = [];
-    
+
     currentQuestionIndex: number = 0;
     answer = new FormControl('');
     startQuiz: boolean = false;
@@ -51,13 +51,40 @@ export class QuizComponent implements OnInit {
         } else if (nCards > this.cards.length) {
             alert("You can't have more cards than you own in the Quiz!");
             return;
-        } else if (this.globalData.tagsQuiz.length == 0) {
-            alert('You must pick at least 1 tag for the Quiz!');
-            return;
         } else if (this.globalData.tagsQuiz.length > nCards) {
             alert("You can't pick more tags than the number of cards.");
             return;
         }
+
+        this.quizQuestions = [];
+
+        if (this.globalData.tagsQuiz.length == 0) this.quizRandom();
+        else {
+            if(!this.quizWithTags()) this.close();
+        }
+
+        this.currentQuestion = this.quizQuestions[0];
+
+        this.showQuiz = true;
+    }
+
+    quizRandom() {
+        let nCards = this.numCards.value;
+
+        let totalQuestions = 0;
+
+        while (totalQuestions < nCards) {
+            let randomCard = this.cards[this.getRandomInt(this.cards.length)];
+
+            if (!this.repeatedQuestion(randomCard)) {
+                this.quizQuestions.push(randomCard);
+                totalQuestions++;
+            }
+        }
+    }
+
+    quizWithTags(): number{
+        let nCards = this.numCards.value;
 
         let tagCards = 0;
 
@@ -70,13 +97,11 @@ export class QuizComponent implements OnInit {
                 }
             }
         }
-
+        console.log("asdasd " + nCards + " asdgtth " + tagCards);
         if (tagCards < nCards) {
-            alert("Not enough cards for the chosen tags");
-            return;
+            alert('Not enough cards for the chosen tags');
+            return 0;
         }
-
-        this.quizQuestions = [];
 
         let nextTag = false;
 
@@ -84,14 +109,13 @@ export class QuizComponent implements OnInit {
         while (totalQuestions < nCards) {
             for (let val of this.globalData.tagsQuiz) {
                 nextTag = false;
-                while (!nextTag) {
+               // while (!nextTag) {
                     let randomCard =
                         this.cards[this.getRandomInt(this.cards.length)];
 
                     for (let cardTagID of randomCard.tagIDs!) {
                         if (cardTagID == val.idString) {
                             if (!this.repeatedQuestion(randomCard)) {
-                                console.log('quest ' + randomCard.question);
                                 this.quizQuestions.push(randomCard);
                                 totalQuestions++;
                                 nextTag = true;
@@ -99,14 +123,11 @@ export class QuizComponent implements OnInit {
                             }
                         }
                     }
-                }
+               // }
                 if (totalQuestions == nCards) break;
             }
         }
-        console.log(this.quizQuestions.length);
-        this.currentQuestion = this.quizQuestions[0];
-
-        this.showQuiz = true;
+        return 1;
     }
 
     repeatedQuestion(card: Flashcard): boolean {
@@ -119,9 +140,11 @@ export class QuizComponent implements OnInit {
     }
 
     onSubmitAnswer() {
-        if (this.answer.value === this.currentQuestion?.answer) {
+        if (this.answer.value.toLowerCase().trim() === this.currentQuestion?.answer.toLowerCase().trim()) {
             this.correctAnswers++;
         }
+
+        this.answer.setValue('');
 
         if (this.currentQuestionIndex == this.quizQuestions.length - 1) {
             let tagIDs: string[] = [];

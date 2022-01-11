@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnChanges, SimpleChanges } from '@angular/core';
 import { liveQuery, Observable } from 'dexie';
 import { stringify } from 'querystring';
 import { BehaviorSubject, Subject } from 'rxjs';
@@ -11,21 +11,28 @@ import { Tag } from './clases/tag';
 @Injectable({
   providedIn: 'root',
 })
-export class GlobalDataService {
+export class GlobalDataService implements OnChanges{
   public tags: Tag[] = [];
   public selectedCard?: Flashcard = undefined;
   public cardChanged: Subject<Flashcard> = new Subject<Flashcard>();
   public cardTags: Tag[] = [];
-  public cards: Observable<Flashcard[]> = this.getCards();
+  public cardsObs: Observable<Flashcard[]> = this.getCardsObs();
+  public cards: Flashcard[] = [];
   public filterCards: Flashcard[] = [];
   public filterCardsObs: Subject<Flashcard[]> = new Subject<Flashcard[]>();
   public createQuiz: boolean = false;
   public tagsQuiz: Tag[] = [];
+  public createCard: boolean = false;
 
   constructor() {
     this.cardChanged.subscribe((card) => {
       this.selectedCard = card;
     });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.getCards();
+    this.getTags();
   }
 
   setCard(card?: Flashcard) {
@@ -39,13 +46,20 @@ export class GlobalDataService {
     return this.selectedCard?.question;
   }
 
-  getCards(): Observable<Flashcard[]> {
+  getCardsObs(): Observable<Flashcard[]> {
     return liveQuery(() => db.cards.toArray());
   }
 
-  getTags() {
+  async getCards() {
+    this.cards = [];
+    await db.cards.each(card => {
+      this.cards.push(card);
+    })
+  }
+
+  async getTags() {
     this.tags = [];
-    db.tags.each((tag) => {
+    await db.tags.each((tag) => {
       this.tags.push(tag);
     });
   }

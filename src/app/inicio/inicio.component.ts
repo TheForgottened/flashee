@@ -36,6 +36,22 @@ export class InicioComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    var cards = document.getElementById('flashcards');
+    if (this.globalData.createCard) {
+      //cards?.classList.toggle('card-animation');
+      
+    } else {
+      cards?.animate([
+        {
+          opacity: 0
+        },
+        {
+          opacity: 1
+        }
+      ], {
+        duration: 1000,
+      });
+    }
     //db.delete().then (()=>db.open());
     //db.tags.clear();
     

@@ -30,7 +30,7 @@ export class CardComponent implements OnInit, OnChanges {
   constructor(public globalData: GlobalDataService) {}
 
   ngOnInit(): void {
-    
+   
   }
 
   ngOnChanges() {
@@ -63,6 +63,8 @@ export class CardComponent implements OnInit, OnChanges {
     var tagsToDelete: number[] = [];
     let index = 0;
     let tag = '';
+    
+    this.globalData.filterCards.splice(this.globalData.filterCards.indexOf(this.flashcard), 1);
 
     db.cards.delete(this.flashcard.id);
     //this.deleteEvent.emit(this.flashcard);
@@ -91,12 +93,22 @@ export class CardComponent implements OnInit, OnChanges {
         }
       
     }
-    tagsToDelete.forEach((tag) => {
+
+    let removeTag: Tag;
+
+    tagsToDelete.forEach(async (tag) => {
+      
+      for (let tagg of this.globalData.tags) {
+        if (tagg.id == tag) {
+          removeTag = tagg;
+          break;
+        }
+      }
+      if (removeTag)
+        this.globalData.tags.splice(this.globalData.tags.indexOf(removeTag), 1)
       db.tags.delete(tag);
     });
-
-    this.globalData.searchCards('', '');
-    this.globalData.getTags();
+      
   }
 
   sleep(ms: number) {

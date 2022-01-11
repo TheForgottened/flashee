@@ -1,5 +1,5 @@
-<div class="cards-container">
-  <flashcard *ngFor="let card of cards" [flashcard]="card"
+<div id="flashcards" class="cards-container">
+  <flashcard id="flashcard" *ngFor="let card of cards" [flashcard]="card"
     (modifyEvent)="onModify($event)">
   </flashcard>
 

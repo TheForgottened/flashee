@@ -51,7 +51,7 @@ export class CreateCardComponent implements OnInit {
     }
   }
 
-  newCard() {
+  async newCard() {
     if (this.card) {
       this.card.question = this.question.value;
       this.card.answer = this.answer.value;
@@ -63,12 +63,8 @@ export class CreateCardComponent implements OnInit {
         return;
       }
 
-      db.cards.put(this.card);
-
-      db.tags.each(tag => {
-        console.log("adfasd " + tag.name);
-      })
-
+      await db.cards.put(this.card);
+      this.globalData.filterCards.push(this.card);
     } else {
       let card: Flashcard = new Flashcard(
         this.question.value,
@@ -79,11 +75,13 @@ export class CreateCardComponent implements OnInit {
         return;
       }
 
-      db.cards.add(card);
+      await db.cards.add(card);
+      this.globalData.filterCards.push(card);
     }
 
     this.discard();
-    this.globalData.searchCards('', '');
+    
+    //this.globalData.searchCards('', '');
     this.globalData.getTags();
   }
 
@@ -92,9 +90,10 @@ export class CreateCardComponent implements OnInit {
     this.tags.setValue(this.tags.value.replace(/\s/g, ''));
     let tagArr = this.tags.value.split(',');
 
-    tagArr.forEach((tag: string) => {
+    for (let tag of tagArr) {
+      if (tag == '') continue;
       tagSet.add(new Tag(tag));
-    });
+    }
 
     for (let i = 0; i < tagArr.length; i++) {
       for (let j = i + 1; j < tagArr.length; j++) {

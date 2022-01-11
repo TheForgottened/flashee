@@ -26,14 +26,6 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.globalData.getTags();
   }
-  
-  newCardMenu(open:boolean):void {
-    this.modCard = undefined;
-    this.globalData.selectedCard = undefined;
-
-    this.createCard = open;
-    this.overlayDiv = open;
-  }
 
     newCardMenu(open: boolean): void {
         this.modCard = undefined;

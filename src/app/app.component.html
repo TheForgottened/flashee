@@ -10,13 +10,13 @@
     "
 >
     <create-card
-        (closeEvent)="closeEventHandler($event)"
+     
         id="card-creation"
         *ngIf="globalData.selectedCard || this.createCard"
         [card]="globalData.selectedCard"
     ></create-card>
     <quiz
-        (closeEvent)="closeEventHandler($event)"
+        
         *ngIf="globalData.createQuiz"
     ></quiz>
 </div>
@@ -28,7 +28,7 @@
 <div class="grid-container">
   <div class="header">
     <p style="font-size: 2em;color: var(--pink); font-weight: bold;"><i>Flashee</i></p>
-    <search-card (closeEvent)="closeEventHandler($event)" id="card-search" style="width: 50%;"></search-card> 
+    <search-card id="card-search" style="width: 50%;"></search-card> 
   </div>
 
   <div class="vertical-menu-left">

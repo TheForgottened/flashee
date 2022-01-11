@@ -17,7 +17,7 @@
     justify-content: space-between;
 
     width: 20em;
-    height: 10em;
+    height:fit-content;
 
     background-color: var(--backgroundLight);
     border-radius: 1em;
@@ -64,7 +64,7 @@
 }
 
 .card-tags > button {
-    border: .2em double var(--backgroundLighter);
+    border: .2em solid rgba(0, 0, 0, 0.226);
     text-align: center;
     border-radius: 1em;
     background-color: var(--purple);

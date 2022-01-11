@@ -3,7 +3,6 @@ import { FormControl } from '@angular/forms';
 import { liveQuery } from 'dexie';
 import { db } from '../clases/DbManager';
 import { Flashcard } from '../clases/flashcard';
-import { CARDS } from '../clases/prueba-tarjetas';
 import { Tag } from '../clases/tag';
 import { GlobalDataService } from '../global-data.service';
 

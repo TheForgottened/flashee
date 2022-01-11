@@ -21,37 +21,37 @@
     ></quiz>
 </div>
 
+<div class="overlay" *ngIf="this.statistics">
+  <statistics (closeEvent)="closeStatisticsEventHandler($event)"></statistics>
+</div>
+
 <div class="grid-container">
-    <div class="header">
-        <p style="color: var(--pink); font-weight: bold">Flashee</p>
-        <search-card
-            (closeEvent)="closeEventHandler($event)"
-            id="card-search"
-            style="width: 50%"
-        ></search-card>
-    </div>
+  <div class="header">
+    <p style="font-size: 2em;color: var(--pink); font-weight: bold;"><i>Flashee</i></p>
+    <search-card (closeEvent)="closeEventHandler($event)" id="card-search" style="width: 50%;"></search-card> 
+  </div>
 
-    <div class="vertical-menu-left">
-        <button (click)="globalData.searchCards('', '', false)">
-            Show all cards
-        </button>
-        <tag *ngFor="let tag of globalData.tags" [tag]="tag"></tag>
-    </div>
+  <div class="vertical-menu-left">
+    <button (click)="globalData.searchCards('','',false)">Show all cards</button>
+    <tag *ngFor="let tag of globalData.tags" [tag]="tag"></tag>
+  </div>
 
-    <div class="main-screen">
-        <app-inicio (modCardEvent)="onModify($event)"></app-inicio>
-    </div>
+  <div class="main-screen">
+    <app-inicio (modCardEvent)="onModify($event)" ></app-inicio>
+  </div>
 
-    <div class="vertical-menu-right">
-        <button class="green" (click)="newCardMenu(true)">New card</button>
-
-        <input hidden type="file" #uploader (change)="importDeck($event)" />
-        <button class="blue" (click)="uploader.click()">Import</button>
-
-        <button class="blue" (click)="exportDeck()">Export</button>
-        <button>Stats</button>
-        <button class="greenyellow" (click)="newQuiz()">Quiz</button>
-    </div>
+  <div class="vertical-menu-right">
+    <button class="green" (click)='newCardMenu(true)'>New card</button>
+  
+    <input hidden type="file" #uploader (change)="importDeck($event)"/>
+    <button class="blue" (click)="uploader.click()">
+      Import
+    </button>
+  
+    <button class="blue" (click)='exportDeck()'>Export</button>
+    <button (click)='this.statistics = true'>Stats(WIP)</button>
+    <button class="greenyellow" (click)="globalData.createQuiz=true">Quiz</button>
+  </div>
 </div>
 
 <!-- Footer -->

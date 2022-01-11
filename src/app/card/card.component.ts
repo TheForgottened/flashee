@@ -18,6 +18,9 @@ export class CardComponent implements OnInit, OnChanges {
   faTrash = faTrash;
   faEdit = faEdit;
   cardTags: Tag[] = [];
+
+  showAnswer:boolean = false;
+
   @Input() flashcard!: Flashcard;
 
   @Output() modifyEvent = new EventEmitter<Flashcard>();
@@ -100,5 +103,10 @@ export class CardComponent implements OnInit, OnChanges {
     return new Promise(function (resolve) {
       setTimeout(resolve, ms);
     });
+  }
+
+  onAnswer(mouse:boolean) {    
+    this.showAnswer = mouse;
+    console.log("Mouse",this.showAnswer);
   }
 }

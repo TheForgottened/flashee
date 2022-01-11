@@ -1,4 +1,4 @@
-<section class="card-container">
+<section class="card-container" (mouseenter)="onAnswer(true)" (mouseleave)="onAnswer(false)">
   <div class="card-header">
     <span class="card-title">{{flashcard.question}}</span>
     <div class="button-container" *ngIf="!globalData.createQuiz">
@@ -9,6 +9,10 @@
 
   <div class="card-body">
     <p>{{flashcard.description}}</p>
+  </div>
+
+  <div class="card-header" *ngIf="this.showAnswer">
+    <p><i>Answer:</i> {{flashcard.answer}}</p>
   </div>
 
   <div class="card-tags">

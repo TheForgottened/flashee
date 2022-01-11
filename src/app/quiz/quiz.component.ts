@@ -49,8 +49,8 @@ export class QuizComponent implements OnInit {
             alert('You must have at least 1 card in the Quiz!');
             return;
         } else if (nCards > this.cards.length) {
-            alert("You can't have more cards than you own in the Quiz!");
-            return;
+            alert("You can't have more cards than you own in the Quiz!, the number of cards will be: "+this.cards.length);
+            nCards = this.cards.length;;
         } else if (this.globalData.tagsQuiz.length == 0) {
             alert('You must pick at least 1 tag for the Quiz!');
             return;
@@ -61,6 +61,7 @@ export class QuizComponent implements OnInit {
 
         let tagCards = 0;
 
+        // Do a query
         for (let tag of this.globalData.tagsQuiz) {
             for (let card of this.cards) {
                 for (let cardTagID of card.tagIDs!) {

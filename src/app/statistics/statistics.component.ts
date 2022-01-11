@@ -1,9 +1,12 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { GlobalDataService } from '../global-data.service';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { liveQuery, Observable } from 'dexie';
 
 import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
 import { Color, Label } from 'ng2-charts';
+import { db } from '../clases/DbManager';
+import { Quiz } from '../clases/quiz';
 
 
 @Component({
@@ -14,11 +17,9 @@ import { Color, Label } from 'ng2-charts';
 
 export class StatisticsComponent implements OnInit {
 
-  lineChartData: ChartDataSets[] = [
-    { data: [85, 72, 78, 75, 77, 75], label: 'Crude oil prices' },
-  ];
+  lineChartData: ChartDataSets[] = [];
  
-  lineChartLabels: Label[] = ['January', 'February', 'March', 'April', 'May', 'June'];
+  lineChartLabels: Label[] = [];
  
   lineChartOptions = {
     responsive: true,
@@ -40,10 +41,36 @@ export class StatisticsComponent implements OnInit {
 
   @Output() closeEvent = new EventEmitter<boolean>();
 
-  constructor(private globalData:GlobalDataService) { }
+  constructor(private globalData:GlobalDataService) {
+
+    let dates: Label[] = [];
+    let data:number[] = [];
+
+    db.quizzes.each(q => {
+      dates.push(q.date.toISOString().split('T')[0])
+      data.push((q.correctAnswers/q.nQuestions)*10);
+      console.log(q)
+    });
+
+
+    this.lineChartLabels= dates;
+    this.lineChartData.push(
+      { data: data, label: 'Score' }
+    )
+
+    
+
+  }
+
+  fetchData() {
+    
+  }
   
 
   ngOnInit(): void {
+    
+
+    
   }
 
   close(){

@@ -107,6 +107,5 @@ export class CardComponent implements OnInit, OnChanges {
 
   onAnswer(mouse:boolean) {    
     this.showAnswer = mouse;
-    console.log("Mouse",this.showAnswer);
   }
 }

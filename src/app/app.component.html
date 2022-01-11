@@ -21,13 +21,13 @@
     ></quiz>
 </div>
 
-<div class="" *ngIf="this.statistics">
+<div class="overlay" *ngIf="this.statistics">
   <statistics (closeEvent)="closeStatisticsEventHandler($event)"></statistics>
 </div>
 
 <div class="grid-container">
   <div class="header">
-    <p style="color: var(--pink); font-weight: bold;">Flashee</p>
+    <p style="font-size: 2em;color: var(--pink); font-weight: bold;"><i>Flashee</i></p>
     <search-card (closeEvent)="closeEventHandler($event)" id="card-search" style="width: 50%;"></search-card> 
   </div>
 
@@ -49,7 +49,7 @@
     </button>
   
     <button class="blue" (click)='exportDeck()'>Export</button>
-    <button (click)='this.statistics = true'>Stats</button>
+    <button (click)='this.statistics = true'>Stats(WIP)</button>
     <button class="greenyellow" (click)="globalData.createQuiz=true">Quiz</button>
   </div>
 </div>

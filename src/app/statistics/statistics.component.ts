@@ -7,6 +7,7 @@ import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
 import { Color, Label } from 'ng2-charts';
 import { db } from '../clases/DbManager';
 import { Quiz } from '../clases/quiz';
+import { Flashcard } from '../clases/flashcard';
 
 
 @Component({
@@ -35,6 +36,12 @@ export class StatisticsComponent implements OnInit {
   public lineChartLegend = true;
   public lineChartPlugins = [];
   public lineChartType: ChartType = 'line';
+
+  // Pie chart
+
+  public pieChartLabels: string[] = [];
+  public pieChartData: number[] = [];
+  public pieChartType: ChartType = 'pie';
   
   
   faTimes = faTimes;
@@ -43,6 +50,7 @@ export class StatisticsComponent implements OnInit {
 
   constructor(private globalData:GlobalDataService) {
 
+    // Line chart
     let dates: Label[] = [];
     let data:number[] = [];
 
@@ -56,25 +64,57 @@ export class StatisticsComponent implements OnInit {
     this.lineChartLabels= dates;
     this.lineChartData.push(
       { data: data, label: 'Score' }
-    )
+    ) 
 
-    
+    // Pie chart
+    let ncards = 0;
+    let cards = db.cards.toArray();
+    let arrCards:Flashcard[];
 
-  }
+    cards.then(cards => arrCards = cards);
 
-  fetchData() {
-    
+    db.tags.each(t => {
+      this.pieChartLabels.push(t.name);
+
+        arrCards.forEach(c => {         
+          if (c.tagIDs?.includes(this.nameBinary(t.name))) {
+            ncards++;            
+          }
+        })
+      
+      this.pieChartData.push(ncards);
+      ncards= 0;
+    })
+
+    console.log(this.pieChartLabels,this.pieChartData)
+
   }
   
 
-  ngOnInit(): void {
-    
-
-    
+  ngOnInit(): void {    
   }
 
   close(){
     this.closeEvent.emit(true);
   }
 
+  nameBinary(name: string):string {
+    let newID = '';
+    for (let index = 0; index < name.length; index++) {
+      newID += name[index].charCodeAt(0).toString(2);
+      if (index != name.length-1) newID += " ";
+    }
+    
+
+    return newID;
+  }
+
+  // events
+  public chartClicked(e: any): void {
+
+  }
+
+  public chartHovered(e: any): void {
+
+  }
 }

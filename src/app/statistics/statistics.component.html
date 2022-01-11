@@ -1,17 +1,21 @@
 <div>
-  <div>
-    <h3>Statistics</h3>
-    <fa-icon style="color: var(--red);" [icon]="faTimes" (click)="close()"></fa-icon>
+    <div>
+        <h3>Statistics</h3>
+        <fa-icon style="color: var(--red);" [icon]="faTimes" (click)="close()"></fa-icon>
+    </div>
+    <div class="chart-wrapper">
+        <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
+            [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType"
+            [plugins]="lineChartPlugins">
+        </canvas>
+    </div>
+
+    <div class="chart-wrapper">
+      <canvas baseChart
+          [data]="pieChartData"
+          [labels]="pieChartLabels"
+          [chartType]="pieChartType"
+          (chartHover)="chartHovered($event)"
+          (chartClick)="chartClicked($event)"></canvas>
   </div>
-  <div class="chart-wrapper">
-    <canvas baseChart 
-        [datasets]="lineChartData" 
-        [labels]="lineChartLabels" 
-        [options]="lineChartOptions"
-        [colors]="lineChartColors" 
-        [legend]="lineChartLegend" 
-        [chartType]="lineChartType"
-        [plugins]="lineChartPlugins">
-    </canvas>
-</div>
 </div>

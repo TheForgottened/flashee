@@ -1,0 +1,143 @@
+{
+  "decks": [],
+  "quizzes": [
+    {
+      "id": 1641897047248,
+      "date": "2022-01-11T10:30:47.248Z",
+      "nQuestions": 1,
+      "correctAnswers": 1,
+      "selectedTags": []
+    },
+    {
+      "id": 1641903034605,
+      "date": "2022-01-11T12:10:34.605Z",
+      "nQuestions": 4,
+      "correctAnswers": 4,
+      "selectedTags": [
+        "1000111 1100101 1110010 1101101 1100001 1101110"
+      ]
+    }
+  ],
+  "tags": [
+    {
+      "idString": "1001101 1100001 1110100 1101000",
+      "id": 1.0011011100001111e+27,
+      "name": "Math",
+      "related": {}
+    },
+    {
+      "idString": "1000111 1100101 1110010 1101101 1100001 1101110",
+      "id": 1.0001111100101111e+41,
+      "name": "German",
+      "related": {}
+    },
+    {
+      "idString": "1010000 1101111 1110010 1110100 1110101 1100111 1110101 1100101 1110011 1100101",
+      "id": 1.0100001101111111e+69,
+      "name": "Portuguese",
+      "related": {}
+    }
+  ],
+  "cards": [
+    {
+      "id": 1641897323103,
+      "question": "red",
+      "answer": "rot",
+      "creationDate": "2022-01-11T10:35:23.103Z",
+      "tagIDs": [
+        "1000111 1100101 1110010 1101101 1100001 1101110"
+      ],
+      "description": "Translate to German"
+    },
+    {
+      "id": 1641897364252,
+      "question": "blue",
+      "answer": "blau",
+      "creationDate": "2022-01-11T10:36:04.252Z",
+      "tagIDs": [
+        "1000111 1100101 1110010 1101101 1100001 1101110"
+      ],
+      "description": "Translate to German"
+    },
+    {
+      "id": 1641897382054,
+      "question": "orange",
+      "answer": "die orange",
+      "creationDate": "2022-01-11T10:36:22.054Z",
+      "tagIDs": [
+        "1000111 1100101 1110010 1101101 1100001 1101110"
+      ],
+      "description": "Translate to German"
+    },
+    {
+      "id": 1641897411251,
+      "question": "black",
+      "answer": "schwarz",
+      "creationDate": "2022-01-11T10:36:51.251Z",
+      "tagIDs": [
+        "1000111 1100101 1110010 1101101 1100001 1101110"
+      ],
+      "description": "Translate to German"
+    },
+    {
+      "id": 1641897608316,
+      "question": "diamond",
+      "answer": "diamant",
+      "creationDate": "2022-01-11T10:40:08.316Z",
+      "tagIDs": [
+        "1000111 1100101 1110010 1101101 1100001 1101110"
+      ],
+      "description": "Translate to German"
+    },
+    {
+      "id": 1641898588112,
+      "question": "function",
+      "answer": "A function is a special relationship where each input has a single output.",
+      "creationDate": "2022-01-11T10:56:28.112Z",
+      "tagIDs": [
+        "1001101 1100001 1110100 1101000"
+      ],
+      "description": "Describe what a function is"
+    },
+    {
+      "id": 1641902807254,
+      "question": "a TV",
+      "answer": "uma televisão",
+      "creationDate": "2022-01-11T12:06:47.254Z",
+      "tagIDs": [
+        "1010000 1101111 1110010 1110100 1110101 1100111 1110101 1100101 1110011 1100101"
+      ],
+      "description": "Translate to Portuguese"
+    },
+    {
+      "id": 1641902836083,
+      "question": "a table",
+      "answer": "uma mesa",
+      "creationDate": "2022-01-11T12:07:16.083Z",
+      "tagIDs": [
+        "1010000 1101111 1110010 1110100 1110101 1100111 1110101 1100101 1110011 1100101"
+      ],
+      "description": "Translate to Portuguese"
+    },
+    {
+      "id": 1641902852425,
+      "question": "a chair",
+      "answer": "uma cadeira",
+      "creationDate": "2022-01-11T12:07:32.425Z",
+      "tagIDs": [
+        "1010000 1101111 1110010 1110100 1110101 1100111 1110101 1100101 1110011 1100101"
+      ],
+      "description": "Translate to Portuguese"
+    },
+    {
+      "id": 1641902876771,
+      "question": "a tree",
+      "answer": "uma árvore",
+      "creationDate": "2022-01-11T12:07:56.771Z",
+      "tagIDs": [
+        "1010000 1101111 1110010 1110100 1110101 1100111 1110101 1100101 1110011 1100101"
+      ],
+      "description": "Translate to Portuguese"
+    }
+  ]
+}

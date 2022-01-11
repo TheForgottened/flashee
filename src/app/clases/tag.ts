@@ -16,14 +16,10 @@ export class Tag {
     }
     this.idString = newID;
 
-    //console.log(String.fromCharCode(+newID))
     newID = newID.replace(/\s/g, "");
 
-    //console.log(newID);
-
     this.id = Number(newID);
-    //console.log("asdasd");
-    //console.log(this.id);
+
     this.name = name;
     this.related = new Set<Tag>();
   }

@@ -28,6 +28,8 @@ export class QuizComponent implements OnInit {
     buttonLabel: string = 'Next Question';
     tags: Tag[] = [];
 
+    time!: number;
+
     @Input() currentQuestion!: Flashcard;
     @Output() closeEvent = new EventEmitter<boolean>();
 
@@ -68,6 +70,7 @@ export class QuizComponent implements OnInit {
 
         this.currentQuestion = this.quizQuestions[0];
 
+        this.time = Date.now()
         this.showQuiz = true;
     }
 
@@ -157,10 +160,13 @@ export class QuizComponent implements OnInit {
                 tagIDs.push(tag.idString);
             });
 
+            this.time = Date.now() - this.time;
+
             let q = new Quiz(
                 this.quizQuestions.length,
                 this.correctAnswers,
-                tagIDs
+                tagIDs,
+                this.time,
             );
 
             db.quizzes.add(q);

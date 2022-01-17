@@ -32,6 +32,8 @@ export class StatisticsComponent implements OnInit {
       backgroundColor: 'rgba(255,255,0,0.28)',
     },
   ];
+
+  time: number = 0;
  
   public lineChartLegend = true;
   public lineChartPlugins = [];
@@ -52,14 +54,14 @@ export class StatisticsComponent implements OnInit {
 
     // Line chart
     let dates: Label[] = [];
-    let data:number[] = [];
+    let data: number[] = [];
 
     db.quizzes.each(q => {
       dates.push(q.date.toISOString().split('T')[0])
       data.push((q.correctAnswers/q.nQuestions)*10);
+      this.time += q.time
       console.log(q)
-    });
-
+    })
 
     this.lineChartLabels= dates;
     this.lineChartData.push(
@@ -107,6 +109,25 @@ export class StatisticsComponent implements OnInit {
     
 
     return newID;
+  }
+
+  getPracticeTime(time: number): string {   
+    //Get hours from milliseconds
+    var hours = time / (1000*60*60);
+    var absoluteHours = Math.floor(hours);
+    var h = absoluteHours > 9 ? absoluteHours : '0' + absoluteHours;
+
+    //Get remainder from hours and convert to minutes
+    var minutes = (hours - absoluteHours) * 60;
+    var absoluteMinutes = Math.floor(minutes);
+    var m = absoluteMinutes > 9 ? absoluteMinutes : '0' +  absoluteMinutes;
+
+    //Get remainder from minutes and convert to seconds
+    var seconds = (minutes - absoluteMinutes) * 60;
+    var absoluteSeconds = Math.floor(seconds);
+    var s = absoluteSeconds > 9 ? absoluteSeconds : '0' + absoluteSeconds;
+
+    return h + ':' + m + ':' + s;
   }
 
   // events

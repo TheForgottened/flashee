@@ -6,12 +6,13 @@ import { Tag } from "./tag";
 export class Flashcard {
     id: number;
 
-    // Contetnt
+    // Content
     question: string;
     description?: string;
     answer: string;
     deck?: number;
     tagIDs?: string[];
+    difficulty?: string;
 
     //Statistics
     attempts: number;
@@ -21,7 +22,7 @@ export class Flashcard {
     creationDate: Date;
 
 
-    constructor(question:string, answer:string, description?:string, deck?: number) {
+    constructor(question:string, answer:string, description?:string, difficulty?: string, deck?: number) {
         this.id = Date.now()
         this.question = question;
         this.answer = answer;
@@ -29,6 +30,7 @@ export class Flashcard {
         this.tagIDs = [];
         this.description = description;
         this.deck = deck;
+        this.difficulty = difficulty;
         this.attempts = 0;
         this.sucessAttempts = 0;
     }

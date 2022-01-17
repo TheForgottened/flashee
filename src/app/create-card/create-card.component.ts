@@ -28,6 +28,7 @@ export class CreateCardComponent implements OnInit {
   answer = new FormControl('');
   tags = new FormControl('');
   description = new FormControl('');
+  difficulty = new FormControl('');
 
   //private globalDataService: any;
   public cardObs?: Observable<Flashcard>;
@@ -47,6 +48,7 @@ export class CreateCardComponent implements OnInit {
       this.question.setValue(this.card.question);
       this.description.setValue(this.card.description);
       this.answer.setValue(this.card.answer);
+      this.difficulty.setValue(this.card.difficulty)
       this.tags.setValue(this.getTagsString(this.card.tagIDs));
     }
   }
@@ -56,12 +58,14 @@ export class CreateCardComponent implements OnInit {
       this.card.question = this.question.value;
       this.card.answer = this.answer.value;
       this.card.description = this.description.value;
+      this.card.difficulty = this.difficulty.value;
       //this.card.tagIDs = this.tags.value;
       console.log('Modifying');
       this.findTags(this.card);
       if (!this.findTags(this.card)) {
         return;
       }
+      console.log(this.card)
 
       await db.cards.put(this.card);
       this.globalData.filterCards.push(this.card);
@@ -69,12 +73,14 @@ export class CreateCardComponent implements OnInit {
       let card: Flashcard = new Flashcard(
         this.question.value,
         this.answer.value,
-        this.description.value
+        this.description.value,
+        this.difficulty.value,
       );
       if (!this.findTags(card)) {
         return;
       }
 
+      console.log(card);
       await db.cards.add(card);
       this.globalData.filterCards.push(card);
     }
@@ -134,6 +140,7 @@ export class CreateCardComponent implements OnInit {
     this.description.setValue('');
     this.answer.setValue('');
     this.tags.setValue('');
+    this.difficulty.setValue('');
     console.log(this.globalData.getCardQuestion());
   }
 
@@ -146,6 +153,7 @@ export class CreateCardComponent implements OnInit {
     this.question.setValue(card.question);
     this.description.setValue(card.description);
     this.answer.setValue(card.answer);
+    this.difficulty.setValue(card.difficulty);
     this.tags.setValue(this.getTagsString(card.tagIDs));
   }
 

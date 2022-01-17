@@ -62,6 +62,10 @@
     overflow: auto;
 }
 
+.card-difficulty {
+    font-weight: bold;
+}
+
 .card-body {
     text-align: center;
     /* overflow: auto; */

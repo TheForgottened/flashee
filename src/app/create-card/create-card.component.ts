@@ -146,6 +146,7 @@ export class CreateCardComponent implements OnInit {
 
   close() {
     this.globalData.selectedCard = undefined;
+    this.globalData.createCard = false;
     this.closeEvent.emit(true);
   }
 

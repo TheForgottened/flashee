@@ -30,7 +30,6 @@ export class AppComponent implements OnInit {
     newCardMenu(open: boolean): void {
         this.modCard = undefined;
         this.globalData.selectedCard = undefined;
-        this.createCard = open;
         this.globalData.createCard = open;
         this.overlayDiv = open;
     }

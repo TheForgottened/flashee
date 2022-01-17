@@ -3,16 +3,14 @@
 <div
     class="overlay"
     *ngIf="
-        overlayDiv ||
         globalData.selectedCard ||
-        this.createCard ||
+        globalData.createCard ||
         globalData.createQuiz
     "
 >
     <create-card
-     
         id="card-creation"
-        *ngIf="globalData.selectedCard || this.createCard"
+        *ngIf="globalData.selectedCard || globalData.createCard"
         [card]="globalData.selectedCard"
     ></create-card>
     <quiz

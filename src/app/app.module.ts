@@ -18,6 +18,7 @@ import { SearchCardComponent } from './search-card/search-card.component';
 import { GlobalDataService } from './global-data.service';
 import { QuizComponent } from './quiz/quiz.component';
 
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { QuizComponent } from './quiz/quiz.component';
     FormsModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    ChartsModule
   ],
   providers: [GlobalDataService],
   bootstrap: [AppComponent]

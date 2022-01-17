@@ -2,7 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { liveQuery } from 'dexie';
 import { DbManager, db } from '../clases/DbManager';
 import { Flashcard } from '../clases/flashcard';
-import { CARDS } from '../clases/prueba-tarjetas';
+import { Quiz } from '../clases/quiz';
 import { GlobalDataService } from '../global-data.service';
 
 @Component({
@@ -54,5 +54,6 @@ export class InicioComponent implements OnInit {
     }
     //db.delete().then (()=>db.open());
     //db.tags.clear();
+    
   }
 }

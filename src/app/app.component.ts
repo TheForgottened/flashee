@@ -14,17 +14,18 @@ const indexExportImport = require('indexeddb-export-import');
 })
 export class AppComponent implements OnInit {
     title = 'Flashee';
-
-    createCard = false;
-    searchCard = false;
-    overlayDiv = false;
-    modCard?: Flashcard;
+  
+  createCard = false;
+  searchCard = false;
+  overlayDiv = false;
+  statistics = false;
+  modCard?: Flashcard;
 
     constructor(public globalData: GlobalDataService) {}
 
-    ngOnInit(): void {
-        this.globalData.getTags();
-    }
+  ngOnInit(): void {
+    this.globalData.getTags();
+  }
 
     newCardMenu(open: boolean): void {
         this.modCard = undefined;
@@ -97,14 +98,14 @@ export class AppComponent implements OnInit {
         );
     }
 
-    closeEventHandler(event: any) {
-        this.newCardMenu(false);
-        this.globalData.createQuiz = false;
-    }
+  closeStatisticsEventHandler(event: boolean) {
+    this.statistics = false;
+  }
 
-    onModify(card: Flashcard) {
-        //this.modCard = card;
-        this.createCard = false;
-        this.createCard = true;
-    }
+  onModify(card: Flashcard) {
+    //this.modCard = card;
+    this.createCard = false;
+    this.createCard = true;
+  }
+
 }

@@ -26,11 +26,11 @@
     padding: 1em;
 }
 
-.card-container:hover {
+#card-container:hover {
     border: 0.1em solid var(--foreground);
 }
 
-.card-container > * {
+#card-container > * {
     width: 100%;
 }
 
@@ -38,6 +38,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    
 }
 
 .button-container > fa-icon {
@@ -57,10 +58,14 @@
 
 .card-title {
     font-weight: bold;
+    max-width: fit-content;
+    overflow: auto;
 }
 
 .card-body {
     text-align: center;
+    /* overflow: auto; */
+    overflow: auto;
 }
 
 .card-tags > button {
@@ -73,4 +78,107 @@
 
     float: right;
     margin: 0.2em;
+}
+
+.card-answer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    overflow: auto;
+}
+
+.card-title::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    padding: 2px;
+}
+  
+/* Track */
+.card-title::-webkit-scrollbar-track {
+    background: var(--background);
+}
+
+/* Handle */
+.card-title::-webkit-scrollbar-thumb {
+    background: var(--backgroundLight);
+    border-radius: 5px;
+    border: 1px solid #3A3D41;
+}
+  
+/* Handle on hover */
+.card-title::-webkit-scrollbar-thumb:hover {
+    background: var(--backgroundLighter);
+    cursor: pointer !important;
+}
+
+.card-body::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    padding: 2px;
+}
+  
+/* Track */
+.card-body::-webkit-scrollbar-track {
+    background: var(--background);
+}
+
+/* Handle */
+.card-body::-webkit-scrollbar-thumb {
+    background: var(--backgroundLight);
+    border-radius: 5px;
+    border: 1px solid #3A3D41;
+}
+  
+/* Handle on hover */
+.card-body::-webkit-scrollbar-thumb:hover {
+    background: var(--backgroundLighter);
+    cursor: pointer !important;
+}
+
+.card-answer::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    padding: 2px;
+}
+  
+/* Track */
+.card-answer::-webkit-scrollbar-track {
+    background: var(--background);
+}
+
+/* Handle */
+.card-answer::-webkit-scrollbar-thumb {
+    background: var(--backgroundLight);
+    border-radius: 5px;
+    border: 1px solid #3A3D41;
+}
+  
+/* Handle on hover */
+.card-answer::-webkit-scrollbar-thumb:hover {
+    background: var(--backgroundLighter);
+    cursor: pointer !important;
+}
+
+.card-tags::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    padding: 2px;
+}
+  
+/* Track */
+.card-tags::-webkit-scrollbar-track {
+    background: var(--background);
+}
+
+/* Handle */
+.card-tags::-webkit-scrollbar-thumb {
+    background: var(--backgroundLight);
+    border-radius: 5px;
+    border: 1px solid #3A3D41;
+}
+  
+/* Handle on hover */
+.card-tags::-webkit-scrollbar-thumb:hover {
+    background: var(--backgroundLighter);
+    cursor: pointer !important;
 }

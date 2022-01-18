@@ -8,28 +8,11 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { Tag } from '../clases/tag';
 import Dexie from 'dexie';
-import { animate, query, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'flashcard',
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.css'],
-  // animations:[
-  //   trigger('onShowAnswer', [
-  //     state('true', style({
-  //       height: 'calc(height+40px)',
-  //       width: 'calc(width+40px)',
-  //       'z-index': 20
-  //     })),
-  //     state('false', style({
-  //       'z-index': 0
-  //     })),
-  //     transition('false <=> true', [
-  //       animate('0.4s ease-in-out')
-  //     ]),
-      
-  //   ])
-  // ]
 })
 export class CardComponent implements OnInit, OnChanges {
   faTrash = faTrash;
@@ -64,9 +47,11 @@ export class CardComponent implements OnInit, OnChanges {
   getTagsByID(id?: string[]) {
     this.cardTags = [];
     db.tags.each((tag) => {
+      
       id!.forEach((tagID) => {
         if (tag.idString === tagID) {
           this.cardTags.push(tag);
+          
         }
       });
     });

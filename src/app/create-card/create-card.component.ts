@@ -43,7 +43,7 @@ export class CreateCardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.globalData.selectedCard);
+    //console.log(this.globalData.selectedCard);
     if (this.card) {
       this.question.setValue(this.card.question);
       this.description.setValue(this.card.description);
@@ -60,14 +60,15 @@ export class CreateCardComponent implements OnInit {
       this.card.description = this.description.value;
       this.card.difficulty = this.difficulty.value;
       //this.card.tagIDs = this.tags.value;
-      console.log('Modifying');
-      this.findTags(this.card);
+      //console.log('Modifying');
+      //this.findTags(this.card);
       if (!this.findTags(this.card)) {
         return;
       }
-      console.log(this.card)
+      //console.log(this.card)
 
       await db.cards.put(this.card);
+      await this.deleteTag();
       this.globalData.filterCards.push(this.card);
     } else {
       let card: Flashcard = new Flashcard(
@@ -86,9 +87,9 @@ export class CreateCardComponent implements OnInit {
     }
 
     this.discard();
-    
-    //this.globalData.searchCards('', '');
     this.globalData.getTags();
+    this.globalData.searchCards('', '');
+    
   }
 
   findTags(card: Flashcard): number {
@@ -109,9 +110,9 @@ export class CreateCardComponent implements OnInit {
         }
       }
     }
-    card.tagIDs! = [];
+    card.tagIDs = [];
     
-    tagSet.forEach((tag) => { card.tagIDs!.push(tag.idString); });
+    tagSet.forEach((tag) => { card.tagIDs!.push(tag.idString); console.log("added tag to card") });
     this.updateTagList(tagSet);
 
     return 1;
@@ -121,18 +122,20 @@ export class CreateCardComponent implements OnInit {
     let exists = false;
     tagSet.forEach((tag) => {
       db.tags.each((dbtag) => {
-        if (tag.name === dbtag.name) {
+        //console.log(dbtag.name);
+        if (tag.name == dbtag.name) {
           exists = true;
         }
       })
 
       if (!exists) {
-        db.tags.add(tag);
+        console.log("new tag" + tag.name);
+        db.tags.put(tag);
       } else {
         exists = false;
       }
     });
-    this.deleteTag();
+    
   }
 
   discard() {
@@ -141,7 +144,7 @@ export class CreateCardComponent implements OnInit {
     this.answer.setValue('');
     this.tags.setValue('');
     this.difficulty.setValue('');
-    console.log(this.globalData.getCardQuestion());
+    //console.log(this.globalData.getCardQuestion());
   }
 
   close() {
@@ -160,32 +163,30 @@ export class CreateCardComponent implements OnInit {
 
   async deleteTag() {
     if (!this.card) return;
-    let tags = this.card!.tagIDs;
+    
+    console.log("im here");
+    //let tags = this.card!.tagIDs;
+    let tags = await db.tags.toArray();
     let found = false;
     var tagsToDelete: number[] = [];
     let tag = '';
 
     let cards = await db.cards.toArray();
 
-    for (let tagIDString of tags!) {
-      tag = tagIDString;
+    for (let tag of tags!) {
       for (let card of cards) {
         for (let cardTagID of card.tagIDs!) {
-          if (tagIDString === cardTagID) {
+          if (tag.idString === cardTagID) {
             found = true;
+            break;
           }
         }
+        if (found) break;
       }
 
       if (!found) {
-        let tagName = tag
-        .split(' ')
-        .map((bin) => String.fromCharCode(parseInt(bin, 2)))
-        .join('');
-        console.log("asdasdsadsadad " + tagName);
-        tag = tag.replace(/\s/g, '');
-        let tagID = +tag;
-        tagsToDelete.push(tagID);
+        console.log
+        tagsToDelete.push(tag.id);
       } else {
         found = false;
       }

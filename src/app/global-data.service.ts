@@ -36,7 +36,7 @@ export class GlobalDataService implements OnChanges{
   }
 
   setCard(card?: Flashcard) {
-    console.log('Card cambiada', card);
+    //console.log('Card cambiada', card);
     //this.selectedCard = card;
     this.cardChanged.next(card!);
   }
@@ -72,7 +72,6 @@ export class GlobalDataService implements OnChanges{
       db.cards.toArray().then((arr) => {
         arr.forEach((card) => {
           this.filterCards.push(card);
-          console.log(this.filterCards.length);
         });
         return;
       });

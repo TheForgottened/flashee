@@ -24,6 +24,7 @@ export class AppComponent implements OnInit {
     constructor(public globalData: GlobalDataService) {}
 
   ngOnInit(): void {
+      //this.globalData.searchCards('', '');
     this.globalData.getTags();
   }
 

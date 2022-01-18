@@ -3,7 +3,7 @@
     (mouseenter)="onAnswer(true)"
     (mouseleave)="onAnswer(false)"
 >
-    <div class="inner-container">
+    <div *ngIf="flashcard" class="inner-container">
         <div class="card-header">
             <span class="card-title">{{ flashcard.question }}</span>
             <div class="button-container" *ngIf="!globalData.createQuiz">

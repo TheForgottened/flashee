@@ -20,16 +20,21 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'flashee'`, () => {
+  it(`should have as title 'Flashee'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('flashee');
+    expect(app.title).toEqual('Flashee');
   });
 
-  it('should render title', () => {
+  // it('should render title', () => {
+  //   const fixture = TestBed.createComponent(AppComponent);
+  //   fixture.detectChanges();
+  //   const compiled = fixture.nativeElement as HTMLElement;
+  //   expect(compiled.querySelector('.content span')?.textContent).toContain('flashee app is running!');
+  // });
+  it('should open create card menu', () => {
     const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('flashee app is running!');
+    const app = fixture.componentInstance;
+    expect(app.newCardMenu(true)).toBeTruthy();
   });
 });

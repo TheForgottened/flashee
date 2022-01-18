@@ -27,7 +27,7 @@ export class QuizComponent implements OnInit {
     correctAnswers: number = 0;
     buttonLabel: string = 'Next Question';
     tags: Tag[] = [];
-
+    quizCreated:boolean = false;
     time!: number;
 
     @Input() currentQuestion!: Flashcard;
@@ -43,40 +43,42 @@ export class QuizComponent implements OnInit {
         //this.startQuiz = true;
         this.cards = await db.cards.toArray();
         let nCards = this.numCards.value;
-
+        this.quizCreated = false;
         if (this.cards.length < 1) {
+            console.log("no cards");
             alert("You can't start a Quiz with 0 cards!");
             return;
         } else if (nCards < 1) {
+            console.log("chose to add < 1 cards");
             alert('You must have at least 1 card in the Quiz!');
             return;
         } else if (nCards > this.cards.length) {
+            console.log("tried to add more cards than owned");
             alert("You can't have more cards than you own in the Quiz!, the number of cards will be: "+this.cards.length);
             nCards = this.cards.length;;
-        } else if (this.globalData.tagsQuiz.length == 0) {
-            alert('You must pick at least 1 tag for the Quiz!');
-            return;
         } else if (this.globalData.tagsQuiz.length > nCards) {
+            console.log("TOO MANY TAGS");
             alert("You can't pick more tags than the number of cards.");
             return;
         }
-
         this.quizQuestions = [];
 
         if (this.globalData.tagsQuiz.length == 0) this.quizRandom();
         else {
             if(!this.quizWithTags()) this.close();
         }
-
+        
         this.currentQuestion = this.quizQuestions[0];
-
+        if (this.quizQuestions.length > 0){
+            this.quizCreated = true;
+        }
         this.time = Date.now()
         this.showQuiz = true;
     }
 
     quizRandom() {
         let nCards = this.numCards.value;
-
+        
         let totalQuestions = 0;
 
         while (totalQuestions < nCards) {
@@ -87,6 +89,7 @@ export class QuizComponent implements OnInit {
                 totalQuestions++;
             }
         }
+        
     }
 
     quizWithTags(): number{
@@ -134,6 +137,7 @@ export class QuizComponent implements OnInit {
                 if (totalQuestions == nCards) break;
             }
         }
+        
         return 1;
     }
 

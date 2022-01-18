@@ -28,11 +28,12 @@ export class AppComponent implements OnInit {
     this.globalData.getTags();
   }
 
-    newCardMenu(open: boolean): void {
+    newCardMenu(open: boolean): boolean {
         this.modCard = undefined;
         this.globalData.selectedCard = undefined;
         this.globalData.createCard = open;
         this.overlayDiv = open;
+        return true;
     }
 
     async newQuiz() {

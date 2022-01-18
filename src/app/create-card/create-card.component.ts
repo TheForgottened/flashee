@@ -29,7 +29,7 @@ export class CreateCardComponent implements OnInit {
   tags = new FormControl('');
   description = new FormControl('');
   difficulty = new FormControl('');
-
+  newTag: boolean = false;
   //private globalDataService: any;
   public cardObs?: Observable<Flashcard>;
 
@@ -130,6 +130,7 @@ export class CreateCardComponent implements OnInit {
 
       if (!exists) {
         console.log("new tag" + tag.name);
+        this.newTag = true;
         db.tags.put(tag);
       } else {
         exists = false;

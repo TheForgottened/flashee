@@ -1,9 +1,6 @@
 import { Injectable, OnChanges, SimpleChanges } from '@angular/core';
 import { liveQuery, Observable } from 'dexie';
-import { stringify } from 'querystring';
-import { BehaviorSubject, Subject } from 'rxjs';
-import { EventEmitter } from 'stream';
-import { brotliDecompress } from 'zlib';
+import { Subject } from 'rxjs';
 import { db } from './clases/DbManager';
 import { Flashcard } from './clases/flashcard';
 import { Tag } from './clases/tag';

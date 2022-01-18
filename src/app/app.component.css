@@ -39,7 +39,7 @@
     grid-row-end: 2;
 
     background-color: none !important;
-
+    max-height: 2000px;
     padding: 0em !important;
     overflow: auto;
 }

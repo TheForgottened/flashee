@@ -2,13 +2,12 @@
     padding: 1em;
     background-color: rgba(0, 0, 0, 0);
     display: flex;
-    gap: 1em;
     flex-wrap: wrap;
-    align-content: center;
-    justify-content: flex-start;
-    flex-direction: row;
-
-    overflow: auto;
+    /* gap: 3em; */
+    margin:0;
+    /* align-content: center; */
+    /* position: relative;
+    overflow: auto; */
 }
 
 .card {

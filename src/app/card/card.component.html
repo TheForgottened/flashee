@@ -1,24 +1,38 @@
+<section
+    id="card-container"
+    (mouseenter)="onAnswer(true)"
+    (mouseleave)="onAnswer(false)"
+>
+    <div class="inner-container">
+        <div class="card-header">
+            <span class="card-title">{{ flashcard.question }}</span>
+            <div class="button-container" *ngIf="!globalData.createQuiz">
+                <fa-icon
+                    id="mod-button"
+                    [icon]="faEdit"
+                    (click)="modificationEvent()"
+                ></fa-icon>
+                <fa-icon
+                    id="del-button"
+                    [icon]="faTrash"
+                    (click)="deletionEvent()"
+                ></fa-icon>
+            </div>
+        </div>
 
-<section id="card-container" (mouseenter)="onAnswer(true)" (mouseleave)="onAnswer(false)">
+        <div class="card-body">
+            <p>{{ flashcard.description }}</p>
+            <span class="card-difficulty"
+                >Difficulty: {{ flashcard.difficulty }}</span
+            >
+        </div>
 
-  <div class="card-header">
-    <span class="card-title">{{flashcard.question}}</span>
-    <div class="button-container" *ngIf="!globalData.createQuiz">
-      <fa-icon id="mod-button" [icon]="faEdit" (click)="modificationEvent()"></fa-icon>
-      <fa-icon id="del-button" [icon]="faTrash" (click)="deletionEvent()"></fa-icon>
+        <div class="card-answer">
+            <p><i>Answer:</i> {{ flashcard.answer }}</p>
+        </div>
+
+        <div class="card-tags">
+            <tag *ngFor="let tag of cardTags" [tag]="tag"></tag>
+        </div>
     </div>
-  </div>
-
-  <div class="card-body">
-    <p>{{flashcard.description}}</p>
-    <span class="card-difficulty">Difficulty: {{flashcard.difficulty}}</span>
-  </div>
-
-  <div class="card-answer" *ngIf="this.showAnswer">
-    <p><i>Answer:</i> {{flashcard.answer}}</p>
-  </div>
-
-  <div class="card-tags">
-    <tag *ngFor="let tag of cardTags" [tag]="tag"></tag>
-  </div>
 </section>

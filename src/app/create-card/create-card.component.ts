@@ -49,7 +49,7 @@ export class CreateCardComponent implements OnInit {
       this.description.setValue(this.card.description);
       this.answer.setValue(this.card.answer);
       this.difficulty.setValue(this.card.difficulty)
-      this.tags.setValue(this.getTagsString(this.card.tagIDs));
+      this.tags.setValue(this.card.tagIDs?.toString());
     }
   }
 
@@ -64,17 +64,25 @@ export class CreateCardComponent implements OnInit {
       this.card.description = this.description.value;
       this.card.difficulty = this.difficulty.value;
 
+      let oldTags = this.card.tagIDs;
+      let newTags = this.getTagArr(this.tags.value)
+
+      //Delete updated tags
+      console.log("TGAS",oldTags,newTags );
+      
+
       // Update the tag list
       this.findTags(this.card)
 
       // Insert the card into the db
-      await db.cards.put(this.card);
+      await db.cards.put(this.card).finally(()=>{
+        /// Update the deleted tags
+        this.deleteTags(oldTags, newTags);
+      });
 
-      // Update the deleted tags
-      //! await this.deleteTag();
-      await this.deleteTags(this.card.tagIDs,this.getTagArr(this.tags.value));
-
-      this.globalData.filterCards.push(this.card);
+      //this.globalData.filterCards.push(this.card);
+      this.globalData.searchCards('', '');
+      this.close()
     } else {
       let card: Flashcard = new Flashcard(
         this.question.value,
@@ -90,11 +98,13 @@ export class CreateCardComponent implements OnInit {
       console.log(card);
       await db.cards.add(card);
       this.globalData.filterCards.push(card);
+      this.discard();
+
+      this.globalData.searchCards('', '');
+
     }
 
-    this.discard();
     this.globalData.getTags();
-    this.globalData.searchCards('', '');
 
   }
 
@@ -120,7 +130,6 @@ export class CreateCardComponent implements OnInit {
 
     tagSet.forEach((tag) => {
       card.tagIDs!.push(tag.id);
-      console.log("added tag to card")
     });
 
     this.updateTagList(tagSet);
@@ -142,7 +151,6 @@ export class CreateCardComponent implements OnInit {
       })
 
       if (!exists) {
-        console.log("new tag" + tag.name);
         this.newTag = true;
         db.tags.put(tag);
       } else {
@@ -175,34 +183,45 @@ export class CreateCardComponent implements OnInit {
     this.tags.setValue(this.getTagsString(card.tagIDs));
   }
 
-  async deleteTags(oldTags:string[]|undefined, newTags:string[]): Promise<number>{
-    if (!this.card) return 0;
+  /*
+  * Delete tags no longer in use
+  */
+  async deleteTags(oldTags: string[] | undefined, newTags: string[] | undefined): Promise<number> {
     if (oldTags == undefined || oldTags?.length == 0) return 0;
 
     // tags being deleted from the db 
     let delTags: string[] = [];
 
     // Difference between arrays
-    oldTags.forEach(tag => {
-      if(!newTags.includes(tag)) delTags.push(tag);
-    })
+    if (newTags == undefined) {
+      delTags = oldTags;
+    } else {
+      oldTags.forEach(tag => {
+        if (!newTags.includes(tag)) delTags.push(tag);
+      })
+    }
 
+    console.log("Delete tags:",delTags,oldTags)
     // chech if any other card contains the tag
-    delTags.forEach(tag=>{
-      let exists =  false;
+    delTags.forEach(tag => {
+      let exists = false;
       db.cards.each(card => {
         if (card.tagIDs?.includes(tag)) exists = true;
+        console.log("Actual card", card, tag, !exists);
         return;
+      }).finally(() => {
+        // If there are no instances of the card
+        if (!exists) {
+          console.log("Deleting", tag, !exists);
+          db.tags.where("id").equals(tag).delete();
+          this.globalData.getTags()
+        }
       })
-
-      // If there are no instances of the card
-      if(!exists) {        
-        db.tags.where("id").equals(tag).delete();
-      }
     })
 
     return 1;
   }
+
 
   /*
   * !DEPRECATED

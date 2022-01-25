@@ -116,6 +116,10 @@ input {
     outline: none;
 }
 
+statistics {
+    width: 80%;
+}
+
 /* scrollbar for .main-screen */
 
 /* width */

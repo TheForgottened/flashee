@@ -27,14 +27,15 @@ export class CardComponent implements OnInit, OnChanges {
   @Output() deleteEvent = new EventEmitter<Flashcard>();
   @Output() getTagsEvent = new EventEmitter<Flashcard>();
 
-  constructor(public globalData: GlobalDataService) {}
+  constructor(public globalData: GlobalDataService) {
+  }
 
   ngOnInit(): void {
    
   }
 
   ngOnChanges() {
-    this.getTagsByID(this.flashcard.tagIDs);
+    if (this.flashcard.tagIDs) this.getTagsByID(this.flashcard.tagIDs);
   }
 
   modificationEvent() {
@@ -44,17 +45,14 @@ export class CardComponent implements OnInit, OnChanges {
     //this.modifyEvent.emit(this.flashcard);
   }
 
-  getTagsByID(id?: string[]) {
+  /*
+  * Get all the tags from a card
+  */
+  async getTagsByID(id: string[]) {
     this.cardTags = [];
-    db.tags.each((tag) => {
-      
-      id!.forEach((tagID) => {
-        if (tag.idString === tagID) {
-          this.cardTags.push(tag);
-          
-        }
-      });
-    });
+    this.cardTags = await db.tags
+      .where("id").anyOf(id)
+      .toArray()
   }
 
   async deletionEvent() {
@@ -62,7 +60,7 @@ export class CardComponent implements OnInit, OnChanges {
 
     let tags = this.flashcard.tagIDs;
     let found = false;
-    var tagsToDelete: number[] = [];
+    var tagsToDelete: string[] = [];
     let index = 0;
     let tag = '';
     
@@ -88,8 +86,7 @@ export class CardComponent implements OnInit, OnChanges {
       }
 
         if (!found) {
-          let tagID = +tag.replace(/\s/g, '');
-          tagsToDelete.push(tagID);
+          tagsToDelete.push(tag);
         } else {
           found = false;
         }
@@ -106,9 +103,10 @@ export class CardComponent implements OnInit, OnChanges {
           break;
         }
       }
+
       if (removeTag)
         this.globalData.tags.splice(this.globalData.tags.indexOf(removeTag), 1)
-      db.tags.delete(tag);
+      //!db.tags.delete(tag);
     });
       
   }
@@ -121,5 +119,25 @@ export class CardComponent implements OnInit, OnChanges {
 
   onAnswer(mouse:boolean) {    
     this.showAnswer = mouse;
+  }
+
+  /*
+  * Turns a list of tags into a string to display
+  */
+  public getTagsString(tags: string[] | undefined): string {
+    let result: string = '';
+
+    for (let tag of tags!) {
+      let tagName = tag
+        .split(' ')
+        .map((bin) => String.fromCharCode(parseInt(bin, 2)))
+        .join('');
+      result += tagName;
+      result += ',';
+    }
+
+    result = result.slice(0, result.length - 1);
+
+    return result;
   }
 }

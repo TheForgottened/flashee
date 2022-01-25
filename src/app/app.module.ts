@@ -19,6 +19,8 @@ import { GlobalDataService } from './global-data.service';
 import { QuizComponent } from './quiz/quiz.component';
 
 import { ChartsModule } from 'ng2-charts';
+import { LineChartComponent } from './line-chart/line-chart.component';
+import { PieChartComponent } from './pie-chart/pie-chart.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { ChartsModule } from 'ng2-charts';
     CreateCardComponent,
     HorizontalMenuComponent,
     SearchCardComponent,
-    QuizComponent
+    QuizComponent,
+    LineChartComponent,
+    PieChartComponent
   ],
   imports: [
     BrowserModule,

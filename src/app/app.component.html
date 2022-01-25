@@ -1,57 +1,48 @@
 <title>{{ title }}</title>
 
-<div
-    class="overlay"
-    *ngIf="
+<div class="overlay" *ngIf="
         globalData.selectedCard ||
         globalData.createCard ||
         globalData.createQuiz
-    "
->
-    <create-card
-        id="card-creation"
-        *ngIf="globalData.selectedCard || globalData.createCard"
-        [card]="globalData.selectedCard"
-    ></create-card>
-    <quiz
-        
-        *ngIf="globalData.createQuiz"
-    ></quiz>
+    ">
+    <create-card id="card-creation" *ngIf="globalData.selectedCard || globalData.createCard"
+        [card]="globalData.selectedCard"></create-card>
+    <quiz *ngIf="globalData.createQuiz"></quiz>
 </div>
 
 <div class="overlay" *ngIf="this.statistics">
-  <statistics (closeEvent)="closeStatisticsEventHandler($event)"></statistics>
+    <statistics (closeEvent)="closeStatisticsEventHandler($event)"></statistics>
 </div>
 
 <div class="grid-container">
-  <div class="header">
-    <p style="font-size: 2em;color: var(--pink); font-weight: bold;"><i>Flashee</i></p>
-    <search-card id="card-search" style="width: 50%;"></search-card> 
-  </div>
+    <div class="header">
+        <p style="font-size: 2em;color: var(--pink); font-weight: bold;"><i>Flashee</i></p>
+        <search-card id="card-search" style="width: 50%;"></search-card>
+    </div>
 
-  <div class="vertical-menu-left">
-    <button (click)="globalData.searchCards('','',false)">Show all cards</button>
-    <tag *ngFor="let tag of globalData.tags" [tag]="tag"></tag>
-  </div>
+    <div class="vertical-menu-left">
+        <button (click)="globalData.searchCards('','',false)">Show all cards</button>
+        <tag *ngFor="let tag of globalData.tags" [tag]="tag"></tag>
+    </div>
 
-  <div class="main-screen">
-    <app-inicio (modCardEvent)="onModify($event)" ></app-inicio>
-  </div>
+    <div class="main-screen">
+        <app-inicio (modCardEvent)="onModify($event)"></app-inicio>
+    </div>
 
-  <div class="vertical-menu-right">
-    <button class="green" (click)='newCardMenu(true)'>New card</button>
-  
-    <input hidden type="file" #uploader (change)="importDeck($event)"/>
-    <button class="blue" (click)="uploader.click()">
-      Import
-    </button>
-  
-    <button class="blue" (click)='exportDeck()'>Export</button>
-    <button (click)='this.statistics = true'>Stats</button>
-    <button class="greenyellow" (click)="globalData.createQuiz=true">Quiz</button>
-</div>
+    <div class="vertical-menu-right">
+        <button class="green" (click)='newCardMenu(true)'>New card</button>
 
-<!-- Footer -->
-<footer></footer>
+        <input hidden type="file" #uploader (change)="importDeck($event)" />
+        <button class="blue" (click)="uploader.click()">
+            Import
+        </button>
 
-<router-outlet></router-outlet>
+        <button class="blue" (click)='exportDeck()'>Export</button>
+        <button (click)='this.statistics = true'>Stats</button>
+        <button class="greenyellow" (click)="globalData.createQuiz=true">Quiz</button>
+    </div>
+
+    <!-- Footer -->
+    <footer></footer>
+
+    <router-outlet></router-outlet>

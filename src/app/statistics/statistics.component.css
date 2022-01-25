@@ -22,3 +22,17 @@
     border: 0.1em solid var(--foreground);
     padding: 1em;
 }
+
+#header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.chart-wrapper {
+    display: flex;
+}
+
+canvas {
+    width: 50% !important;
+    height: auto !important;
+}

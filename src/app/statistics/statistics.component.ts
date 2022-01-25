@@ -18,83 +18,21 @@ import { Flashcard } from '../clases/flashcard';
 
 export class StatisticsComponent implements OnInit {
 
-  lineChartData: ChartDataSets[] = [];
- 
-  lineChartLabels: Label[] = [];
- 
-  lineChartOptions = {
-    responsive: true,
-  };
- 
-  lineChartColors: Color[] = [
-    {
-      borderColor: 'black',
-      backgroundColor: 'rgba(255,255,0,0.28)',
-    },
-  ];
-
-  time: number = 0;
- 
-  public lineChartLegend = true;
-  public lineChartPlugins = [];
-  public lineChartType: ChartType = 'line';
-
-  // Pie chart
-
-  public pieChartLabels: string[] = [];
-  public pieChartData: number[] = [];
-  public pieChartType: ChartType = 'pie';
-  
-  
+  public time:number =0 ;
   faTimes = faTimes;
 
   @Output() closeEvent = new EventEmitter<boolean>();
 
   constructor(private globalData:GlobalDataService) {
 
-    // Line chart
-    let dates: Label[] = [];
-    let data: number[] = [];
+  }
+  
 
-    db.quizzes.each(q => {
-      dates.push(q.date.toISOString().split('T')[0])
-      data.push((q.correctAnswers/q.nQuestions)*10);
-      this.time += q.time
-      console.log(q)
-    })
-
-    this.lineChartLabels= dates;
-    this.lineChartData.push(
-      { data: data, label: 'Score' }
-    ) 
-
-    // Pie chart
-    let ncards = 0;
-    let cards = db.cards.toArray();
-    let arrCards:Flashcard[];
-
-    cards.then(cards => arrCards = cards);
-
-    db.tags.each(t => {
-      this.pieChartLabels.push(t.name);
-
-        arrCards.forEach(c => {         
-          if (c.tagIDs?.includes(this.nameBinary(t.name))) {
-            ncards++;            
-          }
-        })
-      
-      this.pieChartData.push(ncards);
-      ncards= 0;
-    })
-
-    console.log(this.pieChartLabels,this.pieChartData)
+  ngOnInit(): void { 
 
   }
   
 
-  ngOnInit(): void {    
-  }
 
   close(){
     this.closeEvent.emit(true);

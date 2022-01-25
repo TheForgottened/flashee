@@ -161,7 +161,7 @@ export class QuizComponent implements OnInit {
             let tagIDs: string[] = [];
 
             this.globalData.tagsQuiz.forEach((tag) => {
-                tagIDs.push(tag.idString);
+                tagIDs.push(tag.id);
             });
 
             this.time = Date.now() - this.time;

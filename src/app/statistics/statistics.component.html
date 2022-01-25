@@ -1,23 +1,20 @@
 <section class="s-container">
     <div>
-        <div>
+        <div id="header">
             <h3>Statistics</h3>
             <fa-icon style="color: var(--red);" [icon]="faTimes" (click)="close()"></fa-icon>
         </div>
+        <line-chart></line-chart>
+        <pie-chart></pie-chart>
         <div class="chart-wrapper">
-            <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
-                [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType"
-                [plugins]="lineChartPlugins">
-            </canvas>
-        </div>
-    
-        <div class="chart-wrapper">
+            
+            <!--
           <canvas baseChart
               [data]="pieChartData"
               [labels]="pieChartLabels"
               [chartType]="pieChartType"
               (chartHover)="chartHovered($event)"
-              (chartClick)="chartClicked($event)"></canvas>
+              (chartClick)="chartClicked($event)"></canvas>-->
         </div>
     
         <div class="practice-time">

@@ -20,6 +20,7 @@ export class GlobalDataService implements OnChanges{
   public createQuiz: boolean = false;
   public tagsQuiz: Tag[] = [];
   public createCard: boolean = false;
+  public tagChanged: Subject<Tag[]> = new Subject<Tag[]>();
 
   constructor() {
     this.cardChanged.subscribe((card) => {
@@ -30,6 +31,7 @@ export class GlobalDataService implements OnChanges{
   ngOnChanges(changes: SimpleChanges): void {
     this.getCards();
     this.getTags();
+    
   }
 
   setCard(card?: Flashcard) {
@@ -55,10 +57,8 @@ export class GlobalDataService implements OnChanges{
   }
 
   async getTags() {
-    this.tags = [];
-    await db.tags.each((tag) => {
-      this.tags.push(tag);
-    });
+    this.tags = await db.tags.toArray()
+    console.log("tags",this.tags)
   }
 
   searchCards(filter: string, searchString: string, match?: boolean) {

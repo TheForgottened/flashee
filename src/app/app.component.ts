@@ -14,19 +14,19 @@ const indexExportImport = require('indexeddb-export-import');
 })
 export class AppComponent implements OnInit {
     title = 'Flashee';
-  
-  createCard = false;
-  searchCard = false;
-  overlayDiv = false;
-  statistics = false;
-  modCard?: Flashcard;
 
-    constructor(public globalData: GlobalDataService) {}
+    createCard = false;
+    searchCard = false;
+    overlayDiv = false;
+    statistics = false;
+    modCard?: Flashcard;
 
-  ngOnInit(): void {
-      //this.globalData.searchCards('', '');
-    this.globalData.getTags();
-  }
+    constructor(public globalData: GlobalDataService) { }
+
+    ngOnInit(): void {
+        //this.globalData.searchCards('', '');
+        this.globalData.getTags();
+    }
 
     newCardMenu(open: boolean): boolean {
         this.modCard = undefined;
@@ -88,7 +88,7 @@ export class AppComponent implements OnInit {
                 element.setAttribute(
                     'href',
                     'data:text/json;charset=UTF-8,' +
-                        encodeURIComponent(jString)
+                    encodeURIComponent(jString)
                 );
                 element.setAttribute('download', 'export.json');
                 element.style.display = 'none';
@@ -99,14 +99,14 @@ export class AppComponent implements OnInit {
         );
     }
 
-  closeStatisticsEventHandler(event: boolean) {
-    this.statistics = false;
-  }
+    closeStatisticsEventHandler(event: boolean) {
+        this.statistics = false;
+    }
 
-  onModify(card: Flashcard) {
-    //this.modCard = card;
-    this.createCard = false;
-    this.createCard = true;
-  }
+    onModify(card: Flashcard) {
+        //this.modCard = card;
+        this.createCard = false;
+        this.createCard = true;
+    }
 
 }

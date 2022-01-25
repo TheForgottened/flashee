@@ -182,12 +182,6 @@ export class CreateCardComponent implements OnInit {
     // tags being deleted from the db 
     let delTags: string[] = [];
 
-    // If there are no new tags, delete the old
-    if (newTags.length == 0) {
-      delTags = oldTags;
-      return 1;
-    }
-
     // Difference between arrays
     oldTags.forEach(tag => {
       if(!newTags.includes(tag)) delTags.push(tag);

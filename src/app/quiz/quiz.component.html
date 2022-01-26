@@ -2,11 +2,12 @@
 
     <div class="horizontal-buttons">
         <h3 style="margin: 0em">Quiz</h3>
+        <h4 *ngIf="this.showQuiz"> {{this.interval * 1000 | date:'H:mm:ss':'UTC'}} </h4>
         <fa-icon style="color: var(--red)" [icon]="faTimes" (click)="close()"></fa-icon>
     </div>
 
     <!-- Quiz preparation -->
-    <div class="quiz-prepare-div" *ngIf="!showQuiz">
+    <div class="quiz-prepare-div" *ngIf="showStart">
         <div class="input-div">
             <span>Number of cards: </span>
             <input type="text" [formControl]="numCards" />
@@ -30,28 +31,43 @@
     </div>
 
     <div *ngIf="showQuiz">
-        <div class="card-answer-div" *ngFor="let card of this.quizQuestions">
+        <form [formGroup]="quizForm" (ngSubmit)="onSubmitQuiz()">
 
-            <!--<flashcard  [flashcard]="card"></flashcard>-->
-            <div class="question-container">
-                <p>Question: {{card.question}}</p>
-                <p>Description: {{card.description}}</p>
+            <div formArrayName="questions">
+                <div 
+                    class="card-answer-div" 
+                    *ngFor="let card of getControls().controls; let i = index"
+                    >
+                    <!--<flashcard  [flashcard]="card"></flashcard>-->
+                    <div class="question-container">
+                        <p><i>Question:</i> {{quizQuestions[i].question}}</p>
+                        <p><i>Description:</i> {{quizQuestions[i].description}}</p>
+                        <p *ngIf="showSolution"> {{quizQuestions[i].answer}} </p>
+                    </div>
+
+                    <div class="answer-div">
+                        <textarea 
+                            id="question{{i}}"
+                            type="text" 
+                            [formControlName]="i" 
+                            rows=3
+                            placeholder="Answer">
+                        </textarea>
+                    </div>
+                </div>
+
+                <button class="green" id="nextQuestion" (click)="onSubmitQuiz()">
+                    Submit
+                </button>
             </div>
 
-            <div class="answer-div">
-                <textarea id="answer" type="text" [formControl]="answer" rows=3 placeholder="Answer" ></textarea>
-            </div>
-        </div>
-
-        <button class="green" id="nextQuestion" (click)="onSubmitAnswer()">
-            Submit
-        </button>
+        </form>
     </div>
 
-    
+
     <div class="quiz-result" *ngIf="showResult">
-        <span>Time used</span>
-        <span>Questions:</span>
-        <span>Result:</span>
+        <span>Time used: {{timeUsed* 1000 | date:'H:mm:ss':'UTC'}}</span><br/>
+        <span>Questions: {{quizQuestions.length}} </span><br/>
+        <span>Result: {{result}}</span><br/>
     </div>
 </section>

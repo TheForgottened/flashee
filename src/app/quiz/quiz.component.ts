@@ -3,12 +3,12 @@ import { GlobalDataService } from '../global-data.service';
 
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { db } from '../clases/DbManager';
-import { FormControl } from '@angular/forms';
+import { FormGroup, FormControl,FormArray, FormBuilder } from '@angular/forms'
 import { Flashcard } from '../clases/flashcard';
 import { Quiz } from '../clases/quiz';
 import Dexie, { Observable } from 'dexie';
 import { Tag } from '../clases/tag';
-import { range, timeInterval } from 'rxjs';
+import { range, timer } from 'rxjs';
 
 @Component({
     selector: 'quiz',
@@ -23,12 +23,14 @@ export class QuizComponent implements OnInit {
     cards: Flashcard[] = [];
 
     currentQuestionIndex: number = 0;
-    answer = new FormControl('');
+    answer = new FormArray([]);
     public startQuiz: boolean = false;
     correctAnswers: number = 0;
     buttonLabel: string = 'Next Question';
 
     public showResult: boolean = false;
+    public showSolution: boolean = false;
+    public showStart: boolean = true;
 
     // Questions for the quiz
     public quizQuestions: Flashcard[] = [];
@@ -40,19 +42,29 @@ export class QuizComponent implements OnInit {
     public selectedTags: Tag[] = [];
 
     quizCreated: boolean = false;
+
+    // time relatedd
+    interval: any;
+    timeUsed: number = 0;
     time!: number;
+
+    public result:number = -1;
+
+    // form related
+    public quizForm: FormGroup;
 
     @Input() currentQuestion!: Flashcard;
     @Output() closeEvent = new EventEmitter<boolean>();
 
-    constructor(public globalData: GlobalDataService) { }
+    constructor(public globalData: GlobalDataService,private fb:FormBuilder) { 
+        this.quizForm = this.fb.group({
+            name: '',
+            questions: this.fb.array([])
+        });
+    }
 
     ngOnInit(): void {
         db.tags.toArray(t => this.tags = t);
-    }
-
-    ngOnChange(): void{
-        console.log("answer",this.answer.value)
     }
 
     /*
@@ -90,12 +102,33 @@ export class QuizComponent implements OnInit {
         }
 
         console.log("Questions", this.quizQuestions)
+
+        this.mapQuestions();
+
         // Start of the quiz
         this.showQuiz = true;
-        this.time = Date.now();
+        this.showStart = false;
 
-
+        this.startTimer()
+        
         return 1;
+    }
+
+    public mapQuestions(){
+        this.quizQuestions.forEach(c => {
+            this.addQuestion()
+        })
+        console.log(this.quizForm)
+    }
+
+    /*
+    * Timer of the quiz
+    */
+    public startTimer() {
+        const source = timer(1000,1000);
+        const abc = source.subscribe(val => {
+            this.interval = val;
+        });
     }
 
     /*
@@ -107,9 +140,6 @@ export class QuizComponent implements OnInit {
         if (this.numCards.value < 1) {
             alert("You can't start a Quiz with 0 cards!");
             return 0;
-        } else if (nCards > this.cards.length) {
-            nCards = this.cards.length;
-            return 1;
         }
         return 1;
     }
@@ -122,12 +152,11 @@ export class QuizComponent implements OnInit {
         let nCards: number = this.numCards.value;
         let questions: Flashcard[] = [];
 
-        for (let i = 0; i < nCards || pool.length > 0; i++) {
+        for (let i = 0; i < nCards && pool.length > 0; i++) {
             let index = this.getRandomInt(0, pool.length - 1)
             questions.push(pool.splice(index, 1)[0])
         }
 
-        console.log("1 Pool", questions)
         return questions;
     }
 
@@ -135,7 +164,7 @@ export class QuizComponent implements OnInit {
     * Generate quiz
     */
     public async quizRandom(): Promise<Flashcard[] | undefined> {
-        let tagIDs: string[] = this.tagToStringArr(this.selectedTags);
+        const tagIDs: string[] = this.tagToStringArr(this.selectedTags);
         let cardPool: Flashcard[] = [];
 
         console.log("TAGS", tagIDs)
@@ -151,12 +180,79 @@ export class QuizComponent implements OnInit {
         return cardPool;
     }
 
+    /*
+    *   On submit of the quiz
+    */
+    public onSubmitQuiz() {
+        let vals = this.getQuestions();
+        console.log("Submited questions",vals);
+
+        let correct = 0;
+        
+        
+        // Check answers
+        for (let i=0;i<this.quizQuestions.length;i++) {
+            console.log("Submit",this.quizQuestions[i].answer,this.getControls().controls[i].value);
+            if(this.quizQuestions[i].answer.toLowerCase() == this.getControls().controls[i].value.toLowerCase()){
+                correct++;
+            }
+        }
+
+        // Points in 10 range
+        const points = correct/this.quizQuestions.length*10;
+
+        // Get the time for the quiz
+        const time = this.interval;
+        this.timeUsed = time;
+        this.result = points;
+
+        this.showQuiz = false;
+        this.showResult = true;
+        
+        if (this.result != -1) {
+            const tagIDs: string[] = this.tagToStringArr(this.selectedTags);
+
+            db.quizzes.add(new Quiz(
+                this.quizQuestions.length,
+                correct,
+                tagIDs,
+                time,
+            ))
+        }
+    }
+
+    public getQuestions():FormArray {
+        return this.quizForm.get("questions") as FormArray;
+    }
+
+    /*
+    *   Get controls of questions
+    */
+    public getControls() {
+        return <FormArray>this.quizForm.get('questions');
+    }
+
+    /*
+    * Generates a question
+    */
+    public newQuestion():FormControl{
+        return this.fb.control('')
+    }
+
+    /*
+    *   Add question to the for contoller
+    */
+    public addQuestion() {
+        const control = <FormArray>this.quizForm.controls['questions'];
+        control.push(this.newQuestion());
+    }
+
     onSubmitAnswer() {
         if (this.answer.value.toLowerCase().trim() === this.currentQuestion?.answer.toLowerCase().trim()) {
             this.correctAnswers++;
         }
 
-        this.answer.setValue('');
+        //this.answer.setValue('');
 
         if (this.currentQuestionIndex == this.quizQuestions.length - 1) {
             let tagIDs: string[] = [];

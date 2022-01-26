@@ -1,7 +1,19 @@
-# Flashee
-## Make learning new topics quick and easy.
-##
+# Flashee:  Make learning new topics quick and easy.
 
-GPS assignment for the year 2021.
+- [Flashee:  Make learning new topics quick and easy.](#flashee--make-learning-new-topics-quick-and-easy)
+  - [Where to Test the Application:](#where-to-test-the-application)
+  - [Example Deck:](#example-deck)
 
-Test deck JSON: https://pastebin.com/atVjzApn
+## Where to Test the Application:
+
+The application is automatically built and deployed using GitHub Actions. The application can be accessed and fully used [here](https://theforgottened.github.io/flashee/).
+
+
+## Example Deck:
+
+We need cards to use the application. One example deck cam be downloaded [here](https://pastebin.com/atVjzApn).
+
+All that's left is to import the deck inside the application.
+
+
+###### GPS assignment for the first semester of the year 2021/2022.

@@ -18,9 +18,9 @@ export class DbManager extends Dexie{
 
     constructor() { 
         super('flashee');
-        this.version(5).stores({
+        this.version(8).stores({
             decks: '++id',
-            cards: '++id, question, tags',
+            cards: '++id, question, *tagIDs',
             tags: 'id,name',
             quizzes: '++id'
         })

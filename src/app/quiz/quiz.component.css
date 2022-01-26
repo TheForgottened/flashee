@@ -37,11 +37,10 @@ section {
 
 .card-answer-div {
     box-sizing: border-box;
-
     margin: 1em;
 }
 
-.card-answer-div > flashcard {
+.card-answer-div > *{
     margin-right: 1em;
 }
 
@@ -49,16 +48,15 @@ section {
     box-sizing: border-box;
 
     display: flex;
-    flex-direction: column;
     justify-content: space-between;
     height: 100%;
-    gap: 4em;
 }
 
-.answer-div > input {
-    line-height: 5em;
+.answer-div > textarea {
+    margin-right: 1em;
 }
-input {
+
+textarea {
     background-color: var(--backgroundLight);
     color: var(--foreground);
 
@@ -67,6 +65,8 @@ input {
 
     padding: 5px;
     border-radius: 5px;
+
+    height: fit-content;
 }
 
 .tag-container {
@@ -96,4 +96,10 @@ button {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.question-container {
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-start;
 }

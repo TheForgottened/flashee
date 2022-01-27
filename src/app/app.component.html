@@ -7,7 +7,7 @@
     ">
     <create-card id="card-creation" *ngIf="globalData.selectedCard || globalData.createCard"
         [card]="globalData.selectedCard"></create-card>
-    <quiz *ngIf="globalData.createQuiz"></quiz>
+    <quiz class="quiz-container" *ngIf="globalData.createQuiz"></quiz>
 </div>
 
 <div class="overlay" *ngIf="this.statistics">

@@ -20,7 +20,7 @@ export class InicioComponent implements OnInit {
   @Output() modCardEvent = new EventEmitter<Flashcard>(); 
   
 
-  constructor(private globalData: GlobalDataService) { 
+  constructor(public globalData: GlobalDataService) { 
     this.globalData.filterCardsObs.subscribe(c=>{
       this.cards = c;
     });

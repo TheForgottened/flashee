@@ -10,7 +10,6 @@ import { StatisticsComponent } from './statistics/statistics.component';
 import { TagListComponent } from './tag-list/tag-list.component';
 import { CreateCardComponent } from './create-card/create-card.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HorizontalMenuComponent } from './horizontal-menu/horizontal-menu.component';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { JitCompiler } from '@angular/compiler';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -30,7 +29,6 @@ import { PieChartComponent } from './pie-chart/pie-chart.component';
     StatisticsComponent,
     TagListComponent,
     CreateCardComponent,
-    HorizontalMenuComponent,
     SearchCardComponent,
     QuizComponent,
     LineChartComponent,

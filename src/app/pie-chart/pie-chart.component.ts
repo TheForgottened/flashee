@@ -4,6 +4,7 @@ import { SingleDataSet, Label, monkeyPatchChartJsLegend, monkeyPatchChartJsToolt
 
 import { db } from '../clases/DbManager';
 import { Flashcard } from '../clases/flashcard';
+import { Tag } from '../clases/tag';
 
 @Component({
   selector: 'pie-chart',
@@ -20,34 +21,35 @@ export class PieChartComponent implements OnInit {
   };
   public pieChartLegend = true;
   public pieChartPlugins = [];
-
+  public chartColors: any[] = [
+    { 
+      backgroundColor:["#FF7360", "#6FC8CE", "#FAFFF2", "#FFFCC4", "#B9E8E0"] 
+    }];
   constructor() { }
 
   ngOnInit(): void {
    this.loadData();
   }
 
-  public loadData() {
+  public async loadData() {
     let ncards = 0;
-    let cards = db.cards.toArray();
-    let arrCards:Flashcard[];
 
-    cards.then(cards => arrCards = cards);
+    let tags:Tag[] = await db.tags.toArray();
+    let cards:Flashcard[] = await db.cards.toArray();
 
-    db.tags.each(t => {
-      this.pieChartLabels.push(t.name);
+    tags.forEach(t=>{
+      this.pieChartLabels.push(t.id)
+      cards.forEach(c=>{
+        if (c.tagIDs?.includes(t.id)){
+          ncards ++;
+        }
+      })
 
-        arrCards.forEach(c => {         
-          if (c.tagIDs?.includes(this.nameBinary(t.name))) {
-            ncards++;            
-          }
-        })
-      
       this.pieChartData.push(ncards);
-      ncards= 0;
+      ncards = 0;
     })
 
-    console.log(this.pieChartLabels,this.pieChartData)
+    console.log("Piechartdata",this.pieChartLabels,this.pieChartData)
   }
 
   nameBinary(name: string):string {

@@ -19,6 +19,8 @@ import { Flashcard } from '../clases/flashcard';
 export class StatisticsComponent implements OnInit {
 
   public time:number =0 ;
+  public numCards:number =0 ;
+
   faTimes = faTimes;
 
   @Output() closeEvent = new EventEmitter<boolean>();
@@ -29,7 +31,8 @@ export class StatisticsComponent implements OnInit {
   
 
   ngOnInit(): void { 
-
+    this.getPracticeTime();
+    this.getNumberCards()
   }
   
 
@@ -49,23 +52,17 @@ export class StatisticsComponent implements OnInit {
     return newID;
   }
 
-  getPracticeTime(time: number): string {   
-    //Get hours from milliseconds
-    var hours = time / (1000*60*60);
-    var absoluteHours = Math.floor(hours);
-    var h = absoluteHours > 9 ? absoluteHours : '0' + absoluteHours;
+  async getNumberCards() {
+    this.numCards = await db.cards.count()
+  }
 
-    //Get remainder from hours and convert to minutes
-    var minutes = (hours - absoluteHours) * 60;
-    var absoluteMinutes = Math.floor(minutes);
-    var m = absoluteMinutes > 9 ? absoluteMinutes : '0' +  absoluteMinutes;
-
-    //Get remainder from minutes and convert to seconds
-    var seconds = (minutes - absoluteMinutes) * 60;
-    var absoluteSeconds = Math.floor(seconds);
-    var s = absoluteSeconds > 9 ? absoluteSeconds : '0' + absoluteSeconds;
-
-    return h + ':' + m + ':' + s;
+  async getPracticeTime(): Promise<number> {   
+    let time = 0;
+    await db.quizzes.each(q=>{
+      time += q.time
+    })
+    this.time = time;
+    return time;
   }
 
   // events

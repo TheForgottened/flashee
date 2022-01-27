@@ -8,7 +8,7 @@ import { Tag } from './clases/tag';
 @Injectable({
   providedIn: 'root',
 })
-export class GlobalDataService implements OnChanges{
+export class GlobalDataService implements OnChanges {
   public tags: Tag[] = [];
   public selectedCard?: Flashcard = undefined;
   public cardChanged: Subject<Flashcard> = new Subject<Flashcard>();
@@ -31,7 +31,7 @@ export class GlobalDataService implements OnChanges{
   ngOnChanges(changes: SimpleChanges): void {
     this.getCards();
     this.getTags();
-    
+
   }
 
   setCard(card?: Flashcard) {
@@ -58,58 +58,49 @@ export class GlobalDataService implements OnChanges{
 
   async getTags() {
     this.tags = await db.tags.toArray()
-    console.log("tags",this.tags)
+    console.log("tags", this.tags)
   }
 
   searchCards(filter: string, searchString: string, match?: boolean) {
-    this.filterCards = [];
+    //this.filterCards = [];
     this.filterCardsObs.next([]);
+    let filtered:Flashcard[] = [];
 
-    if (searchString.length == 0 && filter.length == 0) {
-      db.cards.toArray().then((arr) => {
-        arr.forEach((card) => {
-          this.filterCards.push(card);
-        });
-        return;
-      });
-    }
-
-    db.cards.each((card) => {
+    if (!searchString || !filter) {
+      console.log("nocards")
+      db.cards.toArray(arr => this.filterCards = arr);
+    } else {
       switch (filter) {
         case 'Question':
-          if (card.question.toLowerCase().includes(searchString.toLowerCase()))
-            this.filterCards.push(card);
+          this.filterCards.forEach(c => {
+            if (c.question.toLowerCase().includes(searchString.toLowerCase())) { 
+              filtered.push(c) 
+            };
+          });
+          this.filterCards = filtered;
           break;
         case 'Answer':
-          if (card.answer.toLowerCase().includes(searchString.toLowerCase()))
-            this.filterCards.push(card);
+          this.cards.forEach(c => {
+            if (c.answer.toLowerCase().includes(searchString.toLowerCase())) filtered.push(c) ;
+          });
+          this.filterCards = filtered;
           break;
         case 'Description':
-          if (
-            card.description!.toLowerCase().includes(searchString.toLowerCase())
-          )
-            this.filterCards.push(card);
+          this.cards.forEach(c => {
+            if (c.description!.toLowerCase().includes(searchString.toLowerCase())) filtered.push(c) ;
+          });
+          this.filterCards = filtered;
           break;
         case 'Tag':
-          card.tagIDs?.forEach((tag) => {
-            let tagName = tag
-              .split(' ')
-              .map((bin) => String.fromCharCode(parseInt(bin, 2)))
-              .join('');
-
-            if (match) {
-              if (tagName.toLowerCase() === searchString.toLowerCase())
-                this.filterCards.push(card);
-            } else {
-              if (tagName.toLowerCase().includes(searchString.toLowerCase()))
-                this.filterCards.push(card);
-            }
-          });
+          db.cards
+            .where("tagIDs")
+            .equals(searchString)
+            .toArray(arr => {
+              this.filterCards = arr;
+              console.log("filter tag", arr)
+            })
           break;
       }
-    });
-
-    //console.log("Filter cards",this.filterCards);
-    this.filterCardsObs.next(this.filterCards);
+    }
   }
 }

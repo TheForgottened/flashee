@@ -7,6 +7,8 @@ section {
     border: 0.1em solid var(--foreground);
 }
 
+
+
 .horizontal-buttons,
 .card-answer-div {
     display: flex;
@@ -15,18 +17,6 @@ section {
 }
 
 .quiz-prepare-div {
-    /*display:grid;
-     justify-content: center;
-     align-items: center;
-     height: 100%; */
-
-    /*display: grid;
-    justify-items: stretch;
-
-    grid-template-columns: 0.8fr; 
-    grid-template-rows: 1fr;
-    grid-column-gap: 0em;
-    grid-row-gap: 1em; */
     padding: 1em;
 }
 
@@ -38,6 +28,7 @@ section {
 .card-answer-div {
     box-sizing: border-box;
     margin: 1em;
+    overflow-y: auto;
 }
 
 .card-answer-div > *{

@@ -30,10 +30,8 @@ export class SearchCardComponent implements OnInit {
   selectedOption: string = "Question";
 
   searchCard() {
-    //this.foundCards.clear();
-    //if (this.searchString.value == "") return;
     this.globalData.searchCards(this.selectedOption, this.searchString.value);
-    console.log("Searched",this.globalData.filterCards);
+    console.log("Searched",this.searchString.value,this.selectedOption);
   }
 
   ngOnInit(): void {

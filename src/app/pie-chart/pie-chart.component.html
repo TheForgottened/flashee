@@ -1,13 +1,12 @@
-<div class="row">
-    <div class="col-8 offset-2">
-      <canvas baseChart 
-        [data]="pieChartData" 
-        [labels]="pieChartLabels" 
-        [chartType]="pieChartType"
-        [options]="pieChartOptions"
-        [plugins]="pieChartPlugins"
-        [legend]="pieChartLegend">
-      </canvas>
-      <h3 class="text-center mt-3">Pie Chart</h3>
-    </div>
-  </div>
+<div style="display: block; width: 500px; height: 100%;">
+  <h4>Number of cards per tag</h4>
+  <canvas baseChart
+    [data]="pieChartData" 
+    [labels]="pieChartLabels" 
+    [chartType]="pieChartType"
+    [options]="pieChartOptions"
+    [plugins]="pieChartPlugins"
+    [legend]="pieChartLegend"
+    [colors]="chartColors">
+  </canvas>
+</div>

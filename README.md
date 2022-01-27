@@ -11,7 +11,7 @@ The application is automatically built and deployed using GitHub Actions. The ap
 
 ## Example Deck
 
-We need cards to use the application. One example deck can be downloaded [here](https://pastebin.com/atVjzApn).
+We need cards to use the application. One example deck can be downloaded [here](https://pastebin.com/EmqAdxEe).
 
 All that's left is to import the deck inside the application.
 

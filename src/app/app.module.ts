@@ -10,7 +10,6 @@ import { StatisticsComponent } from './statistics/statistics.component';
 import { TagListComponent } from './tag-list/tag-list.component';
 import { CreateCardComponent } from './create-card/create-card.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HorizontalMenuComponent } from './horizontal-menu/horizontal-menu.component';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { JitCompiler } from '@angular/compiler';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -19,6 +18,8 @@ import { GlobalDataService } from './global-data.service';
 import { QuizComponent } from './quiz/quiz.component';
 
 import { ChartsModule } from 'ng2-charts';
+import { LineChartComponent } from './line-chart/line-chart.component';
+import { PieChartComponent } from './pie-chart/pie-chart.component';
 
 @NgModule({
   declarations: [
@@ -28,9 +29,10 @@ import { ChartsModule } from 'ng2-charts';
     StatisticsComponent,
     TagListComponent,
     CreateCardComponent,
-    HorizontalMenuComponent,
     SearchCardComponent,
-    QuizComponent
+    QuizComponent,
+    LineChartComponent,
+    PieChartComponent
   ],
   imports: [
     BrowserModule,

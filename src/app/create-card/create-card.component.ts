@@ -24,52 +24,65 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 export class CreateCardComponent implements OnInit {
   faTimes = faTimes;
 
+  /// Form controls
   question = new FormControl('');
   answer = new FormControl('');
   tags = new FormControl('');
   description = new FormControl('');
   difficulty = new FormControl('');
   newTag: boolean = false;
-  //private globalDataService: any;
+  ///
+
   public cardObs?: Observable<Flashcard>;
 
   @Input() card?: Flashcard;
   @Output() closeEvent = new EventEmitter<boolean>();
 
   constructor(public globalData: GlobalDataService) {
-    // this.globalData.cardChanged.subscribe((card) => {
-    //   this.updateValues(card);
-    // });
+
   }
 
   ngOnInit(): void {
-    //console.log(this.globalData.selectedCard);
+    // If the operation is a update the card is loaded
     if (this.card) {
       this.question.setValue(this.card.question);
       this.description.setValue(this.card.description);
       this.answer.setValue(this.card.answer);
       this.difficulty.setValue(this.card.difficulty)
-      this.tags.setValue(this.getTagsString(this.card.tagIDs));
+      this.tags.setValue(this.card.tagIDs?.toString());
     }
   }
 
+  /*
+  * Main function for the creation of cards
+  */
   async newCard() {
     if (this.card) {
+      // Intro of data
       this.card.question = this.question.value;
       this.card.answer = this.answer.value;
       this.card.description = this.description.value;
       this.card.difficulty = this.difficulty.value;
-      //this.card.tagIDs = this.tags.value;
-      //console.log('Modifying');
-      //this.findTags(this.card);
-      if (!this.findTags(this.card)) {
-        return;
-      }
-      //console.log(this.card)
 
-      await db.cards.put(this.card);
-      await this.deleteTag();
-      this.globalData.filterCards.push(this.card);
+      let oldTags = this.card.tagIDs;
+      let newTags = this.getTagArr(this.tags.value)
+
+      //Delete updated tags
+      console.log("TGAS",oldTags,newTags );
+      
+
+      // Update the tag list
+      this.findTags(this.card)
+
+      // Insert the card into the db
+      await db.cards.put(this.card).finally(()=>{
+        /// Update the deleted tags
+        this.deleteTags(oldTags, newTags);
+      });
+
+      //this.globalData.filterCards.push(this.card);
+      this.globalData.searchCards('', '');
+      this.close()
     } else {
       let card: Flashcard = new Flashcard(
         this.question.value,
@@ -77,6 +90,7 @@ export class CreateCardComponent implements OnInit {
         this.description.value,
         this.difficulty.value,
       );
+
       if (!this.findTags(card)) {
         return;
       }
@@ -84,17 +98,27 @@ export class CreateCardComponent implements OnInit {
       console.log(card);
       await db.cards.add(card);
       this.globalData.filterCards.push(card);
+      this.discard();
+
+      this.globalData.searchCards('', '');
+
     }
 
-    this.discard();
     this.globalData.getTags();
-    this.globalData.searchCards('', '');
-    
+
   }
 
-  findTags(card: Flashcard): number {
+  /*
+  * Find the unique tags in a card
+  * @Params card on creation to search
+  */
+  public findTags(card: Flashcard): number {
+
+    //Load all the individual tags
     let tagSet = new Set<Tag>();
     this.tags.setValue(this.tags.value.replace(/\s/g, ''));
+
+    //Card string to array can contain repeated tas
     let tagArr = this.tags.value.split(',');
 
     for (let tag of tagArr) {
@@ -102,23 +126,21 @@ export class CreateCardComponent implements OnInit {
       tagSet.add(new Tag(tag));
     }
 
-    for (let i = 0; i < tagArr.length; i++) {
-      for (let j = i + 1; j < tagArr.length; j++) {
-        if (tagArr[i] === tagArr[j]) {
-          alert("You can't use the same tag twice.");
-          return 0;
-        }
-      }
-    }
     card.tagIDs = [];
-    
-    tagSet.forEach((tag) => { card.tagIDs!.push(tag.idString); console.log("added tag to card") });
+
+    tagSet.forEach((tag) => {
+      card.tagIDs!.push(tag.id);
+    });
+
     this.updateTagList(tagSet);
 
     return 1;
   }
 
-  updateTagList(tagSet: Set<Tag>) {
+  /*
+  * update the database of tags
+  */
+  public updateTagList(tagSet: Set<Tag>) {
     let exists = false;
     tagSet.forEach((tag) => {
       db.tags.each((dbtag) => {
@@ -129,14 +151,13 @@ export class CreateCardComponent implements OnInit {
       })
 
       if (!exists) {
-        console.log("new tag" + tag.name);
         this.newTag = true;
         db.tags.put(tag);
       } else {
         exists = false;
       }
     });
-    
+
   }
 
   discard() {
@@ -162,18 +183,64 @@ export class CreateCardComponent implements OnInit {
     this.tags.setValue(this.getTagsString(card.tagIDs));
   }
 
-  async deleteTag() {
-    if (!this.card) return;
-    
-    console.log("im here");
-    //let tags = this.card!.tagIDs;
+  /*
+  * Delete tags no longer in use
+  */
+  async deleteTags(oldTags: string[] | undefined, newTags: string[] | undefined): Promise<number> {
+    if (oldTags == undefined || oldTags?.length == 0) return 0;
+
+    // tags being deleted from the db 
+    let delTags: string[] = [];
+
+    // Difference between arrays
+    if (newTags == undefined) {
+      delTags = oldTags;
+    } else {
+      oldTags.forEach(tag => {
+        if (!newTags.includes(tag)) delTags.push(tag);
+      })
+    }
+
+    console.log("Delete tags:",delTags,oldTags)
+    // chech if any other card contains the tag
+    delTags.forEach(tag => {
+      let exists = false;
+      db.cards.each(card => {
+        if (card.tagIDs?.includes(tag)) exists = true;
+        console.log("Actual card", card, tag, !exists);
+        return;
+      }).finally(() => {
+        // If there are no instances of the card
+        if (!exists) {
+          console.log("Deleting", tag, !exists);
+          db.tags.where("id").equals(tag).delete();
+          this.globalData.getTags()
+        }
+      })
+    })
+
+    return 1;
+  }
+
+
+  /*
+  * !DEPRECATED
+  * Deletes a tag
+  * Updates the tag list when
+  */
+  async deleteTag(): Promise<number> {
+    // If we are not updating a card close
+    if (!this.card) return 0;
+
+    // All the avaible tags
     let tags = await db.tags.toArray();
     let found = false;
-    var tagsToDelete: number[] = [];
+    var tagsToDelete: string[] = [];
     let tag = '';
 
     let cards = await db.cards.toArray();
 
+    //!TODO: WTF is going on here
     for (let tag of tags!) {
       for (let card of cards) {
         for (let cardTagID of card.tagIDs!) {
@@ -192,11 +259,24 @@ export class CreateCardComponent implements OnInit {
         found = false;
       }
     }
+
     tagsToDelete.forEach((tag) => {
-      db.tags.delete(tag);
+      //!db.tags.delete(tag);
     });
+
+    return 1;
   }
 
+  /*
+  * Turns a coma separated list into a array
+  */
+  getTagArr(tags: string): string[] {
+    return tags.split(',');
+  }
+
+  /*
+  * Turns a list of tags into a string to display
+  */
   getTagsString(tags: string[] | undefined): string {
     let result: string = '';
 

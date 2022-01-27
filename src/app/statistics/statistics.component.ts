@@ -18,83 +18,24 @@ import { Flashcard } from '../clases/flashcard';
 
 export class StatisticsComponent implements OnInit {
 
-  lineChartData: ChartDataSets[] = [];
- 
-  lineChartLabels: Label[] = [];
- 
-  lineChartOptions = {
-    responsive: true,
-  };
- 
-  lineChartColors: Color[] = [
-    {
-      borderColor: 'black',
-      backgroundColor: 'rgba(255,255,0,0.28)',
-    },
-  ];
+  public time:number =0 ;
+  public numCards:number =0 ;
 
-  time: number = 0;
- 
-  public lineChartLegend = true;
-  public lineChartPlugins = [];
-  public lineChartType: ChartType = 'line';
-
-  // Pie chart
-
-  public pieChartLabels: string[] = [];
-  public pieChartData: number[] = [];
-  public pieChartType: ChartType = 'pie';
-  
-  
   faTimes = faTimes;
 
   @Output() closeEvent = new EventEmitter<boolean>();
 
   constructor(private globalData:GlobalDataService) {
 
-    // Line chart
-    let dates: Label[] = [];
-    let data: number[] = [];
-
-    db.quizzes.each(q => {
-      dates.push(q.date.toISOString().split('T')[0])
-      data.push((q.correctAnswers/q.nQuestions)*10);
-      this.time += q.time
-      console.log(q)
-    })
-
-    this.lineChartLabels= dates;
-    this.lineChartData.push(
-      { data: data, label: 'Score' }
-    ) 
-
-    // Pie chart
-    let ncards = 0;
-    let cards = db.cards.toArray();
-    let arrCards:Flashcard[];
-
-    cards.then(cards => arrCards = cards);
-
-    db.tags.each(t => {
-      this.pieChartLabels.push(t.name);
-
-        arrCards.forEach(c => {         
-          if (c.tagIDs?.includes(this.nameBinary(t.name))) {
-            ncards++;            
-          }
-        })
-      
-      this.pieChartData.push(ncards);
-      ncards= 0;
-    })
-
-    console.log(this.pieChartLabels,this.pieChartData)
-
   }
   
 
-  ngOnInit(): void {    
+  ngOnInit(): void { 
+    this.getPracticeTime();
+    this.getNumberCards()
   }
+  
+
 
   close(){
     this.closeEvent.emit(true);
@@ -111,23 +52,17 @@ export class StatisticsComponent implements OnInit {
     return newID;
   }
 
-  getPracticeTime(time: number): string {   
-    //Get hours from milliseconds
-    var hours = time / (1000*60*60);
-    var absoluteHours = Math.floor(hours);
-    var h = absoluteHours > 9 ? absoluteHours : '0' + absoluteHours;
+  async getNumberCards() {
+    this.numCards = await db.cards.count()
+  }
 
-    //Get remainder from hours and convert to minutes
-    var minutes = (hours - absoluteHours) * 60;
-    var absoluteMinutes = Math.floor(minutes);
-    var m = absoluteMinutes > 9 ? absoluteMinutes : '0' +  absoluteMinutes;
-
-    //Get remainder from minutes and convert to seconds
-    var seconds = (minutes - absoluteMinutes) * 60;
-    var absoluteSeconds = Math.floor(seconds);
-    var s = absoluteSeconds > 9 ? absoluteSeconds : '0' + absoluteSeconds;
-
-    return h + ':' + m + ':' + s;
+  async getPracticeTime(): Promise<number> {   
+    let time = 0;
+    await db.quizzes.each(q=>{
+      time += q.time
+    })
+    this.time = time;
+    return time;
   }
 
   // events

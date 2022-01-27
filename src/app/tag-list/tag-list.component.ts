@@ -14,20 +14,7 @@ export class TagListComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  searchByTag() {
-    if (this.globalData.createQuiz) {
-      let exists = false;
-
-      for (let tag of this.globalData.tagsQuiz) {
-        if (this.tag.id == tag.id) {
-          exists = true;
-        }
-      }
-      if (!exists)
-        this.globalData.tagsQuiz.push(this.tag);
-      return;
-    }
-
+  public searchByTag() {
     //console.log(this.tag.name);
     this.globalData.searchCards('Tag', this.tag.name, true);
   }

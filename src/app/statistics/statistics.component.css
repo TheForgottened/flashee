@@ -7,6 +7,10 @@
     }
 }
 
+.practise-time {
+    height: fit-content;
+}
+
 .s-container {
     animation: 1s ease-in-out 0s 1 onLoad;
     margin: auto;
@@ -14,11 +18,31 @@
     display: flex;
     flex-direction: column;
     width: auto;
-    height: auto;
+    height: 100%;
     justify-content: space-evenly;
 
     background-color: var(--backgroundLight);
     border-radius: 1em;
     border: 0.1em solid var(--foreground);
     padding: 1em;
+}
+
+.s-container > div {
+    height: 100%;
+}
+
+#header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.chart-wrapper {
+    display: flex;
+    height: fit-content;
+    max-height: 70%;
+}
+
+canvas {
+    width: 50% !important;
+    height: auto !important;
 }

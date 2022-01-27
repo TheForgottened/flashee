@@ -1,0 +1,12 @@
+<div style="display: block; width: 500px; height: 100%;">
+  <h4>Points per test</h4>
+      <canvas baseChart
+        [datasets]="lineChartData"
+        [labels]="lineChartLabels"
+        [options]="lineChartOptions"
+        [colors]="lineChartColors"
+        [legend]="lineChartLegend"
+        [chartType]="'line'"
+        [plugins]="lineChartPlugins">
+      </canvas>
+  </div>

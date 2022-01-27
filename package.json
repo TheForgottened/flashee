@@ -29,6 +29,7 @@
     "buffer": "^6.0.3",
     "chart.js": "^2.9.4",
     "dexie": "^3.2.0",
+    "guid-typescript": "^1.0.9",
     "indexeddb-export-import": "^2.1.5",
     "ng2-charts": "^2.4.3",
     "rxjs": "~7.4.0",

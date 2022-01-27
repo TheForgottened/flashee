@@ -1,31 +1,23 @@
 <section class="s-container">
-    <div>
-        <div>
-            <h3>Statistics</h3>
-            <fa-icon style="color: var(--red);" [icon]="faTimes" (click)="close()"></fa-icon>
-        </div>
-        <div class="chart-wrapper">
-            <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
-                [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType"
-                [plugins]="lineChartPlugins">
-            </canvas>
-        </div>
-    
-        <div class="chart-wrapper">
-          <canvas baseChart
-              [data]="pieChartData"
-              [labels]="pieChartLabels"
-              [chartType]="pieChartType"
-              (chartHover)="chartHovered($event)"
-              (chartClick)="chartClicked($event)"></canvas>
-        </div>
-    
-        <div class="practice-time">
-            <span>Total practice time</span>
-            <br>
-            <span>{{getPracticeTime(time)}}</span>
-        </div>
+
+    <div id="header">
+        <h3>Statistics</h3>
+        <fa-icon style="color: var(--red);" [icon]="faTimes" (click)="close()"></fa-icon>
     </div>
+
+    <div class="chart-wrapper">
+        <line-chart></line-chart>
+        <pie-chart></pie-chart>
+    </div>
+
+    <div class="practice-time">
+        <span>Number of cards: </span>
+        <span>{{numCards}}</span>
+        <br/>
+
+        <span>Total practice time :</span>
+        <span>{{time* 1000 | date:'H:mm:ss':'UTC'}}</span>
+        <br/>
+    </div>
+
 </section>
-
-

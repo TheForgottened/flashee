@@ -19,7 +19,7 @@ export class CardComponent implements OnInit, OnChanges {
   faEdit = faEdit;
   cardTags: Tag[] = [];
 
-  showAnswer:boolean = false;
+  showAnswer: boolean = false;
 
   @Input() flashcard!: Flashcard;
 
@@ -27,14 +27,15 @@ export class CardComponent implements OnInit, OnChanges {
   @Output() deleteEvent = new EventEmitter<Flashcard>();
   @Output() getTagsEvent = new EventEmitter<Flashcard>();
 
-  constructor(public globalData: GlobalDataService) {}
+  constructor(public globalData: GlobalDataService) {
+  }
 
   ngOnInit(): void {
-   
+
   }
 
   ngOnChanges() {
-    this.getTagsByID(this.flashcard.tagIDs);
+    if (this.flashcard.tagIDs) this.getTagsByID(this.flashcard.tagIDs);
   }
 
   modificationEvent() {
@@ -44,17 +45,14 @@ export class CardComponent implements OnInit, OnChanges {
     //this.modifyEvent.emit(this.flashcard);
   }
 
-  getTagsByID(id?: string[]) {
+  /*
+  * Get all the tags from a card
+  */
+  async getTagsByID(id: string[]) {
     this.cardTags = [];
-    db.tags.each((tag) => {
-      
-      id!.forEach((tagID) => {
-        if (tag.idString === tagID) {
-          this.cardTags.push(tag);
-          
-        }
-      });
-    });
+    this.cardTags = await db.tags
+      .where("id").anyOf(id)
+      .toArray()
   }
 
   async deletionEvent() {
@@ -62,55 +60,18 @@ export class CardComponent implements OnInit, OnChanges {
 
     let tags = this.flashcard.tagIDs;
     let found = false;
-    var tagsToDelete: number[] = [];
+    var tagsToDelete: string[] = [];
     let index = 0;
     let tag = '';
-    
+
+    // Delete from display not database
     this.globalData.filterCards.splice(this.globalData.filterCards.indexOf(this.flashcard), 1);
 
+    // Actual deletion of the card
     db.cards.delete(this.flashcard.id);
-    //this.deleteEvent.emit(this.flashcard);
-    if ((await db.cards.toArray()).length == 0) {
-      db.tags.clear();
-    }
 
-    let cards = await db.cards.toArray();
-
-    for (let tagIDString of tags!) {
-      tag = tagIDString;
-      for (let card of cards) {
-        for (let cardTagID of card.tagIDs!) {
-      
-          if (tagIDString === cardTagID) {
-            found = true;
-          }
-        }
-      }
-
-        if (!found) {
-          let tagID = +tag.replace(/\s/g, '');
-          tagsToDelete.push(tagID);
-        } else {
-          found = false;
-        }
-      
-    }
-
-    let removeTag: Tag;
-
-    tagsToDelete.forEach(async (tag) => {
-      
-      for (let tagg of this.globalData.tags) {
-        if (tagg.id == tag) {
-          removeTag = tagg;
-          break;
-        }
-      }
-      if (removeTag)
-        this.globalData.tags.splice(this.globalData.tags.indexOf(removeTag), 1)
-      db.tags.delete(tag);
-    });
-      
+    // Delete the old ids
+    this.deleteTags(this.flashcard.tagIDs,undefined)
   }
 
   sleep(ms: number) {
@@ -119,7 +80,65 @@ export class CardComponent implements OnInit, OnChanges {
     });
   }
 
-  onAnswer(mouse:boolean) {    
+  onAnswer(mouse: boolean) {
     this.showAnswer = mouse;
+  }
+
+  /*
+  * Turns a list of tags into a string to display
+  */
+  public getTagsString(tags: string[] | undefined): string {
+    let result: string = '';
+
+    for (let tag of tags!) {
+      let tagName = tag
+        .split(' ')
+        .map((bin) => String.fromCharCode(parseInt(bin, 2)))
+        .join('');
+      result += tagName;
+      result += ',';
+    }
+
+    result = result.slice(0, result.length - 1);
+
+    return result;
+  }
+
+  /*
+  * Delete tags no longer in use
+  */
+  async deleteTags(oldTags:string[]|undefined, newTags:string[] | undefined): Promise<number>{
+    if (oldTags == undefined || oldTags?.length == 0) return 0;
+
+    // tags being deleted from the db 
+    let delTags: string[] = [];
+
+    // Difference between arrays
+    if (newTags ==  undefined){
+      delTags = oldTags;
+    }else {
+      oldTags.forEach(tag => {
+        if(!newTags.includes(tag)) delTags.push(tag);
+      })
+    }    
+
+    // chech if any other card contains the tag
+    delTags.forEach(tag=>{
+      let exists =  false;
+      db.cards.each(card => {        
+        if (card.tagIDs?.includes(tag)) exists = true;
+        console.log("Actual card",card,tag,!exists);
+        return;
+      }).finally(() => {
+        // If there are no instances of the card
+        if(!exists) {
+          console.log("Deleting",tag,!exists);
+          db.tags.where("id").equals(tag).delete();
+          this.globalData.getTags()
+        }
+      })      
+    })
+
+    return 1;
   }
 }

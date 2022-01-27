@@ -7,6 +7,7 @@ import { QuizComponent } from './quiz.component';
 describe('QuizComponent', () => {
     let component: QuizComponent;
     let fixture: ComponentFixture<QuizComponent>;
+    
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
@@ -34,9 +35,11 @@ describe('QuizComponent', () => {
         ccComp.difficulty.setValue('test');
         ccComp.tags.setValue('test,test2');
         ccComp.newCard();
+        
+        let pool = await component.quizRandom();
 
         component.numCards.setValue('1');
-        await component.randomizeQuestions();
+        await component.randomizeQuestions(pool!);
         expect(component.quizCreated).toBeTruthy();
     });
 
@@ -60,7 +63,8 @@ describe('QuizComponent', () => {
         });
        
         component.numCards.setValue('3');
-        await component.randomizeQuestions();
+        let pool = await component.quizRandom();
+        await component.randomizeQuestions(pool!);
         expect(component.quizCreated).toBeTruthy();
     });
 });
